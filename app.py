@@ -67,7 +67,7 @@ def home():
 
     if request.method == "POST" and "verb" in request.form:
 
-        user_verb = request.form.get("verb", "").strip()
+        user_verb = (request.form.get("verb") or request.form.get("verb_desktop") or "").strip()
 
         if user_verb:
             if is_valid_verb(user_verb):
