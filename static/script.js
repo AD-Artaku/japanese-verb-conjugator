@@ -19,7 +19,7 @@ const backdrop = document.getElementById('popup-backdrop');
 const closeBtn = document.getElementById('popup-close');
 
 if (sendBtn) {
-  sendBtn.addEventListener('click', async () => {
+  sendBtn.addEventListener('click', () => {
     const message = textarea.value.trim();
 
     if (!message) return;
@@ -27,29 +27,22 @@ if (sendBtn) {
     sendBtn.disabled = true;
     sendBtn.textContent = '送信中...';
 
-    try {
-      const response = await fetch('/send_message', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message })
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        textarea.value = '';
-        charCount.textContent = '残り400文字';
-        backdrop.classList.add('active');
-      } else {
-        alert('送信に失敗しました。もう一度お試しください。');
-      }
-
-    } catch (err) {
-      alert('送信に失敗しました。もう一度お試しください。');
-    } finally {
+    emailjs.send("service_l9kxnvm", "template_nskztz7", {
+      message: message,
+      from_name: "訪問者"
+    })
+    .then(() => {
+      textarea.value = '';
+      charCount.textContent = '残り400文字';
+      backdrop.classList.add('active');
       sendBtn.disabled = false;
       sendBtn.textContent = '送信';
-    }
+    })
+    .catch(() => {
+      alert('送信に失敗しました。もう一度お試しください。');
+      sendBtn.disabled = false;
+      sendBtn.textContent = '送信';
+    });
   });
 }
 
