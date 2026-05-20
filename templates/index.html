@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>日本語動詞変換ツール</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+
+  <!-- Background -->
+  <div class="bg-image"></div>
+  <div class="bg-overlay"></div>
+
+  <!-- CONFIRMATION POPUP -->
+  <div class="popup-backdrop" id="popup-backdrop">
+    <div class="popup">
+      <div class="popup-title">お問い合わせをご送信いただき、誠にありがとうございます。</div>
+      <div class="popup-body">
+        <p>お忙しい中、お時間を割いてご連絡いただきましたこと、心より感謝申し上げます。</p>
+        <p>お問い合わせ内容を確認のうえ、できる限り迅速に、誠意をもって対応させていただきます。</p>
+        <p>ご満足いただけるご案内ができますよう努めてまいりますので、今しばらくお待ちくださいませ。</p>
+      </div>
+      <button class="popup-btn" id="popup-close">承知</button>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-inner">
+
+      <!-- hamburger button (mobile only) -->
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="メニューを開く">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="5" width="20" height="2" rx="1" fill="currentColor"/>
+          <rect x="2" y="11" width="20" height="2" rx="1" fill="currentColor"/>
+          <rect x="2" y="17" width="20" height="2" rx="1" fill="currentColor"/>
+        </svg>
+      </button>
+
+      <!-- logo -->
+      <div class="nav-logo">
+        <div class="logo-mark">
+          <div class="logo-top"></div>
+          <div class="logo-mid"></div>
+          <div class="logo-bot"></div>
+        </div>
+        <span class="logo-text">Eric Chou</span>
+      </div>
+
+      <!-- desktop links -->
+      <div class="nav-links">
+        <a href="https://eric_chou.artstation.com" class="nav-link">ポートフォリオ</a>
+        <a href="#" class="nav-link">履歴書</a>
+        <a href="https://github.com/AD-Artaku" class="nav-link">GitHub</a>
+        <a href="https://www.youtube.com/@Artaku_" class="nav-link nav-link-icon youtube" target="_blank" rel="noopener">
+          <i class="fa-brands fa-youtube"></i> Artaku
+        </a>
+        <a href="https://www.instagram.com/ericc.design" class="nav-link nav-link-icon instagram" target="_blank" rel="noopener">
+          <i class="fa-brands fa-instagram"></i> ericc.design
+        </a>
+      </div>
+
+      <!-- mobile dropdown menu -->
+      <div class="nav-mobile-menu" id="nav-mobile-menu">
+        <a href="https://eric_chou.artstation.com" class="nav-mobile-item">
+          <span class="item-label">ポートフォリオ</span>
+          <i class="fa-solid fa-chevron-right item-chevron"></i>
+        </a>
+        <a href="#" class="nav-mobile-item">
+          <span class="item-label">履歴書</span>
+          <i class="fa-solid fa-chevron-right item-chevron"></i>
+        </a>
+        <a href="https://github.com/AD-Artaku" class="nav-mobile-item" target="_blank" rel="noopener">
+          <span class="item-label">GitHub</span>
+          <i class="fa-solid fa-chevron-right item-chevron"></i>
+        </a>
+        <a href="https://www.youtube.com/@Artaku_" class="nav-mobile-item youtube" target="_blank" rel="noopener">
+          <i class="fa-brands fa-youtube"></i>
+          <span class="item-label">Artaku</span>
+          <i class="fa-solid fa-chevron-right item-chevron"></i>
+        </a>
+        <a href="https://www.instagram.com/ericc.design" class="nav-mobile-item instagram" target="_blank" rel="noopener">
+          <i class="fa-brands fa-instagram"></i>
+          <span class="item-label">ericc.design</span>
+          <i class="fa-solid fa-chevron-right item-chevron"></i>
+        </a>
+      </div>
+
+    </div>
+    <div class="nav-border"></div>
+
+    <!-- invisible overlay to close menu on outside tap -->
+    <div class="nav-mobile-overlay" id="nav-mobile-overlay"></div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- SEARCH CARD -->
+    <section class="search-section">
+      <div class="search-card">
+        <h1 class="search-title">日本語動詞変換ツール</h1>
+        <form method="POST" action="/">
+          <div class="search-form-inner">
+            <div class="search-input-group">
+              <div class="search-label">変換したい動詞：</div>
+
+              <!-- desktop input row -->
+              <div class="search-row">
+                <input
+                  class="search-input"
+                  type="text"
+                  name="verb"
+                  placeholder="ここに入力"
+                  value="{{ request.form.get('verb', '') }}"
+                  autocomplete="off"
+                  id="desktop-verb-input"
+                />
+                <button class="search-btn" type="submit">探索</button>
+              </div>
+
+              <!-- mobile pill input row -->
+              <div class="search-pill-row">
+                <i class="fa-solid fa-magnifying-glass search-pill-icon"></i>
+                <input
+                  class="search-pill-input"
+                  type="text"
+                  name="verb"
+                  placeholder="ここに入力"
+                  value="{{ request.form.get('verb', '') }}"
+                  autocomplete="off"
+                  id="mobile-verb-input"
+                />
+                <button class="search-pill-btn" type="submit">探索</button>
+              </div>
+
+              <div class="search-alert {% if input_error %}active{% endif %}" id="search-alert">
+                <div class="alert-icon">i</div>
+                <div class="alert-text">入力には辞書形の動詞のみをご使用ください。</div>
+                <button class="alert-close" type="button" id="alert-close">✕</button>
+              </div>
+            </div>
+
+            <div class="toggle-row">
+              <label class="toggle-label">
+                <input type="checkbox" name="polite" id="toggle-polite" class="toggle-check" {% if show_polite %}checked{% endif %} />
+                <span class="toggle-box"></span>
+                丁寧形
+              </label>
+              <label class="toggle-label">
+                <input type="checkbox" name="negative" id="toggle-negative" class="toggle-check" {% if show_negative %}checked{% endif %} />
+                <span class="toggle-box"></span>
+                ない形
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- CARDS GRID -->
+    {% if cards %}
+    <section class="cards-section">
+
+      {% set show_polite = request.form.get('polite') %}
+      {% set show_negative = request.form.get('negative') %}
+
+      {% set card_data = [
+        { "badge": "基本形",    "title": "辞書形",    "pos_plain": cards.dictionary,        "neg_plain": cards.negative,                   "pos_polite": cards.polite_dictionary,        "neg_polite": cards.polite_negative_dictionary },
+        { "badge": "基本形",    "title": "て形",      "pos_plain": cards.te,                 "neg_plain": cards.negative_te,                "pos_polite": None,                           "neg_polite": None },
+        { "badge": "基本形",    "title": "た形",      "pos_plain": cards.past,               "neg_plain": cards.negative_past,              "pos_polite": cards.polite_past,              "neg_polite": cards.polite_negative_past },
+        { "badge": "応用活用",  "title": "可能形",    "pos_plain": cards.potential,          "neg_plain": cards.negative_potential,         "pos_polite": cards.polite_potential,         "neg_polite": cards.polite_negative_potential },
+        { "badge": "応用活用",  "title": "受身形",    "pos_plain": cards.passive,            "neg_plain": cards.negative_passive,           "pos_polite": cards.polite_passive,           "neg_polite": cards.polite_negative_passive },
+        { "badge": "応用活用",  "title": "使役形",    "pos_plain": cards.causative,          "neg_plain": cards.negative_causative,         "pos_polite": cards.polite_causative,         "neg_polite": cards.polite_negative_causative },
+        { "badge": "応用活用",  "title": "使役受身形", "pos_plain": cards.causative_passive,  "neg_plain": cards.negative_causative_passive, "pos_polite": cards.polite_causative_passive, "neg_polite": cards.polite_negative_causative_passive },
+        { "badge": "意思・命令", "title": "命令形",    "pos_plain": cards.imperative,         "neg_plain": None,                             "pos_polite": cards.polite_imperative,        "neg_polite": None },
+        { "badge": "意思・命令", "title": "意向形",    "pos_plain": cards.volitional,         "neg_plain": None,                             "pos_polite": cards.polite_volitional,        "neg_polite": None },
+        { "badge": "条件・仮定", "title": "条件形",    "pos_plain": cards.conditional_ba,     "neg_plain": cards.negative_conditional_ba,    "pos_polite": None,                           "neg_polite": None },
+        { "badge": "条件・仮定", "title": "たら形",    "pos_plain": cards.tara,               "neg_plain": cards.negative_tara,              "pos_polite": None,                           "neg_polite": None }
+      ] %}
+
+      <div class="cards-grid">
+        {% for card in card_data %}
+        <div class="card">
+          <div class="card-badge">{{ card.badge }}</div>
+          <div class="card-content">
+            <div class="card-title">{{ card.title }}</div>
+
+            <!-- 普通形 section -->
+            <div class="card-section">
+              <div class="card-section-label">普通形：</div>
+              <div class="card-rows">
+                <div class="card-row">
+                  <span class="card-row-label">肯定</span>
+                  <span class="card-row-dash">-</span>
+                  <span class="card-row-value">{{ card.pos_plain or "—" }}</span>
+                </div>
+                {% if show_negative and card.neg_plain %}
+                <div class="card-row">
+                  <span class="card-row-label">否定</span>
+                  <span class="card-row-dash">-</span>
+                  <span class="card-row-value">{{ card.neg_plain }}</span>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- 丁寧形 section -->
+            {% if show_polite and (card.pos_polite or card.neg_polite) %}
+            <div class="card-divider"></div>
+            <div class="card-section">
+              <div class="card-section-label">丁寧形：</div>
+              <div class="card-rows">
+                {% if card.pos_polite %}
+                <div class="card-row">
+                  <span class="card-row-label">肯定</span>
+                  <span class="card-row-dash">-</span>
+                  <span class="card-row-value">{{ card.pos_polite }}</span>
+                </div>
+                {% endif %}
+                {% if show_negative and card.neg_polite %}
+                <div class="card-row">
+                  <span class="card-row-label">否定</span>
+                  <span class="card-row-dash">-</span>
+                  <span class="card-row-value">{{ card.neg_polite }}</span>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            {% endif %}
+
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- ABOUT SECTION -->
+    <section class="about-section">
+      <div class="about-card">
+        <div class="about-inner">
+          <div class="about-text-col">
+            <div class="about-badge">デザイナー ・ デベロッパー ・ 生涯学生</div>
+            <div class="about-text-body">
+              <div class="about-name-block">
+                <h2 class="about-name">チョウ・エリック</h2>
+                <p class="about-body">
+                  こんにちは、チョウ・エリックと申します。現在26歳で、より高い教育を受けること、そして世界に対する文化的な理解を深めるために、アメリカから日本へ参りました。<br/><br/>
+                  以前はハリウッドで、ゲームや映画のコンセプトデザイナーとして働いていました。とても刺激的で楽しい仕事でしたし、待遇にも恵まれていました。しかし、自分のこれからの人生や「何を残したいのか」を考えるようになるにつれ、もっと社会に貢献できることに挑戦したいという気持ちが強くなっていきました。<br/><br/>
+                  現在の世界には、地球温暖化、世界的な少子化、経済的不安定など、多くの大きな課題が存在しています。自分は、そういった難しい問題に真正面から向き合い、少しでも解決に近づけるような人間になりたいと考えています。<br/><br/>
+                  まだ学ぶことばかりですが、だからこそ、これからも新しい知識や技術を吸収しながら、人の役に立つものを作り続けていきたいと思っています。<br/><br/>
+                  よろしくお願いいたします！
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="about-image-col">
+            <div class="about-image-placeholder">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="8" width="48" height="48" rx="4" stroke="#ccc" stroke-width="2"/>
+                <path d="M8 44L22 30L30 38L42 24L56 44" stroke="#ccc" stroke-width="2"/>
+                <circle cx="42" cy="22" r="5" stroke="#ccc" stroke-width="2"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SITE INFO SECTION -->
+    <section class="info-section">
+      <div class="info-card">
+        <h2 class="section-heading">このサイトについて</h2>
+        <p class="info-body">
+          このプロジェクトは、今の自分が特に力を入れて学んでいる「日本語」と「プログラミング」の二つを、ひとつの形にしてみたいと思い制作しました。<br/><br/>
+          以前はそれぞれを別々に勉強していましたが、プロジェクトを作りながら学ぶ方が、より楽しく、実践的で、深く理解できるのではないかと感じています。今はどちらの分野も学ぶこと自体が本当に楽しく、日々夢中になっています。<br/><br/>
+          また、自分自身の日本語学習の中で、日本語の動詞活用を分かりやすく整理し、使いやすい形で表示してくれるサイトが意外と少ないと感じていました。そのため、「自分が本当に欲しいと思えるツールを作ってみたい」という思いも、このプロジェクトを始めた大きな理由の一つです。<br/><br/>
+          このプロジェクトが、誰かの学習を少しでも支える存在になってくれたら嬉しく思います。そして、これから高等教育へ進む中でも、このように人の役に立つツールや、実際の課題を解決できるものを、もっと作っていきたいと考えています。
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact-section">
+      <div class="contact-card">
+        <h2 class="contact-heading">お問い合わせ</h2>
+        <div class="contact-inner">
+          <div class="contact-textarea-wrapper">
+            <textarea
+              class="contact-textarea"
+              placeholder="内容を入力してください"
+              maxlength="400"
+              id="contact-msg"
+            ></textarea>
+            <div class="contact-char-count"><span id="char-count">残り400文字</span></div>
+          </div>
+          <button class="contact-btn" id="contact-send">送信</button>
+          <p class="contact-hint">このプロジェクトについて何か気になる点や不具合などがありましたら、ぜひ気軽にご連絡いただけると嬉しいです。</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="logo-mark small">
+        <div class="logo-top"></div>
+        <div class="logo-mid"></div>
+        <div class="logo-bot"></div>
+      </div>
+      <span class="footer-copy">© 2026 Eric Chou</span>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
