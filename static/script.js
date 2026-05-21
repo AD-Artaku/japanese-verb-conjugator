@@ -99,7 +99,160 @@ if (hamburger) {
   });
 }
 
-// tapping the invisible overlay closes the menu
 if (mobileOverlay) {
   mobileOverlay.addEventListener('click', closeMenu);
 }
+
+// =====================
+// Verb suggestion dropdown
+// =====================
+
+const VALID_VERB_ENDINGS = ['う','く','ぐ','す','つ','ぬ','ぶ','む','る'];
+
+function isAllHiragana(str) {
+  return [...str].every(ch => {
+    const cp = ch.codePointAt(0);
+    return (cp >= 0x3040 && cp <= 0x309F) || ch === 'ー';
+  });
+}
+
+function debounce(fn, delay) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+}
+
+function setupSuggestDropdown(input) {
+  if (!input) return;
+
+  // Dropdown is appended to body so it escapes the search card's
+  // backdrop-filter stacking context and always renders on top.
+  const dropdown = document.createElement('ul');
+  dropdown.className = 'suggest-dropdown';
+  document.body.appendChild(dropdown);
+
+  let activeIndex = -1;
+  let isComposing = false;
+
+  function positionDropdown() {
+    const rect = input.getBoundingClientRect();
+    dropdown.style.top    = `${rect.bottom + window.scrollY}px`;
+    dropdown.style.left   = `${rect.left + window.scrollX}px`;
+    dropdown.style.width  = `${rect.width}px`;
+  }
+
+  function showDropdown(items) {
+    dropdown.innerHTML = '';
+    activeIndex = -1;
+
+    if (items.length === 0) {
+      dropdown.classList.remove('active');
+      return;
+    }
+
+    items.forEach((item) => {
+      const li = document.createElement('li');
+      li.className = 'suggest-item';
+      li.textContent = item.kanji;
+      li.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        input.value = item.kanji;
+        hideDropdown();
+        input.closest('form').submit();
+      });
+      dropdown.appendChild(li);
+    });
+
+    positionDropdown();
+    dropdown.classList.add('active');
+  }
+
+  function hideDropdown() {
+    dropdown.classList.remove('active');
+    activeIndex = -1;
+  }
+
+  function setActive(index) {
+    const items = dropdown.querySelectorAll('.suggest-item');
+    items.forEach(el => el.classList.remove('active'));
+    if (index >= 0 && index < items.length) {
+      items[index].classList.add('active');
+      activeIndex = index;
+    }
+  }
+
+  // Reposition if window is scrolled or resized while open
+  window.addEventListener('scroll', () => {
+    if (dropdown.classList.contains('active')) positionDropdown();
+  }, { passive: true });
+
+  window.addEventListener('resize', () => {
+    if (dropdown.classList.contains('active')) positionDropdown();
+  });
+
+  input.addEventListener('compositionstart', () => {
+    isComposing = true;
+  });
+
+  input.addEventListener('compositionend', () => {
+    isComposing = false;
+    fetchSuggestions(input.value.trim());
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (isComposing) return;
+
+    const items = dropdown.querySelectorAll('.suggest-item');
+    if (!dropdown.classList.contains('active') || items.length === 0) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setActive(Math.min(activeIndex + 1, items.length - 1));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActive(Math.max(activeIndex - 1, 0));
+    } else if (e.key === 'Enter' && activeIndex >= 0) {
+      e.preventDefault();
+      input.value = items[activeIndex].textContent;
+      hideDropdown();
+      input.closest('form').submit();
+    } else if (e.key === 'Escape') {
+      hideDropdown();
+    }
+  });
+
+  input.addEventListener('blur', () => {
+    setTimeout(hideDropdown, 150);
+  });
+
+  const fetchSuggestions = debounce(async (query) => {
+    if (!query || !isAllHiragana(query) || isComposing) {
+      hideDropdown();
+      return;
+    }
+
+    try {
+      const res = await fetch(`/suggest?q=${encodeURIComponent(query)}`);
+      const data = await res.json();
+
+      const filtered = data.filter(item =>
+        VALID_VERB_ENDINGS.some(ending => item.reading.endsWith(ending)) &&
+        VALID_VERB_ENDINGS.some(ending => item.kanji.endsWith(ending))
+      );
+
+      showDropdown(filtered);
+    } catch (err) {
+      hideDropdown();
+    }
+  }, 200);
+
+  input.addEventListener('input', () => {
+    if (isComposing) return;
+    fetchSuggestions(input.value.trim());
+  });
+}
+
+setupSuggestDropdown(document.getElementById('desktop-verb-input'));
+setupSuggestDropdown(document.getElementById('mobile-verb-input'));

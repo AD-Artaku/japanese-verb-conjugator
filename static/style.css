@@ -1192,3 +1192,56 @@ main.main {
     line-height: 24px;
   }
 }
+
+/* =====================
+   SUGGEST DROPDOWN
+   ===================== */
+
+/* Wrapper keeps the input's flex behaviour intact */
+.suggest-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.suggest-wrapper .search-input,
+.suggest-wrapper .search-pill-input {
+  width: 100%;
+}
+
+/* Dropdown is appended to body and positioned via JS,
+   so it escapes the search card's backdrop-filter stacking context */
+.suggest-dropdown {
+  display: none;
+  position: absolute;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  list-style: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.suggest-dropdown.active {
+  display: block;
+}
+
+.suggest-item {
+  padding: 10px 16px;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.suggest-item:hover,
+.suggest-item.active {
+  background: var(--brand-subtle);
+  color: var(--brand);
+}
+
+.suggest-item + .suggest-item {
+  border-top: 1px solid var(--border);
+}

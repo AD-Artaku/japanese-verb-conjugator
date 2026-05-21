@@ -1,4 +1,5 @@
 import os
+import json
 from flask import Flask, render_template, request, jsonify
 from flask_mail import Mail, Message
 from dotenv import load_dotenv
@@ -18,6 +19,14 @@ app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_USERNAME")
 
 mail = Mail(app)
 
+# =====================
+# VERB DICTIONARY LOAD
+# Loaded once at startup — lookups are instant dict key access.
+# =====================
+VERB_DICT_PATH = os.path.join(os.path.dirname(__file__), "verb_dict.json")
+with open(VERB_DICT_PATH, encoding="utf-8") as f:
+    VERB_DICT = json.load(f)
+
 # Valid dictionary form endings
 VALID_ENDINGS = ("う", "く", "ぐ", "す", "つ", "ぬ", "ぶ", "む", "る")
 
@@ -25,6 +34,14 @@ VALID_ENDINGS = ("う", "く", "ぐ", "す", "つ", "ぬ", "ぶ", "む", "る")
 INVALID_ENDINGS = ("い", "な", "だ", "た", "て", "で", "ば", "に",
                    "ない", "ます", "した", "って", "んで", "いて",
                    "いで", "して", "られ", "させ", "れば", "たら")
+
+def is_all_hiragana(text):
+    """Return True if every character is hiragana."""
+    for ch in text:
+        cp = ord(ch)
+        if not (0x3040 <= cp <= 0x309F or ch == "ー"):
+            return False
+    return True
 
 def is_valid_verb(verb):
 
@@ -70,6 +87,17 @@ def home():
         user_verb = (request.form.get("verb") or request.form.get("verb_desktop") or "").strip()
 
         if user_verb:
+            # =====================
+            # HIRAGANA AUTO-RESOLVE
+            # If input is hiragana-only and has exactly one kanji match,
+            # silently swap it in. If multiple matches, the frontend
+            # dropdown should have handled it — we still pick the first
+            # as a safe fallback here.
+            # =====================
+            if is_all_hiragana(user_verb) and user_verb in VERB_DICT:
+                matches = VERB_DICT[user_verb]
+                user_verb = matches[0]
+
             if is_valid_verb(user_verb):
                 v = Verb(user_verb)
                 v.polite().negative()
@@ -93,6 +121,37 @@ def home():
         show_polite=show_polite,
         show_negative=show_negative
     )
+
+
+# =====================
+# SUGGEST ENDPOINT
+# Called by the frontend as the user types.
+# Returns up to 8 kanji matches for a hiragana prefix.
+# e.g. GET /suggest?q=たべ → ["食べる"]
+# =====================
+@app.route("/suggest")
+def suggest():
+    q = request.args.get("q", "").strip()
+
+    if not q or not is_all_hiragana(q):
+        return jsonify([])
+
+    # Collect all readings that start with the query prefix,
+    # then flatten to their kanji forms (deduplicated, order preserved).
+    seen = set()
+    results = []
+
+    for reading, kanji_list in VERB_DICT.items():
+        if reading.startswith(q):
+            for kanji in kanji_list:
+                if kanji not in seen:
+                    seen.add(kanji)
+                    results.append({"reading": reading, "kanji": kanji})
+
+        if len(results) >= 8:
+            break
+
+    return jsonify(results)
 
 
 @app.route("/send_message", methods=["POST"])
