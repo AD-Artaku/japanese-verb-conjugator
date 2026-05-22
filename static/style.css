@@ -135,7 +135,7 @@ body {
 .navbar {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 10001;
   background: rgba(255,255,255,0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -175,6 +175,7 @@ body {
 }
 
 .logo-text {
+  font-family: 'Libertinus', Serif;
   font-size: 20px;
   font-weight: 700;
   color: var(--text-primary);
@@ -243,15 +244,19 @@ body {
 /* hamburger dropdown card */
 .nav-mobile-menu {
   display: none;
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 16px;
-  width: 320px;
+  position: fixed;
+  top: calc(56px + 16px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100vw - 32px);
+  max-width: none;
   background: var(--surface);
   border-radius: 32px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.18),
+    0 2px 8px rgba(0,0,0,0.10);
   padding: 16px;
-  z-index: 200;
+  z-index: 10000;
   flex-direction: column;
 }
 
@@ -281,10 +286,61 @@ body {
   flex: 1;
 }
 
+.nav-mobile-item i {
+  font-size: 20px;
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* RIGHT external-link icon only */
 .nav-mobile-item .item-chevron {
   color: var(--text-primary);
-  font-size: 13px;
+  background: none !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  font-size: 18px;
+}
+
+/* LEFT YouTube icon only */
+.nav-mobile-item.youtube > i:first-child {
+  color: #FF0000;
+}
+
+/* LEFT Instagram icon only */
+.nav-mobile-item.instagram > i:first-child {
+  background: linear-gradient(
+    135deg,
+    #F56040,
+    #C13584,
+    #833AB4,
+    #5851DB
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* invisible overlay to catch outside taps */
+.nav-mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 25, 86, 0.6);
+  z-index: 9998;
+}
+
+.nav-mobile-overlay.active {
+  display: block;
+}
+
+.nav-mobile-item .item-chevron {
+  color: var(--text-primary);
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
   flex-shrink: 0;
+  -webkit-text-fill-color: var(--text-primary);
+  background: none;
 }
 
 .nav-mobile-item i {
@@ -307,7 +363,8 @@ body {
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 150;
+  background: rgba(13, 25, 86, 0.6);
+  z-index: 9998;
 }
 
 .nav-mobile-overlay.active {
@@ -392,10 +449,26 @@ main.main {
   align-items: center;
 }
 
-.search-input {
+/* Desktop icon wrapper */
+.search-input-wrapper {
   flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-desktop-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--text-tertiary);
+  font-size: 15px;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
   height: 48px;
-  padding: 0 16px;
+  padding: 0 16px 0 38px;
   border: 1px solid var(--border);
   border-radius: var(--radius-input);
   font-size: 16px;
@@ -936,13 +1009,13 @@ main.main {
 @media (max-width: 600px) {
 
   /* prevent any element from causing horizontal overflow */
-    body {
-      overflow-x: hidden;
-    }
+  body {
+    overflow-x: hidden;
+  }
 
-    * {
-      max-width: 100%;
-    }
+  * {
+    max-width: 100%;
+  }
 
   /* --- NAV --- */
   .nav-inner {
@@ -971,7 +1044,7 @@ main.main {
 
   /* --- SEARCH CARD --- */
   .search-card {
-    padding: 20px;
+    padding: 24px 20px;
     gap: 20px;
     background: var(--surface);
     backdrop-filter: none;
@@ -983,6 +1056,7 @@ main.main {
   .search-title {
     font-size: 24px;
     line-height: 1.3;
+    text-align: center;
   }
 
   .search-form-inner {
@@ -998,13 +1072,13 @@ main.main {
     display: none;
   }
 
-  /* show pill-style input on mobile */
+  /* --- MOBILE PILL --- */
   .search-pill-row {
     display: flex;
     align-items: center;
     gap: 8px;
-    height: 48px;
-    padding: 4px 4px 4px 16px;
+    height: 56px;
+    padding: 8px 8px 8px 16px;
     background: var(--surface);
     border-radius: 999px;
     box-shadow: 0 3px 4px rgba(0,0,0,0.15);
@@ -1022,42 +1096,48 @@ main.main {
     border: none;
     background: transparent;
     outline: none;
-    font-size: 14px;
+    font-size: 15px;
     font-family: 'Inter', sans-serif;
     color: var(--text-primary);
     line-height: 24px;
+    min-width: 0;
   }
 
   .search-pill-input::placeholder {
     color: var(--text-tertiary);
   }
 
+  /* pill button — full pill, inset 8px from the outer pill edges */
   .search-pill-btn {
-    height: 38px;
-    padding: 0 16px;
+    height: 40px;
+    padding: 0 20px;
     background: var(--brand);
     color: #fff;
     border: none;
     border-radius: 999px;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     font-family: 'Inter', sans-serif;
     cursor: pointer;
     flex-shrink: 0;
     transition: background 0.15s;
+    white-space: nowrap;
   }
 
   .search-pill-btn:active {
     background: #2244ee;
   }
 
+  /* --- TOGGLES — centered, gray text --- */
   .toggle-row {
     gap: 12px;
+    justify-content: center;
   }
 
   .toggle-label {
     font-size: 14px;
     gap: 6px;
+    color: var(--text-tertiary);
   }
 
   .toggle-box {
@@ -1110,39 +1190,74 @@ main.main {
     line-height: 24px;
   }
 
-  /* --- ABOUT --- */
+    /* --- ABOUT / SELF INTRO --- */
+  .about-card {
+    border-radius: 32px;
+    overflow: hidden;
+  }
+
   .about-inner {
-    padding: 16px;
+    padding: 20px 16px;
     flex-direction: column;
     gap: 16px;
+    align-items: center;
   }
 
   .about-text-col {
     width: 100%;
+    align-items: center;
+    gap: 16px;
   }
 
   .about-badge {
-    font-size: 12px;
+    align-self: center;
+    padding: 4px 8px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    background: #f2f2f2;
+    text-align: center;
+  }
+
+  .about-text-body {
+    width: 100%;
+    gap: 16px;
+  }
+
+  .about-name-block {
+    gap: 16px;
+    align-items: center;
   }
 
   .about-name {
     font-size: 30px;
     line-height: 1.2;
+    font-weight: 600;
+    text-align: center;
+    color: var(--brand);
   }
 
   .about-body {
     font-size: 16px;
     line-height: 24px;
+    color: var(--text-secondary);
+  }
+
+  .about-image-col {
+    width: 100%;
   }
 
   .about-image-placeholder {
-    min-height: 200px;
+    width: 100%;
+    min-height: 215px;
     border-radius: 20px;
+    overflow: hidden;
   }
 
   /* --- INFO --- */
   .info-card {
-    padding: 16px;
+    padding: 20px 16px;
   }
 
   .section-heading {
@@ -1158,7 +1273,7 @@ main.main {
 
   /* --- CONTACT --- */
   .contact-card {
-    padding: 16px;
+    padding: 20px 16px;
   }
 
   .contact-heading {
@@ -1244,4 +1359,12 @@ main.main {
 
 .suggest-item + .suggest-item {
   border-top: 1px solid var(--border);
+}
+
+@media (max-width: 600px) {
+  .suggest-dropdown {
+    border-radius: 24px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
 }

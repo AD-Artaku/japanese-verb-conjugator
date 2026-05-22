@@ -137,10 +137,19 @@ function setupSuggestDropdown(input) {
   let isComposing = false;
 
   function positionDropdown() {
-    const rect = input.getBoundingClientRect();
-    dropdown.style.top    = `${rect.bottom + window.scrollY}px`;
-    dropdown.style.left   = `${rect.left + window.scrollX}px`;
-    dropdown.style.width  = `${rect.width}px`;
+    // On mobile, align dropdown to the full pill search bar.
+    // On desktop, keep aligning to the normal input box.
+    const isMobile = window.matchMedia('(max-width: 600px)').matches;
+
+    const anchor = isMobile
+      ? input.closest('.search-pill-row')
+      : input.closest('.search-input-wrapper') || input;
+
+    const rect = anchor.getBoundingClientRect();
+
+    dropdown.style.top = `${rect.bottom + window.scrollY}px`;
+    dropdown.style.left = `${rect.left + window.scrollX}px`;
+    dropdown.style.width = `${rect.width}px`;
   }
 
   function showDropdown(items) {

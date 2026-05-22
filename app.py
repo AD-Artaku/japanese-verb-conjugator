@@ -94,16 +94,22 @@ def home():
             # dropdown should have handled it — we still pick the first
             # as a safe fallback here.
             # =====================
-            if is_all_hiragana(user_verb) and user_verb in VERB_DICT:
-                matches = VERB_DICT[user_verb]
-                user_verb = matches[0]
+            if is_all_hiragana(user_verb):
+                # Hiragana input must exist in the dictionary —
+                # rejects nonsense like かえるかえる that would
+                # otherwise pass is_valid_verb by ending in る.
+                if user_verb not in VERB_DICT:
+                    input_error = True
+                else:
+                    user_verb = VERB_DICT[user_verb][0]
 
-            if is_valid_verb(user_verb):
-                v = Verb(user_verb)
-                v.polite().negative()
-                cards = v.forms
-            else:
-                input_error = True
+            if not input_error:
+                if is_valid_verb(user_verb):
+                    v = Verb(user_verb)
+                    v.polite().negative()
+                    cards = v.forms
+                else:
+                    input_error = True
 
         # read toggles from POST
         show_polite = request.form.get("polite")

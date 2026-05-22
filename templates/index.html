@@ -71,34 +71,35 @@
       <div class="nav-mobile-menu" id="nav-mobile-menu">
         <a href="https://eric_chou.artstation.com" class="nav-mobile-item">
           <span class="item-label">ポートフォリオ</span>
-          <i class="fa-solid fa-chevron-right item-chevron"></i>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
         </a>
         <a href="#" class="nav-mobile-item">
           <span class="item-label">履歴書</span>
-          <i class="fa-solid fa-chevron-right item-chevron"></i>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
         </a>
         <a href="https://github.com/AD-Artaku" class="nav-mobile-item" target="_blank" rel="noopener">
           <span class="item-label">GitHub</span>
-          <i class="fa-solid fa-chevron-right item-chevron"></i>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
         </a>
         <a href="https://www.youtube.com/@Artaku_" class="nav-mobile-item youtube" target="_blank" rel="noopener">
           <i class="fa-brands fa-youtube"></i>
           <span class="item-label">Artaku</span>
-          <i class="fa-solid fa-chevron-right item-chevron"></i>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
         </a>
         <a href="https://www.instagram.com/ericc.design" class="nav-mobile-item instagram" target="_blank" rel="noopener">
           <i class="fa-brands fa-instagram"></i>
           <span class="item-label">ericc.design</span>
-          <i class="fa-solid fa-chevron-right item-chevron"></i>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
         </a>
       </div>
 
     </div>
     <div class="nav-border"></div>
 
-    <!-- invisible overlay to close menu on outside tap -->
-    <div class="nav-mobile-overlay" id="nav-mobile-overlay"></div>
   </nav>
+
+  <!-- invisible overlay to close menu on outside tap -->
+  <div class="nav-mobile-overlay" id="nav-mobile-overlay"></div>
 
   <!-- MAIN CONTENT -->
   <main class="main">
@@ -114,16 +115,19 @@
 
               <!-- desktop input row -->
               <div class="search-row">
-                <input
-                  class="search-input"
-                  type="text"
-                  name="verb_desktop"
-                  placeholder="ここに入力"
-                  value="{{ request.form.get('verb', '') }}"
-                  autocomplete="off"
-                  id="desktop-verb-input"
-                  maxlength="20"
-                />
+                <div class="search-input-wrapper">
+                  <i class="fa-solid fa-magnifying-glass search-desktop-icon"></i>
+                  <input
+                    class="search-input"
+                    type="text"
+                    name="verb_desktop"
+                    placeholder="ここに入力"
+                    value="{{ request.form.get('verb', '') }}"
+                    autocomplete="off"
+                    id="desktop-verb-input"
+                    maxlength="20"
+                  />
+                </div>
                 <button class="search-btn" type="submit">探索</button>
               </div>
 
