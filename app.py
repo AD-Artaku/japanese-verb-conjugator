@@ -3,7 +3,7 @@ import json
 from flask import Flask, render_template, request, jsonify
 from flask_mail import Mail, Message
 from dotenv import load_dotenv
-from JP_Verb_conjugator_v3 import Verb, honorific_godan_verb
+from JP_Verb_conjugator_v3 import Verb, honorific_godan_verb, HIRAGANA_PREFERRED
 
 load_dotenv()
 
@@ -101,7 +101,8 @@ def home():
                 if user_verb not in VERB_DICT:
                     input_error = True
                 else:
-                    user_verb = VERB_DICT[user_verb][0]
+                    if user_verb not in HIRAGANA_PREFERRED:
+                        user_verb = VERB_DICT[user_verb][0]
 
             if not input_error:
                 if is_valid_verb(user_verb):
