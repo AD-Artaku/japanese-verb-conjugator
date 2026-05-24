@@ -58,6 +58,7 @@
       <div class="nav-links">
         <a href="https://eric_chou.artstation.com" class="nav-link">ポートフォリオ</a>
         <a href="#" class="nav-link">履歴書</a>
+        <a href="#" class="nav-link">開発ログ</a>
         <a href="https://github.com/AD-Artaku" class="nav-link">GitHub</a>
         <a href="https://www.youtube.com/@Artaku_" class="nav-link nav-link-icon youtube" target="_blank" rel="noopener">
           <i class="fa-brands fa-youtube"></i> Artaku
@@ -75,6 +76,10 @@
         </a>
         <a href="#" class="nav-mobile-item">
           <span class="item-label">履歴書</span>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
+        </a>
+        <a href="#" class="nav-mobile-item">
+          <span class="item-label">開発ログ</span>
           <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
         </a>
         <a href="https://github.com/AD-Artaku" class="nav-mobile-item" target="_blank" rel="noopener">
@@ -121,7 +126,7 @@
                     class="search-input"
                     type="text"
                     name="verb_desktop"
-                    placeholder="ここに入力"
+                    placeholder="辞書形を入力"
                     value="{{ request.form.get('verb', '') }}"
                     autocomplete="off"
                     id="desktop-verb-input"
@@ -138,7 +143,7 @@
                   class="search-pill-input"
                   type="text"
                   name="verb"
-                  placeholder="ここに入力"
+                  placeholder="辞書形を入力"
                   value="{{ request.form.get('verb', '') }}"
                   autocomplete="off"
                   id="mobile-verb-input"
@@ -313,6 +318,21 @@
         </div>
       </div>
     </section>
+    <!-- UPDATE TOAST -->
+    <div class="toast" id="update-toast">
+      <div class="toast-icon">
+        <div class="toast-i-icon">i</div>
+      </div>
+      <div class="toast-body">
+        <div class="toast-top-row">
+          <span class="toast-version">ver.1.0.5 アップデート</span>
+          <button class="toast-close" id="toast-close" aria-label="閉じる">✕</button>
+        </div>
+        <div class="toast-title">「ひらがな優先表記に対応」</div>
+        <div class="toast-desc" id="toast-desc">ひらがなを入力場合、一般的でない漢字への自動変換を防止しました。</div>
+        <a href="#" class="toast-link">詳細を見る <i class="fa-solid fa-chevron-right"></i></a>
+      </div>
+    </div>
 
   </main>
 

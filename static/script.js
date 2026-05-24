@@ -265,3 +265,31 @@ function setupSuggestDropdown(input) {
 
 setupSuggestDropdown(document.getElementById('desktop-verb-input'));
 setupSuggestDropdown(document.getElementById('mobile-verb-input'));
+
+// =====================
+// Update toast
+// =====================
+const TOAST_VERSION = "1.0.5";
+const TOAST_KEY = "toast_dismissed_version";
+
+const toast = document.getElementById("update-toast");
+const toastClose = document.getElementById("toast-close");
+
+if (toast) {
+  if (localStorage.getItem(TOAST_KEY) === TOAST_VERSION) {
+    toast.classList.add("hidden");
+  }
+
+  if (toastClose) {
+    toastClose.addEventListener("click", () => {
+      toast.classList.add("hidden");
+      localStorage.setItem(TOAST_KEY, TOAST_VERSION);
+    });
+  }
+
+  // Shorter text on mobile
+  const toastDesc = document.getElementById("toast-desc");
+  if (toastDesc && window.matchMedia("(max-width: 600px)").matches) {
+    toastDesc.textContent = "一般的でない漢字への自動変換を防止しました。";
+  }
+}
