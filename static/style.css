@@ -41,7 +41,7 @@ body {
 .bg-image {
   position: fixed;
   inset: 0;
-  background-image: url('/static/leaf-7260246_1280.jpg');
+  background-image: url('/static/leaf-7260246_1280.png');
   background-size: cover;
   background-position: center;
   z-index: 0;
@@ -1528,4 +1528,215 @@ main.main {
     padding: 16px 16px;
     border-radius: 32px;
   }
+}
+
+/* =====================
+   DEVLOG PAGE
+   ===================== */
+
+/* Override background for devlog page */
+.devlog-page {
+  background: #c8c0e8;
+}
+
+.devlog-bg {
+  background-image: url('/static/Dev_Log_BG.png') !important;
+}
+
+/* Badge color variables */
+:root {
+  --badge-new:      #91A4FF;
+  --badge-bug:      #FF7979;
+  --badge-api:      #FFDB9E;
+  --badge-uiux:     #79FFF6;
+  --badge-backend:  #79FF82;
+  --badge-quality:  #BA79FF;
+  --badge-optimize: #FF79FF;
+}
+
+/* Badge pills */
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 40px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  line-height: 16px;
+  color: #111;
+  white-space: nowrap;
+}
+
+.badge-new      { background: var(--badge-new); }
+.badge-bug      { background: var(--badge-bug); }
+.badge-api      { background: var(--badge-api); }
+.badge-uiux     { background: var(--badge-uiux); }
+.badge-backend  { background: var(--badge-backend); }
+.badge-quality  { background: var(--badge-quality); }
+.badge-optimize { background: var(--badge-optimize); }
+
+/* Log entry card */
+.log-card {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-heavy);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: fadeInUp 0.4s ease both;
+}
+
+.log-card:nth-child(1) { animation-delay: 0.05s; }
+.log-card:nth-child(2) { animation-delay: 0.10s; }
+.log-card:nth-child(3) { animation-delay: 0.15s; }
+.log-card:nth-child(4) { animation-delay: 0.20s; }
+
+/* Card header: icon + title */
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.card-icon {
+  width: 28px;
+  height: 28px;
+  background: var(--brand);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  margin-top: 1px;
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  line-height: 30px;
+  letter-spacing: -0.5px;
+  color: var(--brand);
+}
+
+/* Card body */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-left: 40px; /* aligns under title text, past icon + gap */
+}
+
+.card-row {
+  display: flex;
+  align-items: flex-start;
+}
+
+.card-row-label {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  line-height: 24px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  flex-shrink: 0;
+  width: 48px;
+}
+
+.card-row-text {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  line-height: 24px;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+/* Continuation paragraphs — indented to align with card-row-text */
+.card-row-continuation {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  line-height: 24px;
+  color: var(--text-primary);
+  padding-left: 48px;
+}
+
+/* Image slot */
+.card-image-row {
+  display: flex;
+  align-items: flex-start;
+}
+
+.card-image-label {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  line-height: 24px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  flex-shrink: 0;
+  width: 48px;
+}
+
+.card-image-placeholder {
+  flex: 1;
+  background: var(--bg-subtle);
+  border: 1px dashed var(--border);
+  border-radius: 16px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* =====================
+   DEVLOG — MOBILE
+   ===================== */
+@media (max-width: 600px) {
+  .log-card {
+    padding: 20px 16px;
+    border-radius: 24px;
+  }
+
+  .card-title {
+    font-size: 20px;
+    line-height: 26px;
+  }
+
+  .card-body {
+    padding-left: 0;
+  }
+
+  .card-row-continuation {
+    padding-left: 48px;
+  }
+
+  .card-image-row {
+    padding-left: 0;
+  }
+}
+
+.nav-logo {
+  text-decoration: none;
+}
+
+.nav-logo .logo-text {
+  text-decoration: none;
 }

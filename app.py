@@ -131,6 +131,14 @@ def home():
 
 
 # =====================
+# DEV LOG PAGE
+# =====================
+@app.route("/devlog")
+def devlog():
+    return render_template("devlog.html")
+
+
+# =====================
 # SUGGEST ENDPOINT
 # Called by the frontend as the user types.
 # Returns up to 8 kanji matches for a hiragana prefix.
