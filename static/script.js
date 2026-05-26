@@ -284,7 +284,7 @@ if (toast) {
 
   // Shorter text on mobile
   if (toastDesc && window.matchMedia("(max-width: 600px)").matches) {
-    toastDesc.textContent = "開発経験が浅いため未完成な部分もありから、記録しています！";
+    toastDesc.textContent = "新しいデザインテーマへUIを更新しました。";
   }
 
   // Keep toast above footer

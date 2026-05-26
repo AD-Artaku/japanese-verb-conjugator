@@ -47,12 +47,12 @@ body {
   z-index: 0;
 }
 
-.bg-overlay {
+/* .bg-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.18);
   z-index: 1;
-}
+} 
 
 /* =====================
    POPUP
@@ -401,16 +401,63 @@ main.main {
   display: flex;
   flex-direction: column;
   gap: 40px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
 
-  /* Liquid glass */
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.75);
+  /* Liquid glass base */
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(12px) saturate(1.2) ;
+  -webkit-backdrop-filter: blur(12px) saturate(1.2) contrast(1.5);
+
+  /* Specular rim — light catching the glass edge */
+  border: 1px solid rgba(255, 255, 255, 0.30);
   box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+    0 4px 24px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.15),
+    inset 1px 0 0 rgba(255, 255, 255, 0.25),
+    inset -1px 0 0 rgba(255, 255, 255, 0.10);
+}
+
+/* Distortion lens layer — sits behind content, warps the backdrop */
+.search-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  filter: url(#glass-distort);
+  background: transparent;
+  pointer-events: none;
+
+  /* Subtle inner gradient to simulate light bending at edges */
+  background-image: radial-gradient(
+    ellipse at 30% 25%,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.04) 50%,
+    rgba(200, 210, 255, 0.06) 100%
+  );
+}
+
+/* Thin specular highlight along top edge — the "glass rim" */
+.search-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 8%;
+  width: 84%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.90) 30%,
+    rgba(255, 255, 255, 0.90) 70%,
+    transparent 100%
+  );
+  border-radius: 1px;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .search-title {
@@ -1057,13 +1104,70 @@ main.main {
 
   /* --- SEARCH CARD --- */
   .search-card {
-    padding: 24px 20px;
-    gap: 20px;
-    background: var(--surface);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    border: none;
-    box-shadow: var(--shadow-card);
+  border-radius: var(--radius-card);
+  padding: 40px;
+  width: 100%;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  /* Liquid glass base */
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px) saturate(1.6);
+  -webkit-backdrop-filter: blur(12px) saturate(1.6);
+
+  /* Specular rim — light catching the glass edge */
+  border: 1px solid rgba(255, 255, 255, 0.30);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.15),
+    inset 1px 0 0 rgba(255, 255, 255, 0.25),
+    inset -1px 0 0 rgba(255, 255, 255, 0.10);
+  }
+
+  /* Distortion lens layer — sits behind content, warps the backdrop */
+  .search-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: -1;
+    filter: url(#glass-distort);
+    background: transparent;
+    pointer-events: none;
+
+    /* Subtle inner gradient to simulate light bending at edges */
+    background-image: radial-gradient(
+      ellipse at 30% 25%,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(255, 255, 255, 0.04) 50%,
+      rgba(200, 210, 255, 0.06) 100%
+    );
+  }
+
+  /* Thin specular highlight along top edge — the "glass rim" */
+  .search-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 8%;
+    width: 84%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.90) 30%,
+      rgba(255, 255, 255, 0.90) 70%,
+      transparent 100%
+    );
+    border-radius: 1px;
+    pointer-events: none;
+    z-index: 1;
   }
 
   .search-title {
@@ -1663,16 +1767,6 @@ main.main {
   line-height: 24px;
   color: var(--text-primary);
   flex: 1;
-}
-
-/* Continuation paragraphs — indented to align with card-row-text */
-.card-row-continuation {
-  font-size: 16px;
-  font-weight: 400;
-  font-family: 'Inter', sans-serif;
-  line-height: 24px;
-  color: var(--text-primary);
-  padding-left: 48px;
 }
 
 /* Image slot */
