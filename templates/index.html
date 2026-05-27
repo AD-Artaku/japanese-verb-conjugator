@@ -28,7 +28,7 @@
         <feDisplacementMap
           in="SourceGraphic"
           in2="noise"
-          scale="10"
+          scale="6"
           xChannelSelector="R"
           yChannelSelector="G"
           result="displaced"
@@ -60,7 +60,6 @@
   <nav class="navbar">
     <div class="nav-inner">
 
-      <!-- hamburger button (mobile only) -->
       <button class="nav-hamburger" id="nav-hamburger" aria-label="メニューを開く">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="2" y="5" width="20" height="2" rx="1" fill="currentColor"/>
@@ -69,8 +68,7 @@
         </svg>
       </button>
 
-      <!-- logo -->
-      <a href="/" class="nav-logo"> 
+      <a href="/" class="nav-logo">
         <div class="logo-mark">
           <div class="logo-top"></div>
           <div class="logo-mid"></div>
@@ -79,11 +77,10 @@
         <span class="logo-text">Eric Chou</span>
       </a>
 
-      <!-- desktop links -->
       <div class="nav-links">
-        <a href="https://eric_chou.artstation.com" class="nav-link">ポートフォリオ</a>
-        <a href="#" class="nav-link">履歴書</a>
-        <a href="/devlog" class="nav-link">開発ログ</a>
+        <a href="https://eric_chou.artstation.com" class="nav-link" data-i18n="nav_portfolio">ポートフォリオ</a>
+        <a href="#" class="nav-link" data-i18n="nav_resume">履歴書</a>
+        <a href="/devlog" class="nav-link" data-i18n="nav_devlog">開発ログ</a>
         <a href="https://github.com/AD-Artaku" class="nav-link">GitHub</a>
         <a href="https://www.youtube.com/@Artaku_" class="nav-link nav-link-icon youtube" target="_blank" rel="noopener">
           <i class="fa-brands fa-youtube"></i> Artaku
@@ -91,20 +88,20 @@
         <a href="https://www.instagram.com/ericc.design" class="nav-link nav-link-icon instagram" target="_blank" rel="noopener">
           <i class="fa-brands fa-instagram"></i> ericc.design
         </a>
+        <button class="lang-toggle" id="lang-toggle">EN</button>
       </div>
 
-      <!-- mobile dropdown menu -->
       <div class="nav-mobile-menu" id="nav-mobile-menu">
         <a href="https://eric_chou.artstation.com" class="nav-mobile-item">
-          <span class="item-label">ポートフォリオ</span>
+          <span class="item-label" data-i18n="nav_portfolio">ポートフォリオ</span>
           <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
         </a>
         <a href="#" class="nav-mobile-item">
-          <span class="item-label">履歴書</span>
+          <span class="item-label" data-i18n="nav_resume">履歴書</span>
           <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
         </a>
         <a href="/devlog" class="nav-mobile-item">
-          <span class="item-label">開発ログ</span>
+          <span class="item-label" data-i18n="nav_devlog">開発ログ</span>
           <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
         </a>
         <a href="https://github.com/AD-Artaku" class="nav-mobile-item" target="_blank" rel="noopener">
@@ -128,7 +125,6 @@
 
   </nav>
 
-  <!-- invisible overlay to close menu on outside tap -->
   <div class="nav-mobile-overlay" id="nav-mobile-overlay"></div>
 
   <!-- MAIN CONTENT -->
@@ -137,13 +133,12 @@
     <!-- SEARCH CARD -->
     <section class="search-section">
       <div class="search-card">
-        <h1 class="search-title">日本語動詞変換ツール</h1>
+        <h1 class="search-title" data-i18n="search_title">日本語動詞変換ツール</h1>
         <form method="POST" action="/">
           <div class="search-form-inner">
             <div class="search-input-group">
-              <div class="search-label">変換したい動詞：</div>
+              <div class="search-label" data-i18n="search_label">変換したい動詞：</div>
 
-              <!-- desktop input row -->
               <div class="search-row">
                 <div class="search-input-wrapper">
                   <i class="fa-solid fa-magnifying-glass search-desktop-icon"></i>
@@ -152,16 +147,16 @@
                     type="text"
                     name="verb_desktop"
                     placeholder="辞書形を入力"
+                    data-i18n-placeholder="search_placeholder"
                     value="{{ request.form.get('verb', '') }}"
                     autocomplete="off"
                     id="desktop-verb-input"
                     maxlength="20"
                   />
                 </div>
-                <button class="search-btn" type="submit">探索</button>
+                <button class="search-btn" type="submit" data-i18n="search_btn">探索</button>
               </div>
 
-              <!-- mobile pill input row -->
               <div class="search-pill-row">
                 <i class="fa-solid fa-magnifying-glass search-pill-icon"></i>
                 <input
@@ -169,17 +164,18 @@
                   type="text"
                   name="verb"
                   placeholder="辞書形を入力"
+                  data-i18n-placeholder="search_placeholder"
                   value="{{ request.form.get('verb', '') }}"
                   autocomplete="off"
                   id="mobile-verb-input"
                   maxlength="20"
                 />
-                <button class="search-pill-btn" type="submit">探索</button>
+                <button class="search-pill-btn" type="submit" data-i18n="search_btn">探索</button>
               </div>
 
               <div class="search-alert {% if input_error %}active{% endif %}" id="search-alert">
                 <div class="alert-icon">i</div>
-                <div class="alert-text">入力には辞書形の動詞のみをご使用ください。</div>
+                <div class="alert-text" data-i18n="search_alert">入力には辞書形の動詞のみをご使用ください。</div>
                 <button class="alert-close" type="button" id="alert-close">✕</button>
               </div>
             </div>
@@ -188,12 +184,12 @@
               <label class="toggle-label">
                 <input type="checkbox" name="polite" id="toggle-polite" class="toggle-check" {% if show_polite %}checked{% endif %} />
                 <span class="toggle-box"></span>
-                丁寧形
+                <span data-i18n="toggle_polite">丁寧形</span>
               </label>
               <label class="toggle-label">
                 <input type="checkbox" name="negative" id="toggle-negative" class="toggle-check" {% if show_negative %}checked{% endif %} />
                 <span class="toggle-box"></span>
-                ない形
+                <span data-i18n="toggle_negative">ない形</span>
               </label>
             </div>
           </div>
@@ -209,38 +205,37 @@
       {% set show_negative = request.form.get('negative') %}
 
       {% set card_data = [
-        { "badge": "基本形",    "title": "辞書形",    "pos_plain": cards.dictionary,        "neg_plain": cards.negative,                   "pos_polite": cards.polite_dictionary,        "neg_polite": cards.polite_negative_dictionary },
-        { "badge": "基本形",    "title": "て形",      "pos_plain": cards.te,                 "neg_plain": cards.negative_te,                "pos_polite": None,                           "neg_polite": None },
-        { "badge": "基本形",    "title": "た形",      "pos_plain": cards.past,               "neg_plain": cards.negative_past,              "pos_polite": cards.polite_past,              "neg_polite": cards.polite_negative_past },
-        { "badge": "応用活用",  "title": "可能形",    "pos_plain": cards.potential,          "neg_plain": cards.negative_potential,         "pos_polite": cards.polite_potential,         "neg_polite": cards.polite_negative_potential },
-        { "badge": "応用活用",  "title": "受身形",    "pos_plain": cards.passive,            "neg_plain": cards.negative_passive,           "pos_polite": cards.polite_passive,           "neg_polite": cards.polite_negative_passive },
-        { "badge": "応用活用",  "title": "使役形",    "pos_plain": cards.causative,          "neg_plain": cards.negative_causative,         "pos_polite": cards.polite_causative,         "neg_polite": cards.polite_negative_causative },
-        { "badge": "応用活用",  "title": "使役受身形", "pos_plain": cards.causative_passive,  "neg_plain": cards.negative_causative_passive, "pos_polite": cards.polite_causative_passive, "neg_polite": cards.polite_negative_causative_passive },
-        { "badge": "意思・命令", "title": "命令形",    "pos_plain": cards.imperative,         "neg_plain": None,                             "pos_polite": cards.polite_imperative,        "neg_polite": None },
-        { "badge": "意思・命令", "title": "意向形",    "pos_plain": cards.volitional,         "neg_plain": None,                             "pos_polite": cards.polite_volitional,        "neg_polite": None },
-        { "badge": "条件・仮定", "title": "条件形",    "pos_plain": cards.conditional_ba,     "neg_plain": cards.negative_conditional_ba,    "pos_polite": None,                           "neg_polite": None },
-        { "badge": "条件・仮定", "title": "たら形",    "pos_plain": cards.tara,               "neg_plain": cards.negative_tara,              "pos_polite": None,                           "neg_polite": None }
+        { "badge": "基本形",    "badge_key": "badge_basic",        "title": "辞書形",     "title_key": "card_dictionary",       "pos_plain": cards.dictionary,        "neg_plain": cards.negative,                   "pos_polite": cards.polite_dictionary,        "neg_polite": cards.polite_negative_dictionary },
+        { "badge": "基本形",    "badge_key": "badge_basic",        "title": "て形",       "title_key": "card_te",               "pos_plain": cards.te,                 "neg_plain": cards.negative_te,                "pos_polite": None,                           "neg_polite": None },
+        { "badge": "基本形",    "badge_key": "badge_basic",        "title": "た形",       "title_key": "card_past",             "pos_plain": cards.past,               "neg_plain": cards.negative_past,              "pos_polite": cards.polite_past,              "neg_polite": cards.polite_negative_past },
+        { "badge": "応用活用",  "badge_key": "badge_applied",      "title": "可能形",     "title_key": "card_potential",        "pos_plain": cards.potential,          "neg_plain": cards.negative_potential,         "pos_polite": cards.polite_potential,         "neg_polite": cards.polite_negative_potential },
+        { "badge": "応用活用",  "badge_key": "badge_applied",      "title": "受身形",     "title_key": "card_passive",          "pos_plain": cards.passive,            "neg_plain": cards.negative_passive,           "pos_polite": cards.polite_passive,           "neg_polite": cards.polite_negative_passive },
+        { "badge": "応用活用",  "badge_key": "badge_applied",      "title": "使役形",     "title_key": "card_causative",        "pos_plain": cards.causative,          "neg_plain": cards.negative_causative,         "pos_polite": cards.polite_causative,         "neg_polite": cards.polite_negative_causative },
+        { "badge": "応用活用",  "badge_key": "badge_applied",      "title": "使役受身形",  "title_key": "card_causative_passive","pos_plain": cards.causative_passive,  "neg_plain": cards.negative_causative_passive, "pos_polite": cards.polite_causative_passive, "neg_polite": cards.polite_negative_causative_passive },
+        { "badge": "意思・命令", "badge_key": "badge_volitional",   "title": "命令形",     "title_key": "card_imperative",       "pos_plain": cards.imperative,         "neg_plain": None,                             "pos_polite": cards.polite_imperative,        "neg_polite": None },
+        { "badge": "意思・命令", "badge_key": "badge_volitional",   "title": "意向形",     "title_key": "card_volitional",       "pos_plain": cards.volitional,         "neg_plain": None,                             "pos_polite": cards.polite_volitional,        "neg_polite": None },
+        { "badge": "条件・仮定", "badge_key": "badge_conditional",  "title": "条件形",     "title_key": "card_conditional",      "pos_plain": cards.conditional_ba,     "neg_plain": cards.negative_conditional_ba,    "pos_polite": None,                           "neg_polite": None },
+        { "badge": "条件・仮定", "badge_key": "badge_conditional",  "title": "たら形",     "title_key": "card_tara",             "pos_plain": cards.tara,               "neg_plain": cards.negative_tara,              "pos_polite": None,                           "neg_polite": None }
       ] %}
 
       <div class="cards-grid">
         {% for card in card_data %}
         <div class="card">
-          <div class="card-badge">{{ card.badge }}</div>
+          <div class="card-badge" data-i18n="{{ card.badge_key }}">{{ card.badge }}</div>
           <div class="card-content">
-            <div class="card-title">{{ card.title }}</div>
+            <div class="card-title" data-i18n="{{ card.title_key }}">{{ card.title }}</div>
 
-            <!-- 普通形 section -->
             <div class="card-section">
-              <div class="card-section-label">普通形：</div>
+              <div class="card-section-label" data-i18n="label_plain">普通形：</div>
               <div class="card-rows">
                 <div class="card-row">
-                  <span class="card-row-label">肯定</span>
+                  <span class="card-row-label" data-i18n="label_positive">肯定</span>
                   <span class="card-row-dash">-</span>
                   <span class="card-row-value">{{ card.pos_plain or "—" }}</span>
                 </div>
                 {% if show_negative and card.neg_plain %}
                 <div class="card-row">
-                  <span class="card-row-label">否定</span>
+                  <span class="card-row-label" data-i18n="label_negative">否定</span>
                   <span class="card-row-dash">-</span>
                   <span class="card-row-value">{{ card.neg_plain }}</span>
                 </div>
@@ -248,22 +243,21 @@
               </div>
             </div>
 
-            <!-- 丁寧形 section -->
             {% if show_polite and (card.pos_polite or card.neg_polite) %}
             <div class="card-divider"></div>
             <div class="card-section">
-              <div class="card-section-label">丁寧形：</div>
+              <div class="card-section-label" data-i18n="label_polite">丁寧形：</div>
               <div class="card-rows">
                 {% if card.pos_polite %}
                 <div class="card-row">
-                  <span class="card-row-label">肯定</span>
+                  <span class="card-row-label" data-i18n="label_positive">肯定</span>
                   <span class="card-row-dash">-</span>
                   <span class="card-row-value">{{ card.pos_polite }}</span>
                 </div>
                 {% endif %}
                 {% if show_negative and card.neg_polite %}
                 <div class="card-row">
-                  <span class="card-row-label">否定</span>
+                  <span class="card-row-label" data-i18n="label_negative">否定</span>
                   <span class="card-row-dash">-</span>
                   <span class="card-row-value">{{ card.neg_polite }}</span>
                 </div>
@@ -284,11 +278,11 @@
       <div class="about-card">
         <div class="about-inner">
           <div class="about-text-col">
-            <div class="about-badge">デザイナー ・ デベロッパー ・ 生涯学生</div>
+            <div class="about-badge" data-i18n="about_badge">デザイナー ・ デベロッパー ・ 生涯学生</div>
             <div class="about-text-body">
               <div class="about-name-block">
-                <h2 class="about-name">チョウ・エリック</h2>
-                <p class="about-body">
+                <h2 class="about-name" data-i18n="about_name">チョウ・エリック</h2>
+                <p class="about-body" data-i18n="about_body">
                   こんにちは、チョウ・エリックと申します。現在26歳で、より高い教育を受けること、そして世界に対する文化的な理解を深めるために、アメリカから日本へ参りました。<br/><br/>
                   以前はハリウッドで、ゲームや映画のコンセプトデザイナーとして働いていました。とても刺激的で楽しい仕事でしたし、待遇にも恵まれていました。しかし、自分のこれからの人生や「何を残したいのか」を考えるようになるにつれ、もっと社会に貢献できることに挑戦したいという気持ちが強くなっていきました。<br/><br/>
                   現在の世界には、地球温暖化、世界的な少子化、経済的不安定など、多くの大きな課題が存在しています。自分は、そういった難しい問題に真正面から向き合い、少しでも解決に近づけるような人間になりたいと考えています。<br/><br/>
@@ -314,8 +308,8 @@
     <!-- SITE INFO SECTION -->
     <section class="info-section">
       <div class="info-card">
-        <h2 class="section-heading">このサイトについて</h2>
-        <p class="info-body">
+        <h2 class="section-heading" data-i18n="info_heading">このサイトについて</h2>
+        <p class="info-body" data-i18n="info_body">
           このプロジェクトは、今の自分が特に力を入れて学んでいる「日本語」と「プログラミング」の二つを、ひとつの形にしてみたいと思い制作しました。<br/><br/>
           以前はそれぞれを別々に勉強していましたが、プロジェクトを作りながら学ぶ方が、より楽しく、実践的で、深く理解できるのではないかと感じています。今はどちらの分野も学ぶこと自体が本当に楽しく、日々夢中になっています。<br/><br/>
           また、自分自身の日本語学習の中で、日本語の動詞活用を分かりやすく整理し、使いやすい形で表示してくれるサイトが意外と少ないと感じていました。そのため、「自分が本当に欲しいと思えるツールを作ってみたい」という思いも、このプロジェクトを始めた大きな理由の一つです。<br/><br/>
@@ -327,19 +321,20 @@
     <!-- CONTACT SECTION -->
     <section class="contact-section">
       <div class="contact-card">
-        <h2 class="contact-heading">お問い合わせ</h2>
+        <h2 class="contact-heading" data-i18n="contact_heading">お問い合わせ</h2>
         <div class="contact-inner">
           <div class="contact-textarea-wrapper">
             <textarea
               class="contact-textarea"
               placeholder="内容を入力してください"
+              data-i18n-placeholder="contact_placeholder"
               maxlength="400"
               id="contact-msg"
             ></textarea>
-            <div class="contact-char-count"><span id="char-count">残り400文字</span></div>
+            <div class="contact-char-count"><span id="char-count" data-i18n="char_count">残り400文字</span></div>
           </div>
-          <button class="contact-btn" id="contact-send">送信</button>
-          <p class="contact-hint">このプロジェクトについて何か気になる点や不具合などがありましたら、ぜひ気軽にご連絡いただけると嬉しいです。</p>
+          <button class="contact-btn" id="contact-send" data-i18n="contact_btn">送信</button>
+          <p class="contact-hint" data-i18n="contact_hint">このプロジェクトについて何か気になる点や不具合などがありましたら、ぜひ気軽にご連絡いただけると嬉しいです。</p>
         </div>
       </div>
     </section>
@@ -351,12 +346,12 @@
       </div>
       <div class="toast-body">
         <div class="toast-top-row">
-          <span class="toast-version">ver.1.0.7 アップデート</span>
+          <span class="toast-version" data-i18n="toast_version">ver.1.0.6 アップデート</span>
           <button class="toast-close" id="toast-close" aria-label="閉じる">✕</button>
         </div>
-        <div class="toast-title">「Starry Dreams - 星空に夢中」</div>
-        <div class="toast-desc" id="toast-desc">新しいデザインテーマへUIを更新しました。「ヴィンテージ感」「夢のような柔らかさ」「静かな存在感」をテーマとして設計しています。</div>
-        <a href="/Devlog" class="toast-link">詳細を見る <i class="fa-solid fa-chevron-right"></i></a>
+        <div class="toast-title" data-i18n="toast_title">「Devログ」</div>
+        <div class="toast-desc" id="toast-desc" data-i18n="toast_desc">開発経験が浅いため未完成な部分もありますが、学習過程も含めて記録しています！</div>
+        <a href="/devlog" class="toast-link" data-i18n="toast_link">詳細を見る <i class="fa-solid fa-chevron-right"></i></a>
       </div>
     </div>
 
@@ -370,10 +365,11 @@
         <div class="logo-mid"></div>
         <div class="logo-bot"></div>
       </div>
-      <span class="footer-copy">© 2026 Eric Chou</span>
+      <span class="footer-copy" data-i18n="footer_copy">© 2026 Eric Chou</span>
     </div>
   </footer>
 
+  <script src="{{ url_for('static', filename='translations.js') }}"></script>
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

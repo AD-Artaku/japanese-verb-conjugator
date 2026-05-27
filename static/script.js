@@ -7,7 +7,10 @@ const charCount = document.getElementById('char-count');
 if (textarea && charCount) {
   textarea.addEventListener('input', () => {
     const remaining = 400 - textarea.value.length;
-    charCount.textContent = `残り${remaining}文字`;
+    const lang = localStorage.getItem(LANG_KEY) || 'ja';
+    charCount.textContent = lang === 'ja'
+      ? `残り${remaining}文字`
+      : `${remaining} characters remaining`;
   });
 }
 
@@ -315,4 +318,56 @@ if (toast) {
       localStorage.setItem(TOAST_KEY, TOAST_VERSION);
     });
   }
+}
+
+// =====================
+// i18n Language Toggle
+// =====================
+const LANG_KEY = 'preferred_lang';
+
+function applyLanguage(lang) {
+  const t = translations[lang];
+  if (!t) return;
+
+  // Swap text content
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) {
+      // Preserve any child elements (like icons inside toast-link)
+      const icons = el.querySelectorAll('i');
+      el.innerHTML = t[key];
+      icons.forEach(icon => el.appendChild(icon));
+    }
+  });
+
+  // Swap placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key] !== undefined) {
+      el.setAttribute('placeholder', t[key]);
+    }
+  });
+
+  // Update toggle button label
+  const toggleBtn = document.getElementById('lang-toggle');
+  if (toggleBtn) {
+    toggleBtn.textContent = lang === 'ja' ? 'EN' : 'JP';
+  }
+
+  // Save preference
+  localStorage.setItem(LANG_KEY, lang);
+}
+
+// On page load — apply saved language
+const savedLang = localStorage.getItem(LANG_KEY) || 'ja';
+applyLanguage(savedLang);
+
+// Toggle button click
+const langToggle = document.getElementById('lang-toggle');
+if (langToggle) {
+  langToggle.addEventListener('click', () => {
+    const current = localStorage.getItem(LANG_KEY) || 'ja';
+    const next = current === 'ja' ? 'en' : 'ja';
+    applyLanguage(next);
+  });
 }

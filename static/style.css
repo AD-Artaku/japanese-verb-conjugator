@@ -473,7 +473,7 @@ main.main {
 .search-form-inner {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
 }
 
 .search-input-group {
@@ -483,7 +483,7 @@ main.main {
 }
 
 .search-label {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 500;
   font-family: 'Inter', sans-serif;
   color: var(--text-primary);
@@ -518,7 +518,7 @@ main.main {
   padding: 0 16px 0 38px;
   border: 1px solid var(--border);
   border-radius: var(--radius-input);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   font-family: 'Inter', sans-serif;
   line-height: 24px;
@@ -538,7 +538,6 @@ main.main {
 
 .search-btn {
   height: 48px;
-  width: 80px;
   padding: 0 24px;
   background: var(--brand);
   color: #fff;
@@ -571,7 +570,7 @@ main.main {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   font-family: 'Inter', sans-serif;
   line-height: 24px;
@@ -583,10 +582,10 @@ main.main {
 .toggle-check { display: none; }
 
 .toggle-box {
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 5px;
   background: var(--bg-subtle);
   display: inline-block;
   position: relative;
@@ -602,10 +601,10 @@ main.main {
 .toggle-check:checked + .toggle-box::after {
   content: '';
   position: absolute;
-  left: 7px;
-  top: 3px;
-  width: 6px;
-  height: 11px;
+  left: 4.5px;
+  top: 2px;
+  width: 5px;
+  height: 8px;
   border: 2px solid #fff;
   border-top: none;
   border-left: none;
@@ -769,6 +768,8 @@ main.main {
   font-family: 'Inter', sans-serif;
   line-height: 24px;
   color: var(--text-primary);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .card-row-dash {
@@ -1255,6 +1256,7 @@ main.main {
     font-size: 14px;
     gap: 6px;
     color: var(--text-tertiary);
+    align-items: center
   }
 
   .toggle-box {
@@ -1263,11 +1265,11 @@ main.main {
     border-radius: 6px;
   }
 
-  .toggle-check:checked + .toggle-box::after {
-    left: 6px;
-    top: 2px;
-    width: 5px;
-    height: 10px;
+  .toggle-label {
+  font-size: 14px;
+  gap: 6px;
+  color: var(--text-tertiary);
+  align-items: center;
   }
 
   .alert-text {
@@ -1751,13 +1753,12 @@ main.main {
 
 .card-row-label {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 400;
   font-family: 'Inter', sans-serif;
   line-height: 24px;
   color: var(--text-primary);
   white-space: nowrap;
   flex-shrink: 0;
-  width: 48px;
 }
 
 .card-row-text {
@@ -1833,4 +1834,27 @@ main.main {
 
 .nav-logo .logo-text {
   text-decoration: none;
+}
+
+/* =====================
+   LANGUAGE TOGGLE
+   ===================== */
+.lang-toggle {
+  height: 32px;
+  padding: 0 14px;
+  background: var(--brand-subtle);
+  color: var(--brand);
+  border: 1px solid var(--brand);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.lang-toggle:hover {
+  background: var(--brand);
+  color: #fff;
 }
