@@ -130,8 +130,6 @@ function debounce(fn, delay) {
 function setupSuggestDropdown(input) {
   if (!input) return;
 
-  // Dropdown is appended to body so it escapes the search card's
-  // backdrop-filter stacking context and always renders on top.
   const dropdown = document.createElement('ul');
   dropdown.className = 'suggest-dropdown';
   document.body.appendChild(dropdown);
@@ -140,8 +138,6 @@ function setupSuggestDropdown(input) {
   let isComposing = false;
 
   function positionDropdown() {
-    // On mobile, align dropdown to the full pill search bar.
-    // On desktop, keep aligning to the normal input box.
     const isMobile = window.matchMedia('(max-width: 600px)').matches;
 
     const anchor = isMobile
@@ -195,7 +191,6 @@ function setupSuggestDropdown(input) {
     }
   }
 
-  // Reposition if window is scrolled or resized while open
   window.addEventListener('scroll', () => {
     if (dropdown.classList.contains('active')) positionDropdown();
   }, { passive: true });
@@ -272,7 +267,7 @@ setupSuggestDropdown(document.getElementById('mobile-verb-input'));
 // =====================
 // Update toast
 // =====================
-const TOAST_VERSION = "1.0.6";
+const TOAST_VERSION = "1.1.0";
 const TOAST_KEY = "toast_dismissed_version";
 
 const toast = document.getElementById("update-toast");
@@ -280,17 +275,14 @@ const toastClose = document.getElementById("toast-close");
 const toastDesc = document.getElementById("toast-desc");
 
 if (toast) {
-  // Hide if already dismissed for this version
   if (localStorage.getItem(TOAST_KEY) === TOAST_VERSION) {
     toast.classList.add("hidden");
   }
 
-  // Shorter text on mobile
   if (toastDesc && window.matchMedia("(max-width: 600px)").matches) {
-    toastDesc.textContent = "新しいデザインテーマへUIを更新しました。";
+    toastDesc.textContent = "世界中の日本語学習者に向けて、多言語サポート機能を追加しました。";
   }
 
-  // Keep toast above footer
   const footer = document.querySelector(".footer");
 
   function repositionToast() {
@@ -311,7 +303,6 @@ if (toast) {
   window.addEventListener("resize", repositionToast);
   repositionToast();
 
-  // Dismiss
   if (toastClose) {
     toastClose.addEventListener("click", () => {
       toast.classList.add("hidden");
@@ -321,53 +312,30 @@ if (toast) {
 }
 
 // =====================
-// i18n Language Toggle
+// i18n — homepage
+// applyLanguage swaps all data-i18n text using translations.js
+// initLangPicker (from lang_picker.js) wires up the dropdown
 // =====================
-const LANG_KEY = 'preferred_lang';
-
 function applyLanguage(lang) {
   const t = translations[lang];
   if (!t) return;
 
-  // Swap text content
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (t[key] !== undefined) {
-      // Preserve any child elements (like icons inside toast-link)
       const icons = el.querySelectorAll('i');
       el.innerHTML = t[key];
       icons.forEach(icon => el.appendChild(icon));
     }
   });
 
-  // Swap placeholders
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
     if (t[key] !== undefined) {
       el.setAttribute('placeholder', t[key]);
     }
   });
-
-  // Update toggle button label
-  const toggleBtn = document.getElementById('lang-toggle');
-  if (toggleBtn) {
-    toggleBtn.textContent = lang === 'ja' ? 'EN' : 'JP';
-  }
-
-  // Save preference
-  localStorage.setItem(LANG_KEY, lang);
 }
 
-// On page load — apply saved language
-const savedLang = localStorage.getItem(LANG_KEY) || 'ja';
-applyLanguage(savedLang);
-
-// Toggle button click
-const langToggle = document.getElementById('lang-toggle');
-if (langToggle) {
-  langToggle.addEventListener('click', () => {
-    const current = localStorage.getItem(LANG_KEY) || 'ja';
-    const next = current === 'ja' ? 'en' : 'ja';
-    applyLanguage(next);
-  });
-}
+// Wire up the picker — lang_picker.js must be loaded before this file
+initLangPicker(applyLanguage);

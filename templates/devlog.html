@@ -7,8 +7,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
 </head>
 <body class="devlog-page">
 
@@ -37,9 +38,9 @@
       </a>
 
       <div class="nav-links">
-        <a href="https://eric_chou.artstation.com" class="nav-link">ポートフォリオ</a>
-        <a href="#" class="nav-link">履歴書</a>
-        <a href="/devlog" class="nav-link">開発ログ</a>
+        <a href="https://eric_chou.artstation.com" class="nav-link" data-i18n="nav_portfolio">ポートフォリオ</a>
+        <a href="#" class="nav-link" data-i18n="nav_resume">履歴書</a>
+        <a href="/devlog" class="nav-link" data-i18n="nav_devlog">開発ログ</a>
         <a href="https://github.com/AD-Artaku" class="nav-link">GitHub</a>
         <a href="https://www.youtube.com/@Artaku_" class="nav-link nav-link-icon youtube" target="_blank" rel="noopener">
           <i class="fa-brands fa-youtube"></i> Artaku
@@ -49,17 +50,23 @@
         </a>
       </div>
 
+        <div class="lang-picker">
+          <button class="lang-toggle" id="lang-toggle">
+            <i class="fa-regular fa-globe"></i> 日本語
+          </button>
+        </div>
+
       <div class="nav-mobile-menu" id="nav-mobile-menu">
         <a href="https://eric_chou.artstation.com" class="nav-mobile-item">
-          <span class="item-label">ポートフォリオ</span>
+          <span class="item-label" data-i18n="nav_portfolio">ポートフォリオ</span>
           <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
         </a>
         <a href="#" class="nav-mobile-item">
-          <span class="item-label">履歴書</span>
+          <span class="item-label" data-i18n="nav_resume">履歴書</span>
           <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
         </a>
         <a href="/devlog" class="nav-mobile-item">
-          <span class="item-label">開発ログ</span>
+          <span class="item-label" data-i18n="nav_devlog">開発ログ</span>
           <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
         </a>
         <a href="https://github.com/AD-Artaku" class="nav-mobile-item" target="_blank" rel="noopener">
@@ -86,34 +93,69 @@
 
   <!-- MAIN -->
   <main class="main">
-    <!-- ver.1.0.7 -->
+
+    <!-- ver.1.1.0 -->
     <div class="log-card">
       <div class="badge-row">
-        <span class="badge badge-uiux">UI/UX</span>
-        <span class="badge badge-optimize">最適化</span>
+        <span class="badge badge-new" data-i18n="badge_new">新機能</span>
+        <span class="badge badge-bug" data-i18n="badge_bug">バグ修正</span>
+        <span class="badge badge-uiux" data-i18n="badge_uiux">UI/UX</span>
+        <span class="badge badge-backend" data-i18n="badge_backend">バックエンド</span>
+        <span class="badge badge-quality" data-i18n="badge_quality">品質改善</span>
+        <span class="badge badge-optimize" data-i18n="badge_optimize">最適化</span>
       </div>
       <div class="card-header">
         <div class="card-icon">i</div>
-        <div class="card-title">ver.1.0.7 アップデート: 「Starry Dreams - 星空に夢中」</div>
+        <div class="card-title" data-i18n="v110_title">ver.1.1.0 大型アップデート：「多言語サポート！」</div>
       </div>
       <div class="card-body">
         <div class="card-row">
-          <span class="card-row-label">概要：</span>
-          <span class="card-row-text">「Starry Dreams - 星空に夢中」という新しいデザインテーマへUIを更新しました。</span>
+          <span class="card-row-label" data-i18n="label_summary">概要：</span>
+          <span class="card-row-text"  data-i18n="v110_summary">世界中の日本語学習者に向けて、多言語サポート機能を追加しました。</span>
         </div>
         <div class="card-row">
-          <span class="card-row-label">課題：</span>
-          <span class="card-row-text">今回のデザインでは、「ヴィンテージ感」「夢のような柔らかさ」「静かな存在感」をテーマとして設計しています。<br><br>特に意識したポイントは、「硬いエッジ」と「柔らかいエッジ」のバランス、そしてUI全体におけるテクスチャ表現の密度バランスです。柔らかい光やガラス表現を使いながらも、単に曖昧で淡いだけのデザインにならないよう、コントラストや輪郭感を意識して調整を行いました。</span>
+          <span class="card-row-label" data-i18n="label_problem">課題：</span>
+          <span class="card-row-text"  data-i18n="v110_problem">このプロジェクトは、もともと自分自身のために作り始めたツールでした。しかし、約1か月間アップデートを続ける中で、多くの方々からサポートや改善案をいただくようになり、「もっと幅広い人に使ってもらえるサイトにしたい」という気持ちが強くなっていきました。<br><br>また、日本へ来てから、多くの同級生がパソコンを持っていないことにも気づきました。そのため、ブラウザ翻訳機能に頼るだけではなく、サイト自体に翻訳機能を内蔵することで、より直感的で使いやすい体験を提供したいと考えるようになりました。</span>
         </div>
         <div class="card-row">
-          <span class="card-row-label">対応：</span>
-          <span class="card-row-text">また、このデザインは、今後さらに発展させていく予定の「Liquid Glass」スタイルとも相性が良くなるよう設計しています。現在は、その表現をより高い完成度で実装するために、新しいツールや技術についても学習を進めています。</span>
+          <span class="card-row-label" data-i18n="label_solution">対応：</span>
+          <span class="card-row-text"  data-i18n="v110_solution">もちろん、GoogleやAppleのブラウザには既に翻訳機能が存在しています。しかし、それらの機能は、すべてのユーザーにとって必ずしも分かりやすく、使いやすいとは限りません。<br><br>そこで、このWebサイトでは内蔵型の多言語翻訳機能を実装しました。できる限り「正確」「高速」「シンプル」で使いやすい翻訳体験を目指しています。</span>
+        </div>
+        <div class="card-row">
+          <span class="card-row-label" data-i18n="v110_lang_label">言語：</span>
+          <span class="card-row-text"  data-i18n="v110_languages">日本語、英語、中国語（簡字）、韓国語、スペイン語、ポルトガル語、フランス語、インドネシア語、ベトナム語、ヒンディー語、ネパール語、ビルマ語、タイ語、タガログ語、アラビア語<br><br>今後も、ユーザーからの要望に応じて対応言語を順次追加していく予定です。もしご希望の言語がありましたら、ぜひ「お問い合わせ」からお気軽にご連絡ください。</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ver.1.0.7 -->
+    <div class="log-card">
+      <div class="badge-row">
+        <span class="badge badge-uiux" data-i18n="badge_uiux">UI/UX</span>
+        <span class="badge badge-optimize" data-i18n="badge_optimize">最適化</span>
+      </div>
+      <div class="card-header">
+        <div class="card-icon">i</div>
+        <div class="card-title" data-i18n="v107_title">ver.1.0.7 アップデート: 「Starry Dreams - 星空に夢中」</div>
+      </div>
+      <div class="card-body">
+        <div class="card-row">
+          <span class="card-row-label" data-i18n="label_summary">概要：</span>
+          <span class="card-row-text" data-i18n="v107_summary">「Starry Dreams - 星空に夢中」という新しいデザインテーマへUIを更新しました。</span>
+        </div>
+        <div class="card-row">
+          <span class="card-row-label" data-i18n="label_problem">課題：</span>
+          <span class="card-row-text" data-i18n="v107_problem">今回のデザインでは、「ヴィンテージ感」「夢のような柔らかさ」「静かな存在感」をテーマとして設計しています。<br><br>特に意識したポイントは、「硬いエッジ」と「柔らかいエッジ」のバランス、そしてUI全体におけるテクスチャ表現の密度バランスです。柔らかい光やガラス表現を使いながらも、単に曖昧で淡いだけのデザインにならないよう、コントラストや輪郭感を意識して調整を行いました。</span>
+        </div>
+        <div class="card-row">
+          <span class="card-row-label" data-i18n="label_solution">対応：</span>
+          <span class="card-row-text" data-i18n="v107_solution">また、このデザインは、今後さらに発展させていく予定の「Liquid Glass」スタイルとも相性が良くなるよう設計しています。現在は、その表現をより高い完成度で実装するために、新しいツールや技術についても学習を進めています。</span>
         </div>
         <div class="card-image-row">
-          <span class="card-image-label">画像：</span>
-            <div style="flex:1; min-width:0;">
-                <img src="{{ url_for('static', filename='Update_1_0_7_Starry_Dream.png') }}" alt="Stary_Dream" style="width:100%; border-radius:16px; display:block;" />
-            </div>
+          <span class="card-image-label" data-i18n="label_image">画像：</span>
+          <div style="flex:1; min-width:0;">
+            <img src="{{ url_for('static', filename='Update_1_0_7_Starry_Dream.png') }}" alt="Stary_Dream" style="width:100%; border-radius:16px; display:block;" />
+          </div>
         </div>
       </div>
     </div>
@@ -121,28 +163,28 @@
     <!-- ver.1.0.6 -->
     <div class="log-card">
       <div class="badge-row">
-        <span class="badge badge-new">新機能</span>
-        <span class="badge badge-bug">バグ修正</span>
-        <span class="badge badge-uiux">UI/UX</span>
-        <span class="badge badge-quality">品質改善</span>
-        <span class="badge badge-optimize">最適化</span>
+        <span class="badge badge-new"     data-i18n="badge_new">新機能</span>
+        <span class="badge badge-bug"     data-i18n="badge_bug">バグ修正</span>
+        <span class="badge badge-uiux"    data-i18n="badge_uiux">UI/UX</span>
+        <span class="badge badge-quality" data-i18n="badge_quality">品質改善</span>
+        <span class="badge badge-optimize"data-i18n="badge_optimize">最適化</span>
       </div>
       <div class="card-header">
         <div class="card-icon">i</div>
-        <div class="card-title">ver.1.0.6 アップデート：「Devログ」</div>
+        <div class="card-title" data-i18n="v106_title">ver.1.0.6 アップデート：「Devログ」</div>
       </div>
       <div class="card-body">
         <div class="card-row">
-          <span class="card-row-label">概要：</span>
-          <span class="card-row-text">Devログのページを追加しました。</span>
+          <span class="card-row-label" data-i18n="label_summary">概要：</span>
+          <span class="card-row-text" data-i18n="v106_summary">Devログのページを追加しました。</span>
         </div>
         <div class="card-row">
-          <span class="card-row-label">課題：</span>
-          <span class="card-row-text">まだ開発経験が浅いため、このWebサイトには多くのバグや未完成な部分があります。しかし、だからこそ、自分の考え方や学習過程も含めて記録として残していきたいと思いました。<br><br>もしミスや改善点などを見つけた場合は、ぜひホームページ内の「お問い合わせ」から気軽にご連絡いただけると嬉しいです。今回のチャレンジは、新しいUIを設計することに加え、「単一ページ構成のWebサイトから、どのように複数ページ構成へ拡張していくか」を学ぶことでした。</span>
+          <span class="card-row-label" data-i18n="label_problem">課題：</span>
+          <span class="card-row-text" data-i18n="v106_problem">まだ開発経験が浅いため、このWebサイトには多くのバグや未完成な部分があります。しかし、だからこそ、自分の考え方や学習過程も含めて記録として残していきたいと思いました。<br><br>もしミスや改善点などを見つけた場合は、ぜひホームページ内の「お問い合わせ」から気軽にご連絡いただけると嬉しいです。今回のチャレンジは、新しいUIを設計することに加え、「単一ページ構成のWebサイトから、どのように複数ページ構成へ拡張していくか」を学ぶことでした。</span>
         </div>
         <div class="card-row">
-          <span class="card-row-label">対応：</span>
-          <span class="card-row-text">実際に実装してみると、プログラム側の構造は思っていたよりシンプルでした。新しいページは基本的に新規HTMLファイルとして追加し、それに合わせてCSSやルーティング処理も更新していきます。<br><br>当時は、Webサイトというものをまだ完全には理解できていませんでした。自分の中では、「Webサイトは、縦にとても長いページを持つ本のようなもの」という感覚でした。ユーザーはその一部分だけを拡大して見ていて、別のページへ移動すると、app.py 内の「目次」のようなルーティング処理を参照して、目的のページを探し出しているのだと理解していました。</span>
+          <span class="card-row-label" data-i18n="label_solution">対応：</span>
+          <span class="card-row-text" data-i18n="v106_solution">実際に実装してみると、プログラム側の構造は思っていたよりシンプルでした。新しいページは基本的に新規HTMLファイルとして追加し、それに合わせてCSSやルーティング処理も更新していきます。<br><br>当時は、Webサイトというものをまだ完全には理解できていませんでした。自分の中では、「Webサイトは、縦にとても長いページを持つ本のようなもの」という感覚でした。ユーザーはその一部分だけを拡大して見ていて、別のページへ移動すると、app.py 内の「目次」のようなルーティング処理を参照して、目的のページを探し出しているのだと理解していました。</span>
         </div>
       </div>
     </div>
@@ -150,26 +192,26 @@
     <!-- ver.1.0.5 -->
     <div class="log-card">
       <div class="badge-row">
-        <span class="badge badge-bug">バグ修正</span>
-        <span class="badge badge-backend">バックエンド</span>
-        <span class="badge badge-quality">品質改善</span>
+        <span class="badge badge-bug"     data-i18n="badge_bug">バグ修正</span>
+        <span class="badge badge-backend" data-i18n="badge_backend">バックエンド</span>
+        <span class="badge badge-quality" data-i18n="badge_quality">品質改善</span>
       </div>
       <div class="card-header">
         <div class="card-icon">i</div>
-        <div class="card-title">ver.1.0.5 アップデート：「ひらがな優先表記に対応」</div>
+        <div class="card-title" data-i18n="v105_title">ver.1.0.5 アップデート：「ひらがな優先表記に対応」</div>
       </div>
       <div class="card-body">
         <div class="card-row">
-          <span class="card-row-label">概要：</span>
-          <span class="card-row-text">ひらがなを入力場合、一般的でない漢字への自動変換を防止しました。</span>
+          <span class="card-row-label" data-i18n="label_summary">概要：</span>
+          <span class="card-row-text" data-i18n="v105_summary">ひらがなを入力場合、一般的でない漢字への自動変換を防止しました。</span>
         </div>
         <div class="card-row">
-          <span class="card-row-label">課題：</span>
-          <span class="card-row-text">ひらがな入力時、一部の動詞が一般的でない漢字へ自動変換されてしまう不具合を修正しました。<br><br>例えば、「ある」「できる」「いらっしゃる」などが、それぞれ「有る」「出来る」「居らっしゃる」に変換されていました。<br><br>この問題は、以前追加した「ひらがな入力時の自動漢字変換機能」に起因するものでした。当時は、実装した機能が実際にユーザー環境でどのように使用されるかという視点がまだ十分ではありませんでした。<br><br>ただ、今回この不具合を早期に発見・修正できたことは非常に良かったと感じています。ユーザーの皆様に大きな影響が出る前に対応できていれば幸いです。</span>
+          <span class="card-row-label" data-i18n="label_problem">課題：</span>
+          <span class="card-row-text" data-i18n="v105_problem">ひらがな入力時、一部の動詞が一般的でない漢字へ自動変換されてしまう不具合を修正しました。<br><br>例えば、「ある」「できる」「いらっしゃる」などが、それぞれ「有る」「出来る」「居らっしゃる」に変換されていました。<br><br>この問題は、以前追加した「ひらがな入力時の自動漢字変換機能」に起因するものでした。当時は、実装した機能が実際にユーザー環境でどのように使用されるかという視点がまだ十分ではありませんでした。<br><br>ただ、今回この不具合を早期に発見・修正できたことは非常に良かったと感じています。ユーザーの皆様に大きな影響が出る前に対応できていれば幸いです。</span>
         </div>
         <div class="card-row">
-          <span class="card-row-label">対応：</span>
-          <span class="card-row-text">まず、「ひらがな表記が一般的な動詞かどうか」を判定する処理を、JP_Verb_Conjugator_v3.py 内の動詞変換ロジックに追加しました。そのうえで、app.py 側では、入力された単語を変換処理へ渡す前に事前チェックを行うよう修正しています。具体的には、「ひらがなのまま保持する単語リスト」を用意し、そのリストに含まれる単語は漢字変換を行わず、ひらがなのまま活用処理へ渡す仕様に変更しました。<br><br>一方、リストに含まれていない単語については、従来通り漢字表記へ自動変換されます。この対策により、「たべる」は「食べる」へ変換される一方で、「いらっしゃる」のような単語は、ひらがなのまま自然に活用されるようになりました。</span>
+          <span class="card-row-label" data-i18n="label_solution">対応：</span>
+          <span class="card-row-text" data-i18n="v105_solution">まず、「ひらがな表記が一般的な動詞かどうか」を判定する処理を、JP_Verb_Conjugator_v3.py 内の動詞変換ロジックに追加しました。そのうえで、app.py 側では、入力された単語を変換処理へ渡す前に事前チェックを行うよう修正しています。具体的には、「ひらがなのまま保持する単語リスト」を用意し、そのリストに含まれる単語は漢字変換を行わず、ひらがなのまま活用処理へ渡す仕様に変更しました。<br><br>一方、リストに含まれていない単語については、従来通り漢字表記へ自動変換されます。この対策により、「たべる」は「食べる」へ変換される一方で、「いらっしゃる」のような単語は、ひらがなのまま自然に活用されるようになりました。</span>
         </div>
       </div>
     </div>
@@ -177,34 +219,34 @@
     <!-- ver.1.0.3 -->
     <div class="log-card">
       <div class="badge-row">
-        <span class="badge badge-bug">バグ修正</span>
-        <span class="badge badge-uiux">UI/UX</span>
-        <span class="badge badge-backend">バックエンド</span>
-        <span class="badge badge-quality">品質改善</span>
-        <span class="badge badge-optimize">最適化</span>
+        <span class="badge badge-bug"     data-i18n="badge_bug">バグ修正</span>
+        <span class="badge badge-uiux"    data-i18n="badge_uiux">UI/UX</span>
+        <span class="badge badge-backend" data-i18n="badge_backend">バックエンド</span>
+        <span class="badge badge-quality" data-i18n="badge_quality">品質改善</span>
+        <span class="badge badge-optimize"data-i18n="badge_optimize">最適化</span>
       </div>
       <div class="card-header">
         <div class="card-icon">i</div>
-        <div class="card-title">ver.1.0.3 アップデート：「モバイルUIUX更新」</div>
+        <div class="card-title" data-i18n="v103_title">ver.1.0.3 アップデート：「モバイルUIUX更新」</div>
       </div>
       <div class="card-body">
         <div class="card-row">
-          <span class="card-row-label">概要：</span>
-          <span class="card-row-text">前に、デスクトップ向けなWebサイトがモバイルバージョンが追加させました。</span>
+          <span class="card-row-label" data-i18n="label_summary">概要：</span>
+          <span class="card-row-text" data-i18n="v103_summary">前に、デスクトップ向けなWebサイトがモバイルバージョンが追加させました。</span>
         </div>
         <div class="card-row">
-          <span class="card-row-label">課題：</span>
-          <span class="card-row-text">このプロジェクトのき起源はほとんどにだてのPythonを最初に勉強するために小さいローカルアプリケーションでした。だが、この元々のプロジェクトの挙句、ちょっと寂しかったです。あの最初のいー週間は楽しすぎたり、勉強もなったりからこのプロジェクトをみんなの勉強になるように公開したかったです。<br><br>だから、このサイトはもともとデスクトップ向けました。でも、ユーザー様方はたぶんパソコンが持っていない方が多いと、日本語クラスの中で動詞の接続を確認したい場合もあると思いました。この気持ちから、二日目にモバイルのデザインとバグを早めにやり直しました。</span>
+          <span class="card-row-label" data-i18n="label_problem">課題：</span>
+          <span class="card-row-text" data-i18n="v103_problem">このプロジェクトのき起源はほとんどにだてのPythonを最初に勉強するために小さいローカルアプリケーションでした。だが、この元々のプロジェクトの挙句、ちょっと寂しかったです。あの最初のいー週間は楽しすぎたり、勉強もなったりからこのプロジェクトをみんなの勉強になるように公開したかったです。<br><br>だから、このサイトはもともとデスクトップ向けました。でも、ユーザー様方はたぶんパソコンが持っていない方が多いと、日本語クラスの中で動詞の接続を確認したい場合もあると思いました。この気持ちから、二日目にモバイルのデザインとバグを早めにやり直しました。</span>
         </div>
         <div class="card-row">
-          <span class="card-row-label">対応：</span>
-          <span class="card-row-text">モバイルUIは、デスクトップUIとは大きく異なります。文字サイズだけでなく、画像のアスペクト比やレイアウトも、モバイル向けに最適化する必要がありました。<br><br>そこで、以前Webデザインの仕事で使用していたデザインシステムを改めて見直し、モバイル用のサイズ調整を素早く行えるよう対応しました。その後、新しいヘッダーやハンバーガーメニューのデザインを進めていた際に、少し厄介なバグにも遭遇しました。本来、ナビゲーションメニューはポップアップ外をタップすると閉じる仕様だったのですが、モバイル対応初日の時点では、ヘッダー領域内でしか正常に閉じることができませんでした。<br><br>しかし、二日ほど試行錯誤を続ける中で、「z-index」の仕組みが原因であることを発見しました。ポップアップメニューをヘッダーの 隣外へ移動することで、無事に問題を解決することができました。フロントエンド構造とCSSのレイヤー管理について、多くを学べた良い経験だったと思います。</span>
+          <span class="card-row-label" data-i18n="label_solution">対応：</span>
+          <span class="card-row-text" data-i18n="v103_solution">モバイルUIは、デスクトップUIとは大きく異なります。文字サイズだけでなく、画像のアスペクト比やレイアウトも、モバイル向けに最適化する必要がありました。<br><br>そこで、以前Webデザインの仕事で使用していたデザインシステムを改めて見直し、モバイル用のサイズ調整を素早く行えるよう対応しました。その後、新しいヘッダーやハンバーガーメニューのデザインを進めていた際に、少し厄介なバグにも遭遇しました。本来、ナビゲーションメニューはポップアップ外をタップすると閉じる仕様だったのですが、モバイル対応初日の時点では、ヘッダー領域内でしか正常に閉じることができませんでした。<br><br>しかし、二日ほど試行錯誤を続ける中で、「z-index」の仕組みが原因であることを発見しました。ポップアップメニューをヘッダーの 隣外へ移動することで、無事に問題を解決することができました。フロントエンド構造とCSSのレイヤー管理について、多くを学べた良い経験だったと思います。</span>
         </div>
         <div class="card-image-row">
-          <span class="card-image-label">画像：</span>
-            <div style="flex:1; min-width:0;">
-                <img src="{{ url_for('static', filename='mobile_ka.png') }}" alt="モバイルデザイン" style="width:100%; border-radius:16px; display:block;" />
-            </div>
+          <span class="card-image-label" data-i18n="label_image">画像：</span>
+          <div style="flex:1; min-width:0;">
+            <img src="{{ url_for('static', filename='mobile_ka.png') }}" alt="モバイルデザイン" style="width:100%; border-radius:16px; display:block;" />
+          </div>
         </div>
       </div>
     </div>
@@ -212,30 +254,30 @@
     <!-- ver.1.0.0 -->
     <div class="log-card">
       <div class="badge-row">
-        <span class="badge badge-new">新機能</span>
-        <span class="badge badge-bug">バグ修正</span>
-        <span class="badge badge-api">API</span>
-        <span class="badge badge-uiux">UI/UX</span>
-        <span class="badge badge-backend">バックエンド</span>
-        <span class="badge badge-quality">品質改善</span>
-        <span class="badge badge-optimize">最適化</span>
+        <span class="badge badge-new"     data-i18n="badge_new">新機能</span>
+        <span class="badge badge-bug"     data-i18n="badge_bug">バグ修正</span>
+        <span class="badge badge-api"     data-i18n="badge_api">API</span>
+        <span class="badge badge-uiux"    data-i18n="badge_uiux">UI/UX</span>
+        <span class="badge badge-backend" data-i18n="badge_backend">バックエンド</span>
+        <span class="badge badge-quality" data-i18n="badge_quality">品質改善</span>
+        <span class="badge badge-optimize"data-i18n="badge_optimize">最適化</span>
       </div>
       <div class="card-header">
         <div class="card-icon">i</div>
-        <div class="card-title">ver.1.0.0 公式リリース：「日本語動詞変換ツール」</div>
+        <div class="card-title" data-i18n="v100_title">ver.1.0.0 公式リリース：「日本語動詞変換ツール」</div>
       </div>
       <div class="card-body">
         <div class="card-row">
-          <span class="card-row-label">概要：</span>
-          <span class="card-row-text">辞書形の動詞を入力すると、よく使われる11種類の活用形を一覧表示するWebアプリです。</span>
+          <span class="card-row-label" data-i18n="label_summary">概要：</span>
+          <span class="card-row-text" data-i18n="v100_summary">辞書形の動詞を入力すると、よく使われる11種類の活用形を一覧表示するWebアプリです。</span>
         </div>
         <div class="card-row">
-          <span class="card-row-label">課題：</span>
-          <span class="card-row-text">既存の日本語動詞変換サイトは、広告が多く、情報設計やUIの面でも使いづらさを感じることがありました。</span>
+          <span class="card-row-label" data-i18n="label_problem">課題：</span>
+          <span class="card-row-text" data-i18n="v100_problem">既存の日本語動詞変換サイトは、広告が多く、情報設計やUIの面でも使いづらさを感じることがありました。</span>
         </div>
         <div class="card-row">
-          <span class="card-row-label">対応：</span>
-          <span class="card-row-text">「自分自身が本当に使いたいと思える動詞変換ツールを作れないか？」という発想から、本プロジェクトを制作しました。</span>
+          <span class="card-row-label" data-i18n="label_solution">対応：</span>
+          <span class="card-row-text" data-i18n="v100_solution">「自分自身が本当に使いたいと思える動詞変換ツールを作れないか？」という発想から、本プロジェクトを制作しました。</span>
         </div>
       </div>
     </div>
@@ -250,10 +292,13 @@
         <div class="logo-mid"></div>
         <div class="logo-bot"></div>
       </div>
-      <span class="footer-copy">© 2026 Eric Chou</span>
+      <span class="footer-copy" data-i18n="footer_copy">© 2026 Eric Chou</span>
     </div>
   </footer>
-
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
+<script src="{{ url_for('static', filename='translations.js') }}"></script>
+<script src="{{ url_for('static', filename='translations_devlog.js') }}"></script>
+<script src="{{ url_for('static', filename='lang_picker.js') }}"></script>
+<script src="{{ url_for('static', filename='script_devlog.js') }}"></script>
+<script>initLangPicker(applyLanguageDevlog);</script>
 </body>
 </html>

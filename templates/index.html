@@ -7,8 +7,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.png') }}">
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>emailjs.init("ctd7CvvyvE0mhWyS7");</script>
 </head>
@@ -88,8 +89,13 @@
         <a href="https://www.instagram.com/ericc.design" class="nav-link nav-link-icon instagram" target="_blank" rel="noopener">
           <i class="fa-brands fa-instagram"></i> ericc.design
         </a>
-        <button class="lang-toggle" id="lang-toggle">EN</button>
       </div>
+
+        <div class="lang-picker">
+          <button class="lang-toggle" id="lang-toggle">
+            <i class="fa-regular fa-globe"></i> 日本語
+          </button>
+        </div>
 
       <div class="nav-mobile-menu" id="nav-mobile-menu">
         <a href="https://eric_chou.artstation.com" class="nav-mobile-item">
@@ -310,10 +316,7 @@
       <div class="info-card">
         <h2 class="section-heading" data-i18n="info_heading">このサイトについて</h2>
         <p class="info-body" data-i18n="info_body">
-          このプロジェクトは、今の自分が特に力を入れて学んでいる「日本語」と「プログラミング」の二つを、ひとつの形にしてみたいと思い制作しました。<br/><br/>
-          以前はそれぞれを別々に勉強していましたが、プロジェクトを作りながら学ぶ方が、より楽しく、実践的で、深く理解できるのではないかと感じています。今はどちらの分野も学ぶこと自体が本当に楽しく、日々夢中になっています。<br/><br/>
-          また、自分自身の日本語学習の中で、日本語の動詞活用を分かりやすく整理し、使いやすい形で表示してくれるサイトが意外と少ないと感じていました。そのため、「自分が本当に欲しいと思えるツールを作ってみたい」という思いも、このプロジェクトを始めた大きな理由の一つです。<br/><br/>
-          このプロジェクトが、誰かの学習を少しでも支える存在になってくれたら嬉しく思います。そして、これから高等教育へ進む中でも、このように人の役に立つツールや、実際の課題を解決できるものを、もっと作っていきたいと考えています。
+          このプロジェクトは、今の自分が特に力を入れて学んでいる「日本語」と「プログラミング」の二つを、ひとつの形にしてみたいと思い制作しました。<br><br>以前はそれぞれを別々に勉強していましたが、プロジェクトを作りながら学ぶ方が、より楽しく、実践的で、深く理解できるのではないかと感じています。今はどちらの分野も学ぶこと自体が本当に楽しく、日々夢中になっています。<br><br>また、自分自身の日本語学習の中で、日本語の動詞活用を分かりやすく整理し、使いやすい形で表示してくれるサイトが意外と少ないと感じていました。そのため、「自分が本当に欲しいと思えるツールを作ってみたい」という思いも、このプロジェクトを始めた大きな理由の一つです。もちろん、これがこのプロジェクトの始まりでした。しかし、今ではこのプロジェクトは、自分でも想像していなかったほど、誰かの役に立てるものへと成長してきました。そして、その中で見つけた「人を助けられる」という実感こそが、現在の自分にとって最大の原動力になっています。<br><br>このプロジェクトが、誰かの学習を少しでも支える存在になってくれたら嬉しく思います。そして、これから高等教育へ進む中でも、このように人の役に立つツールや、実際の課題を解決できるものを、もっと作っていきたいと考えています。
         </p>
       </div>
     </section>
@@ -346,11 +349,11 @@
       </div>
       <div class="toast-body">
         <div class="toast-top-row">
-          <span class="toast-version" data-i18n="toast_version">ver.1.0.6 アップデート</span>
+          <span class="toast-version" data-i18n="toast_version">ver.1.1.0 大型アップデート</span>
           <button class="toast-close" id="toast-close" aria-label="閉じる">✕</button>
         </div>
-        <div class="toast-title" data-i18n="toast_title">「Devログ」</div>
-        <div class="toast-desc" id="toast-desc" data-i18n="toast_desc">開発経験が浅いため未完成な部分もありますが、学習過程も含めて記録しています！</div>
+        <div class="toast-title" data-i18n="toast_title">「多言語サポート！」</div>
+        <div class="toast-desc" id="toast-desc" data-i18n="toast_desc">世界中の日本語学習者に向けて、多言語サポート機能を追加しました。</div>
         <a href="/devlog" class="toast-link" data-i18n="toast_link">詳細を見る <i class="fa-solid fa-chevron-right"></i></a>
       </div>
     </div>
@@ -370,6 +373,7 @@
   </footer>
 
   <script src="{{ url_for('static', filename='translations.js') }}"></script>
+  <script src="{{ url_for('static', filename='lang_picker.js') }}"></script>
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
