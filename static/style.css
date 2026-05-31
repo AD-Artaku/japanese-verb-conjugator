@@ -41,7 +41,7 @@ body {
 .bg-image {
   position: fixed;
   inset: 0;
-  background-image: url('/static/leaf-7260246_1280.png');
+  background-image: url('/static/Starry_Dream.webp');
   background-size: cover;
   background-position: center;
   z-index: 0;
@@ -1718,7 +1718,7 @@ main.main {
 }
 
 .devlog-bg {
-  background-image: url('/static/Dev_Log_BG.png') !important;
+  background-image: url('/static/Sunkissed.webp') !important;
 }
 
 /* Badge color variables */

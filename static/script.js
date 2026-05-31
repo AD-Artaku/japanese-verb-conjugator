@@ -323,9 +323,7 @@ function applyLanguage(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (t[key] !== undefined) {
-      const icons = el.querySelectorAll('i');
       el.innerHTML = t[key];
-      icons.forEach(icon => el.appendChild(icon));
     }
   });
 
