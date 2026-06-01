@@ -632,6 +632,8 @@ function initHistoryPicker() {
 
         // Bug 3: update search history
         pushHistory(data.verb);
+        const historyPickerEl = document.getElementById('history-picker');
+        if (historyPickerEl) historyPickerEl.style.display = '';
 
         // Bug 4: update URL without reload
         if (pushState) {
