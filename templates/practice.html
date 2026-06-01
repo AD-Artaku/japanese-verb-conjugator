@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Practice — SRS Flashcards (dev)</title>
+  <style>
+    /* Zero-design utility styles — replace entirely when integrating into main site */
+    body        { font-family: sans-serif; max-width: 640px; margin: 40px auto; padding: 0 20px; }
+    h1          { font-size: 1.4em; }
+    h2          { font-size: 1em; margin-bottom: 8px; }
+    button      { padding: 6px 14px; font-size: 1em; cursor: pointer; margin: 4px; }
+    input[type=text] { padding: 6px 10px; font-size: 1em; width: 220px; }
+    hr          { margin: 28px 0; border: none; border-top: 1px solid #ddd; }
+    .section    { margin-top: 24px; }
+
+    /* Deck list */
+    #deck-list              { list-style: none; padding: 0; }
+    #deck-list li           { padding: 6px 0; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 8px; }
+    #add-status             { margin-left: 8px; font-size: 0.9em; color: #555; }
+
+    /* Review */
+    #review-front           { font-size: 2em; margin: 24px 0 16px; min-height: 60px; }
+    #review-answer          { margin: 16px 0; border-top: 1px solid #ddd; padding-top: 16px; }
+    .rating-row             { margin-top: 16px; }
+    .rating-row button      { font-size: 1em; padding: 8px 20px; }
+    #btn-again              { background: #fdd; }
+    #btn-hard               { background: #ffd; }
+    #btn-good               { background: #ddf; }
+    #btn-easy               { background: #dfd; }
+
+    /* Conjugation table (used in verb card backs) */
+    .conj-table             { border-collapse: collapse; width: 100%; margin-top: 8px; }
+    .conj-table td          { padding: 4px 8px 4px 0; vertical-align: top; }
+    .conj-label             { color: #666; font-size: 0.85em; white-space: nowrap; }
+    .conj-en                { color: #aaa; }
+    .conj-value             { font-size: 1.1em; }
+
+    /* Verb card front */
+    .card-front-verb        { font-size: 2.2em; }
+
+    /* Anki card content — allow images and audio to display sensibly */
+    #review-front img,
+    #review-answer img      { max-width: 100%; border-radius: 6px; }
+    #review-front audio,
+    #review-answer audio    { display: block; margin-top: 8px; }
+
+    /* Import hint text */
+    .hint                   { font-size: 0.85em; color: #666; margin: 0 0 8px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+  <p><a href="/">← Back to conjugator</a></p>
+  <h1>SRS Flashcard Practice <span style="font-size:0.6em;color:#aaa">(dev build)</span></h1>
+
+  <!-- ===================== DECK VIEW ===================== -->
+  <div id="view-deck">
+
+    <div class="section">
+      <strong>Due today:</strong> <span id="due-count">0</span>
+      &nbsp;|&nbsp;
+      <strong>Total cards:</strong> <span id="total-count">0</span>
+    </div>
+
+    <div class="section">
+      <button id="start-review-btn">▶ Start Review</button>
+    </div>
+
+    <hr>
+
+    <!-- Add a verb manually -->
+    <div class="section">
+      <h2>Add a verb</h2>
+      <input id="add-input" type="text" placeholder="e.g. 食べる or たべる" />
+      <button id="add-btn">Add</button>
+      <span id="add-status"></span>
+    </div>
+
+    <hr>
+
+    <!-- Anki .apkg import -->
+    <div class="section">
+      <h2>Import from Anki (.apkg)</h2>
+      <p class="hint">
+        In Anki: <strong>File → Export</strong> → format: <em>Anki Deck Package (.apkg)</em>
+        → select your deck → export. Upload that file here.
+        All cards and media (images, audio) are imported as-is.
+      </p>
+      <input type="file" id="anki-import-input" accept=".apkg" />
+      <div id="anki-import-status" style="margin-top:6px; font-size:0.9em; color:#555"></div>
+    </div>
+
+    <hr>
+
+    <!-- Deck list -->
+    <div class="section">
+      <h2>Your deck</h2>
+      <ul id="deck-list"></ul>
+    </div>
+
+  </div>
+
+  <!-- ===================== REVIEW VIEW ===================== -->
+  <div id="view-review" style="display:none">
+
+    <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px">
+      <button id="exit-review-btn">← Back</button>
+      <div id="review-progress" style="color:#aaa; font-size:0.9em"></div>
+    </div>
+
+    <!-- Front of card (question) -->
+    <div id="review-front"></div>
+
+    <button id="show-answer-btn">Show Answer</button>
+
+    <!-- Back of card (answer) — hidden until Show Answer -->
+    <div id="review-answer" style="display:none"></div>
+
+    <!-- Rating buttons — hidden until answer is shown -->
+    <div id="review-rating" class="rating-row" style="display:none">
+      <button id="btn-again">Again</button>
+      <button id="btn-hard">Hard</button>
+      <button id="btn-good">Good</button>
+      <button id="btn-easy">Easy</button>
+    </div>
+
+  </div>
+
+  <!-- ===================== DONE VIEW ===================== -->
+  <div id="view-done" style="display:none">
+    <h2>Session complete 🎉</h2>
+    <p>Reviewed <strong><span id="done-count">0</span></strong> card(s) this session.</p>
+    <button id="back-to-deck-btn">Back to Deck</button>
+  </div>
+
+  <script src="{{ url_for('static', filename='practice.js') }}"></script>
+</body>
+</html>

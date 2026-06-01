@@ -91,10 +91,22 @@
         </a>
       </div>
 
-        <div class="lang-picker">
-          <button class="lang-toggle" id="lang-toggle">
-            <i class="fa-regular fa-globe"></i> 日本語
+        <div class="nav-pickers">
+          <div class="history-picker" id="history-picker" style="display:none">
+            <button class="history-toggle" id="history-toggle">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </button>
+          </div>
+
+          <button class="furigana-toggle" id="furigana-toggle" title="Toggle furigana">
+            あ
           </button>
+
+          <div class="lang-picker">
+            <button class="lang-toggle" id="lang-toggle">
+              <i class="fa-regular fa-globe"></i> 日本語
+            </button>
+          </div>
         </div>
 
       <div class="nav-mobile-menu" id="nav-mobile-menu">
@@ -154,7 +166,7 @@
                     name="verb_desktop"
                     placeholder="辞書形を入力"
                     data-i18n-placeholder="search_placeholder"
-                    value="{{ request.form.get('verb', '') }}"
+                    value="{{ request.form.get('verb_desktop') or request.form.get('verb') or shared_verb or '' }}"
                     autocomplete="off"
                     id="desktop-verb-input"
                     maxlength="20"
@@ -207,8 +219,15 @@
     {% if cards %}
     <section class="cards-section">
 
-      {% set show_polite = request.form.get('polite') %}
-      {% set show_negative = request.form.get('negative') %}
+      {% set show_polite = request.form.get('polite') or shared_verb %}
+      {% set show_negative = request.form.get('negative') or shared_verb %}
+
+      <div class="cards-share-row">
+        <a class="share-btn" href="/verb/{{ shared_verb or (request.form.get('verb_desktop') or request.form.get('verb', '')) }}" id="share-btn">
+          <i class="fa-solid fa-link"></i>
+          <span data-i18n="share_btn">共有</span>
+        </a>
+      </div>
 
       {% set card_data = [
         { "badge": "基本形",    "badge_key": "badge_basic",        "title": "辞書形",     "title_key": "card_dictionary",       "pos_plain": cards.dictionary,        "neg_plain": cards.negative,                   "pos_polite": cards.polite_dictionary,        "neg_polite": cards.polite_negative_dictionary },
@@ -237,13 +256,13 @@
                 <div class="card-row">
                   <span class="card-row-label" data-i18n="label_positive">肯定</span>
                   <span class="card-row-dash">-</span>
-                  <span class="card-row-value">{{ card.pos_plain or "—" }}</span>
+                  <span class="card-row-value">{{ card.pos_plain | safe if card.pos_plain else "—" }}</span>
                 </div>
                 {% if show_negative and card.neg_plain %}
                 <div class="card-row">
                   <span class="card-row-label" data-i18n="label_negative">否定</span>
                   <span class="card-row-dash">-</span>
-                  <span class="card-row-value">{{ card.neg_plain }}</span>
+                  <span class="card-row-value">{{ card.neg_plain | safe }}</span>
                 </div>
                 {% endif %}
               </div>
@@ -258,14 +277,14 @@
                 <div class="card-row">
                   <span class="card-row-label" data-i18n="label_positive">肯定</span>
                   <span class="card-row-dash">-</span>
-                  <span class="card-row-value">{{ card.pos_polite }}</span>
+                  <span class="card-row-value">{{ card.pos_polite | safe }}</span>
                 </div>
                 {% endif %}
                 {% if show_negative and card.neg_polite %}
                 <div class="card-row">
                   <span class="card-row-label" data-i18n="label_negative">否定</span>
                   <span class="card-row-dash">-</span>
-                  <span class="card-row-value">{{ card.neg_polite }}</span>
+                  <span class="card-row-value">{{ card.neg_polite | safe }}</span>
                 </div>
                 {% endif %}
               </div>
@@ -300,11 +319,7 @@
           </div>
           <div class="about-image-col">
             <div class="about-image-placeholder">
-              <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="8" y="8" width="48" height="48" rx="4" stroke="#ccc" stroke-width="2"/>
-                <path d="M8 44L22 30L30 38L42 24L56 44" stroke="#ccc" stroke-width="2"/>
-                <circle cx="42" cy="22" r="5" stroke="#ccc" stroke-width="2"/>
-              </svg>
+              <img src="{{ url_for('static', filename='Homepage_Headshot_crop.jpg') }}" alt="Eric Chou" class="about-photo" />
             </div>
           </div>
         </div>
