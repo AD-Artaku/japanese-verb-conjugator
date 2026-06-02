@@ -174,6 +174,8 @@ body {
   height: 24px;
 }
 
+.logo-name-short { display: none; }
+
 .logo-text {
   font-family: 'Libertinus', Serif;
   font-size: 20px;
@@ -1164,6 +1166,9 @@ main.main {
    RESPONSIVE — MOBILE
    ===================== */
 @media (max-width: 600px) {
+
+  .logo-name-full { display: none; }
+  .logo-name-short { display: inline; }
 
   /* prevent any element from causing horizontal overflow */
   body {
