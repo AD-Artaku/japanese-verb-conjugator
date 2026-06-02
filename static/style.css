@@ -174,8 +174,6 @@ body {
   height: 24px;
 }
 
-.logo-name-short { display: none; }
-
 .logo-text {
   font-family: 'Libertinus', Serif;
   font-size: 20px;
@@ -1167,8 +1165,7 @@ main.main {
    ===================== */
 @media (max-width: 600px) {
 
-  .logo-name-full { display: none; }
-  .logo-name-short { display: inline; }
+  .logo-text { display: none; }
 
   /* prevent any element from causing horizontal overflow */
   body {
