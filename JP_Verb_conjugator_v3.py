@@ -24,7 +24,7 @@ honorific_godan_verb = {
 
 # Verbs conventionally written in hiragana — kanji substitution is skipped for these
 HIRAGANA_PREFERRED = {
-    "いる", "ある", "なる", "なす", "できる", "くださる", "わかる", "いう",
+    "いる", "ある", "なる", "なす", "できる", "くださる", "わかる", "いう", "くる",
     "すごす", "あらわす", "かかわる", "おすすめする", "かまう", "たずねる",
     "もとづく", "ともなう", "おこなう", "つくる", "いたす", "いただく",
     "おる", "あわせる", "およぶ", "かかる", "かぎる", "まつわる",
@@ -245,19 +245,34 @@ class Verb:
             }
 
         elif self.type == "kuru":
-            return {
-                "dictionary": self.verb,
-                "stem": self.stem,
-                "masu_stem": "き",
-                "te": "きて",
-                "passive": "こられる",
-                "causative": "こさせる",
-                "causative_passive": "こさせられる",
-                "potential": "こられる",
-                "volitional": "こよう",
-                "imperative": "こい",
-                "conditional_ba": "くれば"
-            }
+            if self.verb == "来る":
+                return {
+                    "dictionary": self.verb,
+                    "stem": self.stem,
+                    "masu_stem": "来",
+                    "te": "来て",
+                    "passive": "来られる",
+                    "causative": "来させる",
+                    "causative_passive": "来させられる",
+                    "potential": "来られる",
+                    "volitional": "来よう",
+                    "imperative": "来い",
+                    "conditional_ba": "来れば"
+                }
+            else:  # くる
+                return {
+                    "dictionary": self.verb,
+                    "stem": self.stem,
+                    "masu_stem": "き",
+                    "te": "きて",
+                    "passive": "こられる",
+                    "causative": "こさせる",
+                    "causative_passive": "こさせられる",
+                    "potential": "こられる",
+                    "volitional": "こよう",
+                    "imperative": "こい",
+                    "conditional_ba": "くれば"
+                }
 
         elif self.type == "te_kuru":
             # stem = te-form prefix e.g. 持って
@@ -316,12 +331,20 @@ class Verb:
             }
 
         elif self.type == "kuru":
-            return {
-                "past": "きた",
-                "tara": "きたら",
-                "te_iru": "きている",
-                "te_ita": "きていた"
-            }
+            if self.verb == "来る":
+                return {
+                    "past": "来た",
+                    "tara": "来たら",
+                    "te_iru": "来ている",
+                    "te_ita": "来ていた"
+                }
+            else:  # くる
+                return {
+                    "past": "きた",
+                    "tara": "きたら",
+                    "te_iru": "きている",
+                    "te_ita": "きていた"
+                }
 
         elif self.type == "te_kuru":
             prefix = self.stem
@@ -383,7 +406,7 @@ class Verb:
             negative_base = suru_stem + "しない"
 
         elif self.type == "kuru":
-            negative_base = "こない"
+            negative_base = "来ない" if self.verb == "来る" else "こない"
 
         elif self.type == "te_kuru":
             negative_base = self.stem + "こない"
