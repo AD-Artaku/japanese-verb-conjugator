@@ -568,6 +568,9 @@ function initHistoryPicker() {
 
     // Bug 2: re-wire share button (old listener is gone with old DOM)
     initShareBtn();
+
+    // Re-evaluate furigana: disable show-furigana for hiragana-only results.
+    window._applyFuriganaState?.();
   }
 
   function removeCards() {
@@ -765,16 +768,31 @@ initShareBtn();
 
   const FURI_KEY = "furigana_on";
 
-  function setFurigana(on) {
-    document.body.classList.toggle("show-furigana", on);
-    btn.classList.toggle("active", on);
-    localStorage.setItem(FURI_KEY, on ? "1" : "0");
+  function currentPref() {
+    return localStorage.getItem(FURI_KEY) === "1";
   }
 
-  // Restore preference
-  setFurigana(localStorage.getItem(FURI_KEY) === "1");
+  function hasKanji() {
+    return !!document.querySelector(".cards-section .kw");
+  }
+
+  function applyFuriganaState() {
+    const on = currentPref();
+    // Button active always mirrors saved preference.
+    // show-furigana is only applied if pref is on AND cards have kanji —
+    // hiragana-only verbs have no .kw spans so toggling would just add gaps.
+    btn.classList.toggle("active", on);
+    document.body.classList.toggle("show-furigana", on && hasKanji());
+  }
+
+  // Exposed so injectCards can re-evaluate after each search.
+  window._applyFuriganaState = applyFuriganaState;
+
+  // Restore on page load (handles server-rendered cards too).
+  applyFuriganaState();
 
   btn.addEventListener("click", () => {
-    setFurigana(!document.body.classList.contains("show-furigana"));
+    localStorage.setItem(FURI_KEY, currentPref() ? "0" : "1");
+    applyFuriganaState();
   });
 })();
