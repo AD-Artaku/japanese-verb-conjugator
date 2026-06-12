@@ -614,11 +614,11 @@ main.main {
 .search-alert {
   display: none;
   width: 100%;
-  height: 40px;
-  padding: 8px 16px;
+  height: 32px;
+  padding: 6px 12px;
   background: var(--bg-subtle);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 10px;
   align-items: center;
   gap: 8px;
   overflow: hidden;
@@ -631,15 +631,15 @@ main.main {
 }
 
 .alert-icon {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   background: var(--brand);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-size: 13px;
+  font-size: 10px;
   font-weight: 700;
   color: #fff;
   font-family: 'Inter', 'Noto Sans SC', 'Noto Sans KR', sans-serif;
@@ -647,10 +647,10 @@ main.main {
 
 .alert-text {
   flex: 1;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   font-family: 'Inter', 'Noto Sans SC', 'Noto Sans KR', sans-serif;
-  line-height: 24px;
+  line-height: 20px;
   color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
@@ -658,8 +658,8 @@ main.main {
 }
 
 .alert-close {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   background: none;
   border: none;
   cursor: pointer;
@@ -668,7 +668,7 @@ main.main {
   justify-content: center;
   flex-shrink: 0;
   color: var(--text-tertiary);
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 700;
   line-height: 1;
   padding: 0;
@@ -1850,17 +1850,19 @@ main.main {
   color: var(--brand);
 }
 
-/* Card body */
+/* Card body — CSS Grid so all label/text columns auto-align to the
+   widest label in that card, regardless of language. */
 .card-body {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 12px 8px;
+  align-items: start;
   padding-left: 40px; /* aligns under title text, past icon + gap */
 }
 
+/* display:contents lets each row's children become direct grid items */
 .card-row {
-  display: flex;
-  align-items: flex-start;
+  display: contents;
 }
 
 .card-row-label {
@@ -1870,7 +1872,6 @@ main.main {
   line-height: 24px;
   color: var(--text-primary);
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .card-row-text {
@@ -1879,24 +1880,21 @@ main.main {
   font-family: 'Inter', 'Noto Sans SC', 'Noto Sans KR', sans-serif;
   line-height: 24px;
   color: var(--text-primary);
-  flex: 1;
+  min-width: 0; /* allows grid cell to shrink below content size */
 }
 
-/* Image slot */
+/* Image slot — display:contents so label+image join the parent grid */
 .card-image-row {
-  display: flex;
-  align-items: flex-start;
+  display: contents;
 }
 
 .card-image-label {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 400;
   font-family: 'Inter', 'Noto Sans SC', 'Noto Sans KR', sans-serif;
   line-height: 24px;
   color: var(--text-primary);
   white-space: nowrap;
-  flex-shrink: 0;
-  width: 48px;
 }
 
 .card-image-placeholder {
@@ -1935,9 +1933,6 @@ main.main {
     padding-left: 48px;
   }
 
-  .card-image-row {
-    padding-left: 0;
-  }
 }
 
 .nav-logo {

@@ -219,3 +219,6 @@ __marimo__/
 
 #JMDict
 jmdict-eng-common.json
+
+#stats
+verb_stats.db

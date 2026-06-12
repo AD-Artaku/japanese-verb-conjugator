@@ -27,8 +27,11 @@ if (sendBtn) {
 
     if (!message) return;
 
+    const lang = localStorage.getItem(LANG_KEY) || 'ja';
+    const t = (typeof translations !== 'undefined') && translations[lang];
+
     sendBtn.disabled = true;
-    sendBtn.textContent = '送信中...';
+    sendBtn.textContent = t?.contact_btn_sending || '送信中...';
 
     emailjs.send("service_l9kxnvm", "template_nskztz7", {
       message: message,
@@ -36,15 +39,15 @@ if (sendBtn) {
     })
     .then(() => {
       textarea.value = '';
-      charCount.textContent = '残り400文字';
+      if (charCount) charCount.textContent = t?.char_count || '残り400文字';
       backdrop.classList.add('active');
       sendBtn.disabled = false;
-      sendBtn.textContent = '送信';
+      sendBtn.textContent = t?.contact_btn || '送信';
     })
     .catch(() => {
-      alert('送信に失敗しました。もう一度お試しください。');
+      alert(t?.contact_error || '送信に失敗しました。もう一度お試しください。');
       sendBtn.disabled = false;
-      sendBtn.textContent = '送信';
+      sendBtn.textContent = t?.contact_btn || '送信';
     });
   });
 }
@@ -579,7 +582,13 @@ function initHistoryPicker() {
 
   // ---- ERROR ALERT ------------------------------------------------------
 
-  function showError() {
+  function showError(key = 'search_alert') {
+    if (alertText) {
+      alertText.setAttribute('data-i18n', key);
+      const lang = localStorage.getItem(LANG_KEY) || 'ja';
+      const t = (typeof translations !== 'undefined') && translations[lang];
+      if (t && t[key]) alertText.innerHTML = t[key];
+    }
     searchAlert?.classList.add('active');
   }
 
@@ -594,6 +603,13 @@ function initHistoryPicker() {
   async function doSearch(verb, showPolite, showNegative, pushState = true) {
     verb = verb.trim();
     if (!verb) return;
+
+    // Non-Japanese detection — one regex, no server round-trip needed
+    if (!/[぀-ヿ一-鿿]/.test(verb)) {
+      removeCards();
+      showError('search_alert_not_japanese');
+      return;
+    }
 
     // Bug 7: cancel any in-flight request
     if (currentController) currentController.abort();

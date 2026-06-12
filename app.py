@@ -3,6 +3,7 @@ import json
 import re
 import time
 import calendar
+import sqlite3
 import urllib.request
 import urllib.parse
 import xml.etree.ElementTree as ET
@@ -64,6 +65,34 @@ def to_ruby(text):
     return result
 
 load_dotenv()
+
+# =====================
+# SEARCH STATS — SQLite
+# Tracks successful verb searches (verb + count, anonymous).
+# DB file sits next to app.py; export to CSV anytime for Google Sheets.
+# =====================
+_STATS_DB = os.path.join(os.path.dirname(__file__), "verb_stats.db")
+
+def _init_stats_db():
+    with sqlite3.connect(_STATS_DB) as conn:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS verb_searches (
+                verb  TEXT PRIMARY KEY,
+                count INTEGER NOT NULL DEFAULT 0
+            )
+        """)
+
+_init_stats_db()
+
+def _track_search(verb):
+    try:
+        with sqlite3.connect(_STATS_DB) as conn:
+            conn.execute("""
+                INSERT INTO verb_searches (verb, count) VALUES (?, 1)
+                ON CONFLICT(verb) DO UPDATE SET count = count + 1
+            """, (verb,))
+    except Exception:
+        pass  # never let tracking break a real request
 
 app = Flask(__name__)
 
@@ -158,6 +187,7 @@ def _conjugate(user_verb):
 
     v = Verb(user_verb)
     v.polite().negative()
+    _track_search(user_verb)
     return user_verb, {k: to_ruby(val) for k, val in v.forms.items()}
 
 
