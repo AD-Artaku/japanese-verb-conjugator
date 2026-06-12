@@ -1,5 +1,12 @@
 import os
 import json
+import re
+import time
+import calendar
+import urllib.request
+import urllib.parse
+import xml.etree.ElementTree as ET
+from email.utils import parsedate
 import pykakasi
 from flask import Flask, render_template, request, jsonify
 from flask_mail import Mail, Message
@@ -248,6 +255,150 @@ def api_search():
 @app.route("/devlog")
 def devlog():
     return render_template("devlog.html")
+
+
+# =====================
+# RESUME PAGE
+# =====================
+@app.route("/resume")
+def resume():
+    return render_template("resume.html")
+
+
+@app.route("/resume/print")
+def resume_print():
+    return render_template("resume_print.html")
+
+@app.route("/resume/print/en")
+def resume_print_en():
+    return render_template("resume_print_en.html")
+
+@app.route("/resume/download")
+def resume_download():
+    from flask import send_from_directory
+    return send_from_directory(
+        app.static_folder,
+        "職務経歴書_チョウ_エリック.pdf",
+        as_attachment=True,
+        download_name="職務経歴書_チョウ_エリック.pdf"
+    )
+
+@app.route("/resume/download/en")
+def resume_download_en():
+    from flask import send_from_directory
+    return send_from_directory(
+        app.static_folder,
+        "職務経歴書_チョウ_エリック_EN.pdf",
+        as_attachment=True,
+        download_name="職務経歴書_チョウ_エリック_EN.pdf"
+    )
+
+
+# =====================
+# PORTFOLIO PAGE
+# Fetches the ArtStation RSS feed, parses artwork entries,
+# and caches results for 30 min to avoid hitting ArtStation on every load.
+# =====================
+_portfolio_cache = {"data": None, "ts": 0}
+_PORTFOLIO_TTL   = 1800  # seconds
+
+def _fetch_portfolio(limit=12):
+    now = time.time()
+    if _portfolio_cache["data"] and now - _portfolio_cache["ts"] < _PORTFOLIO_TTL:
+        return _portfolio_cache["data"]
+
+    url = "https://www.artstation.com/eric_chou.rss"
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=8) as resp:
+        root = ET.fromstring(resp.read())
+
+    import html as _html
+    content_ns = "http://purl.org/rss/1.0/modules/content/"
+    items = []
+    for item in root.iter("item"):
+        title    = item.findtext("title") or ""
+        link     = item.findtext("link")  or ""
+        pub_date = item.findtext("pubDate") or ""
+
+        # Images live in <content:encoded>, entity-encoded — decode first
+        encoded_el   = item.find(f"{{{content_ns}}}encoded")
+        encoded_text = _html.unescape(encoded_el.text) if (encoded_el is not None and encoded_el.text) else ""
+
+        m = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', encoded_text)
+        raw_url    = m.group(1).split("?")[0] if m else ""  # strip cache-buster
+
+        # RSS already gives /large/ URLs; derive smaller sizes from it
+        large_url  = raw_url
+        medium_url = raw_url.replace("/large/", "/medium/")
+        small_url  = raw_url.replace("/large/", "/small/")
+
+        def _proxy(u):
+            if not u:
+                return ""
+            return "/portfolio/img?url=" + urllib.parse.quote(u, safe="")
+
+        try:
+            parts    = parsedate(pub_date)
+            date_str = f"{calendar.month_abbr[parts[1]]} {parts[0]}"
+        except Exception:
+            date_str = ""
+
+        items.append({
+            "title": title, "link": link, "date": date_str,
+            "large_url":  _proxy(large_url),
+            "medium_url": _proxy(medium_url),
+            "small_url":  _proxy(small_url),
+        })
+        if len(items) >= limit:
+            break
+
+    _portfolio_cache["data"] = items
+    _portfolio_cache["ts"]   = now
+    return items
+
+
+@app.route("/portfolio/img")
+def portfolio_img():
+    url = request.args.get("url", "")
+    if not (url.startswith("https://cdna.artstation.com/") or
+            url.startswith("https://cdnb.artstation.com/")):
+        return "", 400
+    try:
+        req = urllib.request.Request(url, headers={
+            "User-Agent": "Mozilla/5.0",
+            "Referer":    "https://www.artstation.com/",
+        })
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data         = resp.read()
+            content_type = resp.headers.get("Content-Type", "image/jpeg")
+        from flask import Response
+        r = Response(data, content_type=content_type)
+        r.headers["Cache-Control"] = "public, max-age=86400"
+        return r
+    except Exception:
+        return "", 404
+
+
+@app.route("/portfolio")
+def portfolio():
+    try:
+        pieces = _fetch_portfolio(limit=12)
+    except Exception:
+        pieces = []
+
+    # Pin the nanba piece as the featured hero; fall back to first item
+    featured_idx = 0
+    for i, p in enumerate(pieces):
+        if "nanba" in p["title"].lower() or "namba" in p["title"].lower() or "なんば" in p["title"] or "難波" in p["title"]:
+            featured_idx = i
+            break
+
+    featured = pieces[featured_idx] if pieces else None
+    rest     = [p for i, p in enumerate(pieces) if i != featured_idx]
+    side     = rest[:3]
+    grid     = rest[3:]
+
+    return render_template("portfolio.html", featured=featured, side=side, grid=grid)
 
 
 # =====================

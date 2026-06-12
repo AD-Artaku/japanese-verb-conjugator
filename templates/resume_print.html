@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>職務経歴書 – チョウ エリック</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4;
+      margin: 12mm 14mm;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Force browsers to print background colors & images */
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', 'Inter', sans-serif;
+      font-size: 8.5pt;
+      color: #111827;
+      background: #fff;
+      line-height: 1.55;
+    }
+
+    a { color: #374151; text-decoration: none; }
+
+    /* ── Screen preview wrapper ── */
+    @media screen {
+      body {
+        background: #e8eaf0;
+        padding: 32px 16px 60px;
+      }
+      .page {
+        background: #fff;
+        width: 794px;
+        margin: 0 auto;
+        padding: 34px 42px 34px;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+        border-radius: 4px;
+        position: relative;
+      }
+      .print-btn {
+        position: fixed;
+        bottom: 24px;
+        right: 28px;
+        background: #3355FF;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 12px 26px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: 'Inter', 'Noto Sans JP', sans-serif;
+        box-shadow: 0 4px 18px rgba(51,85,255,0.40);
+        letter-spacing: 0.02em;
+        transition: background 0.15s;
+        z-index: 100;
+      }
+      .print-btn:hover { background: #2244ee; }
+      .back-btn {
+        position: fixed;
+        bottom: 24px;
+        right: 200px;
+        background: #fff;
+        color: #3355FF;
+        border: 2px solid #3355FF;
+        border-radius: 10px;
+        padding: 10px 22px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: 'Inter', 'Noto Sans JP', sans-serif;
+        letter-spacing: 0.02em;
+        transition: all 0.15s;
+        z-index: 100;
+        text-decoration: none;
+      }
+      .back-btn:hover { background: #f0f3ff; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { padding: 0; }
+      .print-btn, .back-btn { display: none; }
+    }
+
+    /* ── HEADER ── */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #d1d5db;
+      margin-bottom: 22px;
+    }
+
+    .header-left {}
+
+    .name-ja {
+      font-size: 22pt;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: #3355FF;
+      line-height: 1.1;
+    }
+
+    .name-en {
+      font-size: 8pt;
+      font-weight: 500;
+      color: #6b7280;
+      letter-spacing: 0.12em;
+      margin-top: 2px;
+    }
+
+    .titles {
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #4b5563;
+      margin-top: 5px;
+      letter-spacing: 0.03em;
+    }
+
+    .title-div {
+      font-weight: 900;
+      font-size: 10pt;
+      opacity: 0.5;
+      margin: 0 3px;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 7.5pt;
+      color: #374151;
+      line-height: 1.85;
+    }
+
+    .header-right .contact-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 5px;
+    }
+
+    .contact-icon {
+      font-size: 7pt;
+      color: #9ca3af;
+      width: 10px;
+      text-align: center;
+    }
+
+    /* ── DATE STAMP ── */
+    .date-stamp {
+      font-size: 7pt;
+      color: #9ca3af;
+      text-align: right;
+      margin-bottom: 10px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── BODY 2-COL ── */
+    .body-layout {
+      display: grid;
+      grid-template-columns: 185px 1fr;
+      gap: 18px;
+    }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-size: 8pt;
+      font-weight: 800;
+      color: #3355FF;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      border-bottom: 1px solid #d1d5db;
+      padding-bottom: 3px;
+      margin-bottom: 9px;
+    }
+
+    .section { margin-bottom: 20px; }
+    .section:last-child { margin-bottom: 0; }
+
+    /* ── SKILLS ── */
+    .skill-group { margin-bottom: 8px; }
+    .skill-group:last-child { margin-bottom: 0; }
+
+    .skill-label {
+      font-size: 7pt;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .skill-tag {
+      font-size: 6.5pt;
+      font-weight: 500;
+      background: #f3f4f6;
+      color: #374151;
+      border-radius: 3px;
+      padding: 2px 6px;
+      line-height: 1.4;
+    }
+
+    /* ── LANGUAGES ── */
+    .lang-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .lang-pill {
+      font-size: 6.5pt;
+      font-weight: 700;
+      border-radius: 3px;
+      padding: 2px 7px;
+      line-height: 1.4;
+    }
+
+    .lang-native {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .lang-learning {
+      background: #f3f4f6;
+      color: #374151;
+      font-weight: 600;
+    }
+
+    .lang-cert {
+      background: #f3f4f6;
+      color: #374151;
+      font-weight: 600;
+    }
+
+    /* ── EDUCATION ── */
+    .edu-item { margin-bottom: 7px; }
+    .edu-item:last-child { margin-bottom: 0; }
+
+    .edu-year {
+      font-size: 6.5pt;
+      font-weight: 700;
+      color: #3355FF;
+      letter-spacing: 0.04em;
+    }
+
+    .edu-school {
+      font-size: 7.5pt;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.3;
+      margin-top: 1px;
+    }
+
+    .edu-detail {
+      font-size: 7pt;
+      color: #6b7280;
+      margin-top: 1px;
+    }
+
+    .edu-awards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-top: 4px;
+    }
+
+    .award-badge {
+      font-size: 6pt;
+      font-weight: 700;
+      background: rgba(51,85,255,0.09);
+      color: #3355FF;
+      border: 0.75px solid rgba(51,85,255,0.28);
+      border-radius: 3px;
+      padding: 1px 5px;
+    }
+
+    /* ── JOB ENTRIES ── */
+    .job { padding-bottom: 14px; margin-bottom: 14px; border-bottom: 0.75px dashed #e5e7eb; }
+    .job:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .company {
+      font-size: 10pt;
+      font-weight: 800;
+      color: #111827;
+      line-height: 1.1;
+    }
+
+    .job-featured .company {
+      color: #111827;
+    }
+
+    .period {
+      font-size: 6.5pt;
+      color: #9ca3af;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .role {
+      font-size: 8pt;
+      font-weight: 600;
+      color: #4b5563;
+      margin-top: 3px;
+    }
+
+
+    .client-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-top: 5px;
+      margin-bottom: 7px;
+    }
+
+    /* default client badge — grey */
+    .client-badge {
+      font-size: 6pt;
+      font-weight: 700;
+      background: #e5e7eb;
+      color: #374151;
+      border-radius: 3px;
+      padding: 1.5px 6px;
+    }
+
+    /* Gadget-Bot featured — award badge style */
+    .job-featured .client-badge {
+      background: rgba(51,85,255,0.09);
+      color: #3355FF;
+      border: 0.75px solid rgba(51,85,255,0.28);
+    }
+
+    .job-desc {
+      font-size: 7.5pt;
+      color: #374151;
+      margin-top: 7px;
+      line-height: 1.6;
+    }
+
+    .job-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-top: 8px;
+    }
+
+    /* default job tag — grey */
+    .job-tag {
+      font-size: 6pt;
+      font-weight: 600;
+      color: #4b5563;
+      background: #f3f4f6;
+      border: 0.75px solid #e5e7eb;
+      border-radius: 3px;
+      padding: 1.5px 5px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Screen-only buttons -->
+  <a href="/resume" class="back-btn">← 戻る</a>
+  <button class="print-btn" onclick="window.print()">PDF として保存 ↓</button>
+
+  <div class="page">
+
+    <!-- DATE -->
+    <div class="date-stamp">作成日：2026年6月</div>
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-left">
+        <div class="name-ja">チョウ　エリック</div>
+        <div class="titles">
+          アートディレクター
+          <span class="title-div">｜</span>
+          コンセプトアーティスト
+          <span class="title-div">｜</span>
+          グラフィックデザイナー
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="contact-row">
+          <span class="contact-icon">◎</span>
+          京都府京都市右京区
+        </div>
+        <div class="contact-row">
+          <span class="contact-icon">☎</span>
+          070-9446-2574
+        </div>
+        <div class="contact-row">
+          <span class="contact-icon">✉</span>
+          ericchou12345@gmail.com
+        </div>
+        <div class="contact-row">
+          <span class="contact-icon">▶</span>
+          <a href="https://eric_chou.artstation.com">artstation.com/eric_chou</a>
+        </div>
+        <div class="contact-row">
+          <span class="contact-icon">in</span>
+          <a href="https://linkedin.com/in/ericchou99">linkedin.com/in/ericchou99</a>
+        </div>
+        <div class="contact-row">
+          <span class="contact-icon">⌥</span>
+          <a href="https://github.com/AD-Artaku">github.com/AD-Artaku</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="body-layout">
+
+      <!-- ── LEFT COLUMN ── -->
+      <div>
+
+        <!-- Skills -->
+        <div class="section">
+          <div class="section-title">スキル</div>
+
+          <div class="skill-group">
+            <div class="skill-label">デザイン・アート</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Adobe Photoshop</span>
+              <span class="skill-tag">Figma</span>
+              <span class="skill-tag">Adobe Illustrator</span>
+              <span class="skill-tag">Blender 3D</span>
+              <span class="skill-tag">Unreal Engine 5</span>
+              <span class="skill-tag">コンセプトアート</span>
+              <span class="skill-tag">絵コンテ</span>
+              <span class="skill-tag">デジタル画</span>
+              <span class="skill-tag">アナログ画</span>
+              <span class="skill-tag">マンガ</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-label">Web・開発</div>
+            <div class="skill-tags">
+              <span class="skill-tag">HTML / CSS</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Flask</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">UI/UX デザイン</span>
+              <span class="skill-tag">Webデザイン</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Languages -->
+        <div class="section">
+          <div class="section-title">言語</div>
+          <div class="lang-pills">
+            <span class="lang-pill lang-native">英語 (母語)</span>
+            <span class="lang-pill lang-native">中国語 (母語)</span>
+            <span class="lang-pill lang-learning">日本語 (学習中)</span>
+            <span class="lang-pill lang-cert">JLPT N2</span>
+            <span class="lang-pill lang-cert">BJT J3 (412点)</span>
+          </div>
+        </div>
+
+        <!-- Education -->
+        <div class="section">
+          <div class="section-title">学歴</div>
+
+          <div class="edu-item">
+            <div class="edu-year">在学中</div>
+            <div class="edu-school">京都民際日本語学校</div>
+            <div class="edu-detail">特集進学クラス (N1向け) ／ 京都市</div>
+          </div>
+
+          <div class="edu-item">
+            <div class="edu-year">2020 – 2021</div>
+            <div class="edu-school">John Park / Joon Ahn<br>メンタープログラム</div>
+            <div class="edu-detail">コンセプトアート 週次個別指導</div>
+          </div>
+
+          <div class="edu-item">
+            <div class="edu-year">2019 – 2020 (中退)</div>
+            <div class="edu-school">OTIS College of Art and Design</div>
+            <div class="edu-detail">イラストレーション専攻<br>ロサンゼルス、CA</div>
+          </div>
+
+          <div class="edu-item">
+            <div class="edu-year">2018</div>
+            <div class="edu-school">Rowland High School</div>
+            <div class="edu-detail">高等学校卒業 ／ ローランドハイツ、CA</div>
+            <div class="edu-awards">
+              <span class="award-badge">🏆 全米議会芸術コンペ 2位</span>
+              <span class="award-badge">⭐ スコラスティック・アート賞</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ── RIGHT COLUMN ── -->
+      <div>
+        <div class="section">
+          <div class="section-title">職務経歴</div>
+
+          <!-- TelyRx -->
+          <div class="job">
+            <div class="job-header">
+              <div class="company">TelyRx</div>
+              <div class="period">2025年3月 – 2025年5月　｜　リモート (アメリカ)</div>
+            </div>
+            <div class="role">シニア UI/UX デザイナー</div>
+            <div class="job-desc">
+              急成長中のテレヘルス企業において、唯一のUI/UXデザイナーとしてウェブサイトのフルリデザインおよびモバイルアプリのUI/UX設計をリード。ユーザーが必要なサービスへ最小限の摩擦でアクセスできる、モダンで直感的なデジタル体験の構築を担当しました。<br><br>
+              マーケティングチームと密に連携し、プロモーション・CM素材のアートディレクションをメインサイトへ統合。SNSからウェブサイトへのシームレスなビジュアルパイプラインを実現しました。また、Magento LUMAの既存アーキテクチャという制約と厳しい納期のなかで、処方者ポータル・患者ポータル・ペット製品ページなど複数のバックエンドUIを並行して設計・更新しました。<br><br>
+              担当プロジェクトの完遂をもって契約満了。在職期間は短かったものの、チームとともに成し遂げた成果を誇りに思っており、担当期間中に会社が顕著な成長を遂げたことを心から嬉しく思っています。
+            </div>
+            <div class="job-tags">
+              <span class="job-tag">UI/UX</span>
+              <span class="job-tag">Figma</span>
+              <span class="job-tag">Webリデザイン</span>
+              <span class="job-tag">Magento Luma</span>
+              <span class="job-tag">アートディレクション</span>
+            </div>
+          </div>
+
+          <!-- Freelance -->
+          <div class="job">
+            <div class="job-header">
+              <div class="company">フリーランス</div>
+              <div class="period">2022年2月 – 現在　｜　アメリカ・日本・中国</div>
+            </div>
+            <div class="role">イラストレーター ／ グラフィックデザイナー</div>
+            <div class="job-desc">
+              書籍カバーデザイン、eスポーツチーム向けSNSビジュアル制作、風景画・写真撮影など幅広いクリエイティブワークを手がける。アメリカ・日本・中国にわたる活動を通じて、多様な文化的感性とデザイン表現を磨き、次世代のデザイナーへのメンタリングも並行して実施。
+            </div>
+            <div class="job-tags">
+              <span class="job-tag">イラスト</span>
+              <span class="job-tag">グラフィックデザイン</span>
+              <span class="job-tag">SNSビジュアル</span>
+              <span class="job-tag">写真</span>
+            </div>
+          </div>
+
+          <!-- NETVRK -->
+          <div class="job">
+            <div class="job-header">
+              <div class="company">NETVRK</div>
+              <div class="period">2021年9月 – 2022年2月　｜　リモート (カリフォルニア)</div>
+            </div>
+            <div class="role">アートディレクター ／ 環境コンセプトアーティスト</div>
+            <div class="job-desc">
+              メタバースプロジェクトのアートディレクションを主導。ウェブサイト・全SNSチャンネルにわたるブランドアイデンティティの構築、プリプロダクション段階のルック開発、3Dアーティスト支援用コンセプトアートの制作を担当。NFT購買ポータルのUI/UX設計にも従事。
+            </div>
+            <div class="job-tags">
+              <span class="job-tag">アートディレクション</span>
+              <span class="job-tag">コンセプトアート</span>
+              <span class="job-tag">UI/UX</span>
+              <span class="job-tag">ブランディング</span>
+            </div>
+          </div>
+
+          <!-- Gadget-Bot (featured) -->
+          <div class="job job-featured">
+            <div class="job-header">
+              <div class="company">Gadget-Bot Productions</div>
+              <div class="period">2021年2月 – 2021年7月　｜　リモート (カリフォルニア)</div>
+            </div>
+            <div class="role">環境コンセプトアーティスト</div>
+            <div class="client-badges">
+              <span class="client-badge">★ Activision Treyarch (Microsoft)</span>
+              <span class="client-badge">Call of Duty: Cold War</span>
+              <span class="client-badge">Call of Duty: Vanguard</span>
+              <span class="client-badge">Apex Legends (EA)</span>
+            </div>
+            <div class="job-desc">
+              Activision Treyarch (現Microsoft傘下)のプロダクションデザイナーと直接連携し、Call of Duty: Cold Warのゾンビマップビジュアル開発を主導。自分の原案デザインをチームの制作基準として提供しながら、背景コンセプトアートを量産。Call of Duty: Vanguardではプロップ・パークマシンのデザインを担当し、Apex Legends (EA)向けエモート・プロモーションアートも制作。
+            </div>
+            <div class="job-tags">
+              <span class="job-tag">環境コンセプトアート</span>
+              <span class="job-tag">プロップデザイン</span>
+              <span class="job-tag">原案デザイン</span>
+              <span class="job-tag">AAAゲーム</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /body-layout -->
+
+  </div><!-- /page -->
+
+</body>
+</html>

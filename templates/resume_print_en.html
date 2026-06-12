@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume – Eric Chou</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4;
+      margin: 12mm 14mm;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      font-size: 8.5pt;
+      color: #111827;
+      background: #fff;
+      line-height: 1.55;
+    }
+
+    a { color: #374151; text-decoration: none; }
+
+    @media screen {
+      body {
+        background: #e8eaf0;
+        padding: 32px 16px 60px;
+      }
+      .page {
+        background: #fff;
+        width: 794px;
+        margin: 0 auto;
+        padding: 34px 42px 34px;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+        border-radius: 4px;
+        position: relative;
+      }
+      .print-btn {
+        position: fixed;
+        bottom: 24px;
+        right: 28px;
+        background: #3355FF;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 12px 26px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        box-shadow: 0 4px 18px rgba(51,85,255,0.40);
+        letter-spacing: 0.02em;
+        transition: background 0.15s;
+        z-index: 100;
+      }
+      .print-btn:hover { background: #2244ee; }
+      .back-btn {
+        position: fixed;
+        bottom: 24px;
+        right: 210px;
+        background: #fff;
+        color: #3355FF;
+        border: 2px solid #3355FF;
+        border-radius: 10px;
+        padding: 10px 22px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        letter-spacing: 0.02em;
+        transition: all 0.15s;
+        z-index: 100;
+        text-decoration: none;
+      }
+      .back-btn:hover { background: #f0f3ff; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { padding: 0; }
+      .print-btn, .back-btn { display: none; }
+    }
+
+    /* ── HEADER ── */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #d1d5db;
+      margin-bottom: 22px;
+    }
+
+    .name-ja {
+      font-size: 22pt;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      color: #3355FF;
+      line-height: 1.1;
+    }
+
+    .titles {
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #4b5563;
+      margin-top: 5px;
+      letter-spacing: 0.03em;
+    }
+
+    .title-div {
+      font-weight: 900;
+      font-size: 10pt;
+      opacity: 0.5;
+      margin: 0 3px;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 7.5pt;
+      color: #374151;
+      line-height: 1.85;
+    }
+
+    .header-right .contact-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 5px;
+    }
+
+    .contact-icon {
+      font-size: 7pt;
+      color: #9ca3af;
+      width: 10px;
+      text-align: center;
+    }
+
+    /* ── DATE STAMP ── */
+    .date-stamp {
+      font-size: 7pt;
+      color: #9ca3af;
+      text-align: right;
+      margin-bottom: 10px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── BODY 2-COL ── */
+    .body-layout {
+      display: grid;
+      grid-template-columns: 185px 1fr;
+      gap: 18px;
+    }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-size: 8pt;
+      font-weight: 800;
+      color: #3355FF;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      border-bottom: 1px solid #d1d5db;
+      padding-bottom: 3px;
+      margin-bottom: 9px;
+    }
+
+    .section { margin-bottom: 20px; }
+    .section:last-child { margin-bottom: 0; }
+
+    /* ── SKILLS ── */
+    .skill-group { margin-bottom: 8px; }
+    .skill-group:last-child { margin-bottom: 0; }
+
+    .skill-label {
+      font-size: 7pt;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 3px; }
+
+    .skill-tag {
+      font-size: 6.5pt;
+      font-weight: 500;
+      background: #f3f4f6;
+      color: #374151;
+      border-radius: 3px;
+      padding: 2px 6px;
+      line-height: 1.4;
+    }
+
+    /* ── LANGUAGES ── */
+    .lang-pills { display: flex; flex-wrap: wrap; gap: 3px; }
+
+    .lang-pill {
+      font-size: 6.5pt;
+      font-weight: 600;
+      border-radius: 3px;
+      padding: 2px 7px;
+      line-height: 1.4;
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    /* ── EDUCATION ── */
+    .edu-item { margin-bottom: 7px; }
+    .edu-item:last-child { margin-bottom: 0; }
+
+    .edu-year {
+      font-size: 6.5pt;
+      font-weight: 700;
+      color: #3355FF;
+      letter-spacing: 0.04em;
+    }
+
+    .edu-school {
+      font-size: 7.5pt;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.3;
+      margin-top: 1px;
+    }
+
+    .edu-detail {
+      font-size: 7pt;
+      color: #6b7280;
+      margin-top: 1px;
+    }
+
+    .edu-awards { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 4px; }
+
+    .award-badge {
+      font-size: 6pt;
+      font-weight: 700;
+      background: rgba(51,85,255,0.09);
+      color: #3355FF;
+      border: 0.75px solid rgba(51,85,255,0.28);
+      border-radius: 3px;
+      padding: 1px 5px;
+    }
+
+    /* ── JOB ENTRIES ── */
+    .job { padding-bottom: 14px; margin-bottom: 14px; border-bottom: 0.75px dashed #e5e7eb; }
+    .job:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .company {
+      font-size: 10pt;
+      font-weight: 800;
+      color: #111827;
+      line-height: 1.1;
+    }
+
+    .period {
+      font-size: 6.5pt;
+      color: #9ca3af;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .role {
+      font-size: 8pt;
+      font-weight: 600;
+      color: #4b5563;
+      margin-top: 3px;
+    }
+
+    .client-badges { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 5px; margin-bottom: 7px; }
+
+    .client-badge {
+      font-size: 6pt;
+      font-weight: 700;
+      background: rgba(51,85,255,0.09);
+      color: #3355FF;
+      border: 0.75px solid rgba(51,85,255,0.28);
+      border-radius: 3px;
+      padding: 1.5px 6px;
+    }
+
+    .job-desc {
+      font-size: 7.5pt;
+      color: #374151;
+      margin-top: 7px;
+      line-height: 1.6;
+    }
+
+    .job-tags { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 8px; }
+
+    .job-tag {
+      font-size: 6pt;
+      font-weight: 600;
+      color: #4b5563;
+      background: #f3f4f6;
+      border: 0.75px solid #e5e7eb;
+      border-radius: 3px;
+      padding: 1.5px 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="/resume" class="back-btn">← Back</a>
+  <button class="print-btn" onclick="window.print()">Save as PDF ↓</button>
+
+  <div class="page">
+
+    <div class="date-stamp">June 2026</div>
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-left">
+        <div class="name-ja">Eric Chou</div>
+        <div class="titles">
+          Art Director
+          <span class="title-div">|</span>
+          Concept Artist
+          <span class="title-div">|</span>
+          Graphic Designer
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="contact-row"><span class="contact-icon">◎</span> Ukyo-ku, Kyoto, Japan</div>
+        <div class="contact-row"><span class="contact-icon">☎</span> +81 70-9446-2574</div>
+        <div class="contact-row"><span class="contact-icon">✉</span> ericchou12345@gmail.com</div>
+        <div class="contact-row"><span class="contact-icon">▶</span> <a href="https://eric_chou.artstation.com">artstation.com/eric_chou</a></div>
+        <div class="contact-row"><span class="contact-icon">in</span> <a href="https://linkedin.com/in/ericchou99">linkedin.com/in/ericchou99</a></div>
+        <div class="contact-row"><span class="contact-icon">⌥</span> <a href="https://github.com/AD-Artaku">github.com/AD-Artaku</a></div>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="body-layout">
+
+      <!-- ── LEFT COLUMN ── -->
+      <div>
+
+        <div class="section">
+          <div class="section-title">Skills</div>
+
+          <div class="skill-group">
+            <div class="skill-label">Design & Art</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Adobe Photoshop</span>
+              <span class="skill-tag">Figma</span>
+              <span class="skill-tag">Adobe Illustrator</span>
+              <span class="skill-tag">Blender 3D</span>
+              <span class="skill-tag">Unreal Engine 5</span>
+              <span class="skill-tag">Concept Art</span>
+              <span class="skill-tag">Storyboarding</span>
+              <span class="skill-tag">Digital Painting</span>
+              <span class="skill-tag">Traditional Art</span>
+              <span class="skill-tag">Manga</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-label">Web & Dev</div>
+            <div class="skill-tags">
+              <span class="skill-tag">HTML / CSS</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Flask</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">UI/UX Design</span>
+              <span class="skill-tag">Web Design</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Languages</div>
+          <div class="lang-pills">
+            <span class="lang-pill">English (Native)</span>
+            <span class="lang-pill">Mandarin (Native)</span>
+            <span class="lang-pill">Japanese (Learning)</span>
+            <span class="lang-pill">JLPT N2</span>
+            <span class="lang-pill">BJT J3 (412 pts)</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Education</div>
+
+          <div class="edu-item">
+            <div class="edu-year">Current</div>
+            <div class="edu-school">Kyoto Saijou Japanese Language School</div>
+            <div class="edu-detail">Advanced Studies Class (N1 Track) / Kyoto</div>
+          </div>
+
+          <div class="edu-item">
+            <div class="edu-year">2020 – 2021</div>
+            <div class="edu-school">John Park / Joon Ahn<br>Mentor Program</div>
+            <div class="edu-detail">Weekly one-on-one concept art mentorship</div>
+          </div>
+
+          <div class="edu-item">
+            <div class="edu-year">2019 – 2020 (Withdrew)</div>
+            <div class="edu-school">OTIS College of Art and Design</div>
+            <div class="edu-detail">Illustration Major / Los Angeles, CA</div>
+          </div>
+
+          <div class="edu-item">
+            <div class="edu-year">2018</div>
+            <div class="edu-school">Rowland High School</div>
+            <div class="edu-detail">Graduated / Rowland Heights, CA</div>
+            <div class="edu-awards">
+              <span class="award-badge">🏆 Congressional Art Competition,<br>2nd Place</span>
+              <span class="award-badge">⭐ Scholastic Art Award,<br>Honorable Mention</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ── RIGHT COLUMN ── -->
+      <div>
+        <div class="section">
+          <div class="section-title">Work Experience</div>
+
+          <!-- TelyRx -->
+          <div class="job">
+            <div class="job-header">
+              <div class="company">TelyRx</div>
+              <div class="period">Mar 2025 – May 2025 &nbsp;|&nbsp; Remote (USA)</div>
+            </div>
+            <div class="role">Senior UI/UX Designer</div>
+            <div class="job-desc">
+              As the sole UI/UX designer at a fast-growing telehealth company, led the full website redesign and mobile app UI/UX — building a modern, intuitive digital experience that minimizes friction for users accessing healthcare services.<br><br>
+              Worked closely with the marketing team to art direct promotional and commercial materials integrated into the main site, creating a seamless visual pipeline from social media to web. Designed and updated multiple backend UIs concurrently — including prescriber portals, patient portals, and pet product pages — within the constraints of Magento LUMA's existing architecture and tight deadlines.<br><br>
+              Contract concluded upon project completion. Proud of what the team accomplished, and genuinely happy to see the company's significant growth during my tenure.
+            </div>
+            <div class="job-tags">
+              <span class="job-tag">UI/UX</span>
+              <span class="job-tag">Figma</span>
+              <span class="job-tag">Web Redesign</span>
+              <span class="job-tag">Magento Luma</span>
+              <span class="job-tag">Art Direction</span>
+            </div>
+          </div>
+
+          <!-- Freelance -->
+          <div class="job">
+            <div class="job-header">
+              <div class="company">Freelance</div>
+              <div class="period">Feb 2022 – Present &nbsp;|&nbsp; USA · Japan · China</div>
+            </div>
+            <div class="role">Illustrator / Graphic Designer</div>
+            <div class="job-desc">
+              Handled a wide range of creative work including book cover design, esports team social media visuals, landscape art, and photography. Built a diverse design sensibility through work spanning the US, Japan, and China, while also mentoring the next generation of designers.
+            </div>
+            <div class="job-tags">
+              <span class="job-tag">Illustration</span>
+              <span class="job-tag">Graphic Design</span>
+              <span class="job-tag">Social Media Visuals</span>
+              <span class="job-tag">Photography</span>
+            </div>
+          </div>
+
+          <!-- NETVRK -->
+          <div class="job">
+            <div class="job-header">
+              <div class="company">NETVRK</div>
+              <div class="period">Sep 2021 – Feb 2022 &nbsp;|&nbsp; Remote (California)</div>
+            </div>
+            <div class="role">Art Director / Environment Concept Artist</div>
+            <div class="job-desc">
+              Led art direction for a metaverse project. Responsible for building brand identity across the website and all social channels, visual look development in pre-production, creating concept art to support 3D artists, and designing the UI/UX for an NFT purchase portal.
+            </div>
+            <div class="job-tags">
+              <span class="job-tag">Art Direction</span>
+              <span class="job-tag">Concept Art</span>
+              <span class="job-tag">UI/UX</span>
+              <span class="job-tag">Branding</span>
+            </div>
+          </div>
+
+          <!-- Gadget-Bot -->
+          <div class="job job-featured">
+            <div class="job-header">
+              <div class="company">Gadget-Bot Productions</div>
+              <div class="period">Feb 2021 – Jul 2021 &nbsp;|&nbsp; Remote (California)</div>
+            </div>
+            <div class="role">Environment Concept Artist</div>
+            <div class="client-badges">
+              <span class="client-badge">★ Activision Treyarch (Microsoft)</span>
+              <span class="client-badge">Call of Duty: Cold War</span>
+              <span class="client-badge">Call of Duty: Vanguard</span>
+              <span class="client-badge">Apex Legends (EA)</span>
+            </div>
+            <div class="job-desc">
+              Worked directly with production designers at Activision Treyarch (now under Microsoft) to lead visual development for the Call of Duty: Cold War zombie map. Provided original reference designs that served as the team's production standard, producing background concept art at volume. Designed props and park machines for Call of Duty: Vanguard, and created emote and promotional art for Apex Legends (EA).
+            </div>
+            <div class="job-tags">
+              <span class="job-tag">Environment Concept Art</span>
+              <span class="job-tag">Prop Design</span>
+              <span class="job-tag">Reference Design</span>
+              <span class="job-tag">AAA Games</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

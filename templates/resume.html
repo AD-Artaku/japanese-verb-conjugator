@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>履歴書 – Eric Chou</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+</head>
+<body class="resume-page">
+
+  <!-- Background -->
+  <div class="bg-image resume-bg"></div>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-inner">
+
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="メニューを開く">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="5" width="20" height="2" rx="1" fill="currentColor"/>
+          <rect x="2" y="11" width="20" height="2" rx="1" fill="currentColor"/>
+          <rect x="2" y="17" width="20" height="2" rx="1" fill="currentColor"/>
+        </svg>
+      </button>
+
+      <a href="/" class="nav-logo">
+        <div class="logo-mark">
+          <div class="logo-top"></div>
+          <div class="logo-mid"></div>
+          <div class="logo-bot"></div>
+        </div>
+        <span class="logo-text">Eric Chou</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="/portfolio" class="nav-link" data-i18n="nav_portfolio">ポートフォリオ</a>
+        <a href="/resume" class="nav-link active-page" data-i18n="nav_resume">履歴書</a>
+        <a href="/devlog" class="nav-link" data-i18n="nav_devlog">開発ログ</a>
+        <a href="https://github.com/AD-Artaku" class="nav-link">GitHub</a>
+        <a href="https://www.youtube.com/@Artaku_" class="nav-link nav-link-icon youtube" target="_blank" rel="noopener">
+          <i class="fa-brands fa-youtube"></i> Artaku
+        </a>
+        <a href="https://www.instagram.com/ericc.design" class="nav-link nav-link-icon instagram" target="_blank" rel="noopener">
+          <i class="fa-brands fa-instagram"></i> ericc.design
+        </a>
+      </div>
+
+      <div class="nav-pickers">
+        <div class="lang-picker">
+          <button class="lang-toggle" id="lang-toggle">
+            <i class="fa-regular fa-globe"></i> 日本語
+          </button>
+        </div>
+      </div>
+
+      <div class="nav-mobile-menu" id="nav-mobile-menu">
+        <a href="/portfolio" class="nav-mobile-item">
+          <span class="item-label" data-i18n="nav_portfolio">ポートフォリオ</span>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
+        </a>
+        <a href="/resume" class="nav-mobile-item">
+          <span class="item-label" data-i18n="nav_resume">履歴書</span>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
+        </a>
+        <a href="/devlog" class="nav-mobile-item">
+          <span class="item-label" data-i18n="nav_devlog">開発ログ</span>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
+        </a>
+        <a href="https://github.com/AD-Artaku" class="nav-mobile-item" target="_blank" rel="noopener">
+          <span class="item-label">GitHub</span>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
+        </a>
+        <a href="https://www.youtube.com/@Artaku_" class="nav-mobile-item youtube" target="_blank" rel="noopener">
+          <i class="fa-brands fa-youtube"></i>
+          <span class="item-label">Artaku</span>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
+        </a>
+        <a href="https://www.instagram.com/ericc.design" class="nav-mobile-item instagram" target="_blank" rel="noopener">
+          <i class="fa-brands fa-instagram"></i>
+          <span class="item-label">ericc.design</span>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
+        </a>
+      </div>
+
+    </div>
+    <div class="nav-border"></div>
+  </nav>
+
+  <div class="nav-mobile-overlay" id="nav-mobile-overlay"></div>
+
+  <!-- MAIN -->
+  <main class="main resume-main">
+
+    <!-- Page header -->
+    <div class="resume-header">
+      <div class="resume-header-left">
+        <h1 class="resume-name" data-i18n="resume_name">チョウ エリック</h1>
+        <p class="resume-titles" data-i18n="resume_titles">アートディレクター　<span class="resume-title-div">｜</span>　コンセプトアーティスト　<span class="resume-title-div">｜</span>　ビジュアルプロブレムソルバー</p>
+      </div>
+      <a href="/resume/download" class="resume-download-btn" id="resume-dl-btn" aria-label="職務経歴書をダウンロード">
+        <i class="fa-solid fa-download"></i> <span data-i18n="resume_dl_btn">履歴書 PDF</span>
+      </a>
+    </div>
+
+    <!-- ── 職歴 ── -->
+    <section class="resume-section">
+      <h2 class="resume-section-title">
+        <span class="resume-section-icon"><i class="fa-solid fa-briefcase"></i></span>
+        <span data-i18n="resume_sec_work">職歴</span>
+      </h2>
+
+      <!-- TelyRx -->
+      <div class="resume-card">
+        <div class="resume-card-aside">
+          <span class="resume-year">2025</span>
+          <div class="resume-timeline-line"></div>
+        </div>
+        <div class="resume-card-body">
+          <div class="resume-card-top">
+            <div>
+              <h3 class="resume-company">TelyRx</h3>
+              <p class="resume-role" data-i18n="telyrx_role">シニア UI/UXデザイナー</p>
+            </div>
+            <div class="resume-meta">
+              <span class="resume-period" data-i18n="telyrx_period">2025年3月 – 2025年5月</span>
+              <span class="resume-location"><i class="fa-solid fa-location-dot"></i> <span data-i18n="telyrx_location">リモート  (アメリカ)</span></span>
+            </div>
+          </div>
+          <p class="resume-desc" data-i18n="telyrx_desc">
+            急成長中のテレヘルス企業において、唯一のUI/UXデザイナーとしてウェブサイトのフルリデザインおよびモバイルアプリのUI/UX設計をリード。ユーザーが必要なサービスへ最小限の摩擦でアクセスできる、モダンで直感的なデジタル体験の構築を担当しました。<br><br>
+            マーケティングチームと密に連携し、プロモーション・CM素材のアートディレクションをメインサイトへ統合。SNSからウェブサイトへのシームレスなビジュアルパイプラインを実現しました。また、Magento LUMAの既存アーキテクチャという制約と厳しい納期のなかで、処方者ポータル・患者ポータル・ペット製品ページなど複数のバックエンドUIを並行して設計・更新しました。<br><br>
+            担当プロジェクトの完遂をもって契約満了。在職期間は短かったものの、チームとともに成し遂げた成果を誇りに思っており、担当期間中に会社が顕著な成長を遂げたことを心から嬉しく思っています。
+          </p>
+          <div class="resume-tags">
+            <span class="resume-tag" data-i18n="telyrx_tag_uiux">UI/UX デザイン</span>
+            <span class="resume-tag">Figma</span>
+            <span class="resume-tag" data-i18n="telyrx_tag_redesign">Webリデザイン</span>
+            <span class="resume-tag" data-i18n="telyrx_tag_mobile">モバイルアプリ設計</span>
+            <span class="resume-tag">Magento Luma</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Freelance -->
+      <div class="resume-card">
+        <div class="resume-card-aside">
+          <span class="resume-year">2022</span>
+          <div class="resume-timeline-line"></div>
+        </div>
+        <div class="resume-card-body">
+          <div class="resume-card-top">
+            <div>
+              <h3 class="resume-company" data-i18n="freelance_co">フリーランス</h3>
+              <p class="resume-role" data-i18n="freelance_role">イラストレーター ／ デザイナー</p>
+            </div>
+            <div class="resume-meta">
+              <span class="resume-period" data-i18n="freelance_period">2022年2月 – 現在</span>
+              <span class="resume-location"><i class="fa-solid fa-location-dot"></i> <span data-i18n="freelance_location">アメリカ・日本・中国</span></span>
+            </div>
+          </div>
+          <p class="resume-desc" data-i18n="freelance_desc">
+            書籍カバーデザイン、eスポーツチーム向けSNSビジュアル制作、風景画・写真撮影など幅広いクリエイティブワークを手がける。アメリカ・日本・中国にわたる活動を通じて、多様な文化的感性とデザイン表現を磨き、次世代のデザイナーへのメンタリングも並行して実施。
+          </p>
+          <div class="resume-tags">
+            <span class="resume-tag" data-i18n="freelance_tag_illus">イラスト</span>
+            <span class="resume-tag" data-i18n="freelance_tag_design">グラフィックデザイン</span>
+            <span class="resume-tag" data-i18n="freelance_tag_photo">写真</span>
+            <span class="resume-tag" data-i18n="freelance_tag_mentor">メンタリング</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- NETVRK -->
+      <div class="resume-card">
+        <div class="resume-card-aside">
+          <span class="resume-year">2021</span>
+          <div class="resume-timeline-line"></div>
+        </div>
+        <div class="resume-card-body">
+          <div class="resume-card-top">
+            <div>
+              <h3 class="resume-company">NETVRK</h3>
+              <p class="resume-role" data-i18n="netvrk_role">アートディレクター ／ 環境コンセプトアーティスト</p>
+            </div>
+            <div class="resume-meta">
+              <span class="resume-period" data-i18n="netvrk_period">2021年9月 – 2022年2月</span>
+              <span class="resume-location"><i class="fa-solid fa-location-dot"></i> <span data-i18n="netvrk_location">リモート  (カリフォルニア)</span></span>
+            </div>
+          </div>
+          <p class="resume-desc" data-i18n="netvrk_desc">
+            メタバースプロジェクトのアートディレクションを主導。ウェブサイト・全SNSチャンネルにわたるブランドアイデンティティの構築、プリプロダクション段階のルック開発、3Dアーティスト支援用コンセプトアートの制作を担当。NFT購買ポータルのUI/UX設計にも従事。
+          </p>
+          <div class="resume-tags">
+            <span class="resume-tag" data-i18n="netvrk_tag_artdir">アートディレクション</span>
+            <span class="resume-tag" data-i18n="netvrk_tag_concept">コンセプトアート</span>
+            <span class="resume-tag" data-i18n="netvrk_tag_meta">メタバース</span>
+            <span class="resume-tag">UI/UX</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gadget-Bot -->
+      <div class="resume-card resume-card-featured">
+        <div class="resume-card-aside">
+          <span class="resume-year">2021</span>
+          <div class="resume-timeline-line"></div>
+        </div>
+        <div class="resume-card-body">
+          <div class="resume-card-top">
+            <div>
+              <h3 class="resume-company">Gadget-Bot Productions</h3>
+              <p class="resume-role" data-i18n="gadgetbot_role">環境コンセプトアーティスト</p>
+            </div>
+            <div class="resume-meta">
+              <span class="resume-period" data-i18n="gadgetbot_period">2021年2月 – 2021年7月</span>
+              <span class="resume-location"><i class="fa-solid fa-location-dot"></i> <span data-i18n="gadgetbot_location">リモート  (カリフォルニア)</span></span>
+            </div>
+          </div>
+          <div class="resume-clients">
+            <span class="resume-client-badge">
+              <i class="fa-solid fa-star"></i> Activision Treyarch (Microsoft)
+            </span>
+            <span class="resume-client-badge">Call of Duty: Cold War</span>
+            <span class="resume-client-badge">Call of Duty: Vanguard</span>
+            <span class="resume-client-badge">Apex Legends (EA)</span>
+          </div>
+          <p class="resume-desc" data-i18n="gadgetbot_desc">
+            Activision Treyarch (現Microsoft傘下)のプロダクションデザイナーと直接連携し、Call of Duty: Cold Warのゾンビマップビジュアル開発を主導。自分の原案デザインをチームの制作基準として提供しながら、背景コンセプトアートを量産。Call of Duty: Vanguardではプロップ・パークマシンのデザインを担当し、Apex Legends (EA)向けエモート・プロモーションアートも制作。
+          </p>
+          <div class="resume-tags">
+            <span class="resume-tag" data-i18n="gadgetbot_tag_env">環境コンセプトアート</span>
+            <span class="resume-tag" data-i18n="gadgetbot_tag_prop">プロップデザイン</span>
+            <span class="resume-tag" data-i18n="gadgetbot_tag_orig">原案デザイン</span>
+            <span class="resume-tag" data-i18n="gadgetbot_tag_aaa">AAA ゲーム</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── 学歴 ── -->
+    <section class="resume-section">
+      <h2 class="resume-section-title">
+        <span class="resume-section-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+        <span data-i18n="resume_sec_edu">学歴</span>
+      </h2>
+
+      <div class="resume-edu-grid">
+
+        <div class="resume-edu-card">
+          <div class="resume-edu-year" data-i18n="edu_kyoto_year">在学中</div>
+          <h3 class="resume-edu-school">京都民際日本語学校</h3>
+          <p class="resume-edu-detail" data-i18n="edu_kyoto_detail">特集進学クラス (N1向け)　｜　京都府京都市</p>
+        </div>
+
+        <div class="resume-edu-card">
+          <div class="resume-edu-year">2020 – 2021</div>
+          <h3 class="resume-edu-school">John Park / Joon Ahn メンタープログラム</h3>
+          <p class="resume-edu-detail" data-i18n="edu_mentor_detail">ハリウッド・AAA業界出身アーティストによる週次コンセプトアート指導　｜　カリフォルニア州</p>
+        </div>
+
+        <div class="resume-edu-card">
+          <div class="resume-edu-year" data-i18n="edu_otis_year">2019 – 2020 (中退)</div>
+          <h3 class="resume-edu-school">OTIS College of Art and Design</h3>
+          <p class="resume-edu-detail" data-i18n="edu_otis_detail">イラストレーション専攻　｜　ロサンゼルス、カリフォルニア州</p>
+        </div>
+
+        <div class="resume-edu-card">
+          <div class="resume-edu-year">2018</div>
+          <h3 class="resume-edu-school">Rowland High School</h3>
+          <p class="resume-edu-detail" data-i18n="edu_rhs_detail">高等学校卒業　｜　ローランドハイツ、カリフォルニア州</p>
+          <div class="resume-clients" style="margin-top: 8px;">
+            <span class="resume-client-badge"><i class="fa-solid fa-trophy"></i> <span data-i18n="rhs_award1">全米議会芸術コンペティション 2位</span></span>
+            <span class="resume-client-badge"><i class="fa-solid fa-star"></i> <span data-i18n="rhs_award2">スコラスティック・アート賞 優秀賞</span></span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── スキル・言語 ── -->
+    <section class="resume-section">
+      <h2 class="resume-section-title">
+        <span class="resume-section-icon"><i class="fa-solid fa-toolbox"></i></span>
+        <span data-i18n="resume_sec_skills">スキル・言語</span>
+      </h2>
+
+      <div class="resume-skills-grid">
+
+        <div class="resume-skill-group">
+          <h4 class="resume-skill-label" data-i18n="skill_grp_design">デザイン・アート</h4>
+          <div class="resume-skill-tags">
+            <span class="resume-skill-tag">Adobe Photoshop</span>
+            <span class="resume-skill-tag">Figma</span>
+            <span class="resume-skill-tag">Adobe Illustrator</span>
+            <span class="resume-skill-tag">Blender (3D)</span>
+            <span class="resume-skill-tag">Unreal Engine 5</span>
+            <span class="resume-skill-tag" data-i18n="skill_digital">デジタル画</span>
+            <span class="resume-skill-tag" data-i18n="skill_traditional">アナログ画</span>
+            <span class="resume-skill-tag" data-i18n="skill_concept_art">コンセプトアート (背景・プロップ)</span>
+            <span class="resume-skill-tag" data-i18n="skill_marketing">マーケティング (広告・ブランドアイデンティティ)</span>
+            <span class="resume-skill-tag" data-i18n="skill_storyboard">絵コンテ</span>
+            <span class="resume-skill-tag" data-i18n="skill_manga">マンガ</span>
+          </div>
+        </div>
+
+        <div class="resume-skill-group">
+          <h4 class="resume-skill-label" data-i18n="skill_grp_web">Web・開発</h4>
+          <div class="resume-skill-tags">
+            <span class="resume-skill-tag">HTML / CSS</span>
+            <span class="resume-skill-tag">Python</span>
+            <span class="resume-skill-tag">Flask</span>
+            <span class="resume-skill-tag" data-i18n="skill_js">JavaScript (学習中)</span>
+            <span class="resume-skill-tag" data-i18n="skill_uiux">UI/UX デザイン</span>
+            <span class="resume-skill-tag" data-i18n="skill_webdesign">Webデザイン</span>
+            <span class="resume-skill-tag" data-i18n="skill_social">SNSマーケティング</span>
+          </div>
+        </div>
+
+        <div class="resume-skill-group">
+          <h4 class="resume-skill-label" data-i18n="skill_grp_lang">言語</h4>
+          <div class="resume-skill-tags">
+            <span class="resume-skill-tag resume-skill-lang" data-i18n="lang_en">英語 (母語)</span>
+            <span class="resume-skill-tag resume-skill-lang" data-i18n="lang_zh">中国語 (母語)</span>
+            <span class="resume-skill-tag resume-skill-lang" data-i18n="lang_ja">日本語 (学習中)</span>
+            <span class="resume-skill-tag" data-i18n="lang_jlpt">日本語能力試験 JLPT N2</span>
+            <span class="resume-skill-tag" data-i18n="lang_bjt">BJT ビジネス日本語能力テスト J3 (412点)</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="logo-mark small">
+        <div class="logo-top"></div>
+        <div class="logo-mid"></div>
+        <div class="logo-bot"></div>
+      </div>
+      <span class="footer-copy">© 2026 Eric Chou</span>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='translations.js') }}"></script>
+  <script src="{{ url_for('static', filename='translations_resume_portfolio.js') }}"></script>
+  <script src="{{ url_for('static', filename='lang_picker.js') }}"></script>
+  <script>
+    const hamburger     = document.getElementById('nav-hamburger');
+    const mobileMenu    = document.getElementById('nav-mobile-menu');
+    const mobileOverlay = document.getElementById('nav-mobile-overlay');
+    function openMenu()  { mobileMenu.classList.add('active');    mobileOverlay.classList.add('active'); }
+    function closeMenu() { mobileMenu.classList.remove('active'); mobileOverlay.classList.remove('active'); }
+    if (hamburger)     hamburger.addEventListener('click', () => mobileMenu.classList.contains('active') ? closeMenu() : openMenu());
+    if (mobileOverlay) mobileOverlay.addEventListener('click', closeMenu);
+
+    const dlBtn = document.getElementById('resume-dl-btn');
+
+    function updateDownloadBtn(lang) {
+      if (lang === 'en') {
+        dlBtn.href = '/resume/download/en';
+      } else {
+        dlBtn.href = '/resume/download';
+      }
+    }
+
+    function applyLanguageResume(lang) {
+      const t = (typeof translations !== 'undefined') && translations[lang];
+      if (!t) return;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+      updateDownloadBtn(lang);
+    }
+    initLangPicker(applyLanguageResume);
+  </script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ポートフォリオ – Eric Chou</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+</head>
+<body class="portfolio-page">
+
+  <!-- Background -->
+  <div class="bg-image portfolio-bg"></div>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-inner">
+
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="メニューを開く">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="5" width="20" height="2" rx="1" fill="currentColor"/>
+          <rect x="2" y="11" width="20" height="2" rx="1" fill="currentColor"/>
+          <rect x="2" y="17" width="20" height="2" rx="1" fill="currentColor"/>
+        </svg>
+      </button>
+
+      <a href="/" class="nav-logo">
+        <div class="logo-mark">
+          <div class="logo-top"></div>
+          <div class="logo-mid"></div>
+          <div class="logo-bot"></div>
+        </div>
+        <span class="logo-text">Eric Chou</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="/portfolio" class="nav-link active-page" data-i18n="nav_portfolio">ポートフォリオ</a>
+        <a href="/resume" class="nav-link" data-i18n="nav_resume">履歴書</a>
+        <a href="/devlog" class="nav-link" data-i18n="nav_devlog">開発ログ</a>
+        <a href="https://github.com/AD-Artaku" class="nav-link">GitHub</a>
+        <a href="https://www.youtube.com/@Artaku_" class="nav-link nav-link-icon youtube" target="_blank" rel="noopener">
+          <i class="fa-brands fa-youtube"></i> Artaku
+        </a>
+        <a href="https://www.instagram.com/ericc.design" class="nav-link nav-link-icon instagram" target="_blank" rel="noopener">
+          <i class="fa-brands fa-instagram"></i> ericc.design
+        </a>
+      </div>
+
+      <div class="nav-pickers">
+        <div class="lang-picker">
+          <button class="lang-toggle" id="lang-toggle">
+            <i class="fa-regular fa-globe"></i> 日本語
+          </button>
+        </div>
+      </div>
+
+      <div class="nav-mobile-menu" id="nav-mobile-menu">
+        <a href="/portfolio" class="nav-mobile-item">
+          <span class="item-label" data-i18n="nav_portfolio">ポートフォリオ</span>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
+        </a>
+        <a href="/resume" class="nav-mobile-item">
+          <span class="item-label" data-i18n="nav_resume">履歴書</span>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
+        </a>
+        <a href="/devlog" class="nav-mobile-item">
+          <span class="item-label" data-i18n="nav_devlog">開発ログ</span>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
+        </a>
+        <a href="https://github.com/AD-Artaku" class="nav-mobile-item" target="_blank" rel="noopener">
+          <span class="item-label">GitHub</span>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
+        </a>
+        <a href="https://www.youtube.com/@Artaku_" class="nav-mobile-item youtube" target="_blank" rel="noopener">
+          <i class="fa-brands fa-youtube"></i>
+          <span class="item-label">Artaku</span>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
+        </a>
+        <a href="https://www.instagram.com/ericc.design" class="nav-mobile-item instagram" target="_blank" rel="noopener">
+          <i class="fa-brands fa-instagram"></i>
+          <span class="item-label">ericc.design</span>
+          <i class="fa-solid fa-arrow-up-right-from-square item-chevron"></i>
+        </a>
+      </div>
+
+    </div>
+    <div class="nav-border"></div>
+  </nav>
+
+  <div class="nav-mobile-overlay" id="nav-mobile-overlay"></div>
+
+  <!-- MAIN -->
+  <main class="main portfolio-main">
+
+    <!-- Page header -->
+    <div class="portfolio-header">
+      <h1 class="portfolio-title" data-i18n="portfolio_title">ポートフォリオ</h1>
+      <a href="https://eric_chou.artstation.com" class="portfolio-artstation-link" target="_blank" rel="noopener">
+        ArtStation <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+    </div>
+
+    {% if featured or side or grid %}
+
+      <!-- Layout B: featured left + side column -->
+      <div class="portfolio-hero">
+
+        {% if featured %}
+        <a href="{{ featured.link }}" class="portfolio-featured" target="_blank" rel="noopener">
+          <img
+            src="{{ featured.large_url }}"
+            onerror="this.onerror=null; this.src='{{ featured.small_url }}'"
+            alt="{{ featured.title }}"
+          />
+          <div class="portfolio-overlay">
+            <span class="portfolio-piece-title">{{ featured.title }}</span>
+            {% if featured.date %}<span class="portfolio-piece-date">{{ featured.date }}</span>{% endif %}
+          </div>
+        </a>
+        {% endif %}
+
+        {% if side %}
+        <div class="portfolio-side">
+          {% for piece in side %}
+          <a href="{{ piece.link }}" class="portfolio-thumb" target="_blank" rel="noopener">
+            <img
+              src="{{ piece.medium_url }}"
+              onerror="this.onerror=null; this.src='{{ piece.small_url }}'"
+              alt="{{ piece.title }}"
+            />
+            <div class="portfolio-overlay">
+              <span class="portfolio-piece-title">{{ piece.title }}</span>
+              {% if piece.date %}<span class="portfolio-piece-date">{{ piece.date }}</span>{% endif %}
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+      </div>
+
+      <!-- Remaining pieces grid -->
+      {% if grid %}
+      <div class="portfolio-grid">
+        {% for piece in grid %}
+        <a href="{{ piece.link }}" class="portfolio-thumb" target="_blank" rel="noopener">
+          <img
+            src="{{ piece.medium_url }}"
+            onerror="this.onerror=null; this.src='{{ piece.small_url }}'"
+            alt="{{ piece.title }}"
+          />
+          <div class="portfolio-overlay">
+            <span class="portfolio-piece-title">{{ piece.title }}</span>
+            {% if piece.date %}<span class="portfolio-piece-date">{{ piece.date }}</span>{% endif %}
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+    {% else %}
+      <div class="portfolio-error">
+        <i class="fa-regular fa-image" style="font-size:48px; margin-bottom:16px; display:block;"></i>
+        <p>ポートフォリオを読み込めませんでした。</p>
+        <p style="margin-top:8px; font-size:14px;">
+          <a href="https://eric_chou.artstation.com" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.8);">
+            ArtStation で直接ご覧ください <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </p>
+      </div>
+    {% endif %}
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="logo-mark small">
+        <div class="logo-top"></div>
+        <div class="logo-mid"></div>
+        <div class="logo-bot"></div>
+      </div>
+      <span class="footer-copy">© 2026 Eric Chou</span>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='translations.js') }}"></script>
+  <script src="{{ url_for('static', filename='translations_resume_portfolio.js') }}"></script>
+  <script src="{{ url_for('static', filename='lang_picker.js') }}"></script>
+  <script>
+    // Hamburger menu (same as devlog)
+    const hamburger = document.getElementById('nav-hamburger');
+    const mobileMenu = document.getElementById('nav-mobile-menu');
+    const mobileOverlay = document.getElementById('nav-mobile-overlay');
+    function openMenu()  { mobileMenu.classList.add('active');    mobileOverlay.classList.add('active'); }
+    function closeMenu() { mobileMenu.classList.remove('active'); mobileOverlay.classList.remove('active'); }
+    if (hamburger)     hamburger.addEventListener('click', () => mobileMenu.classList.contains('active') ? closeMenu() : openMenu());
+    if (mobileOverlay) mobileOverlay.addEventListener('click', closeMenu);
+
+    // Lang picker (nav_portfolio key only — no page body i18n needed)
+    function applyLanguagePortfolio(lang) {
+      const t = (typeof translations !== 'undefined') && translations[lang];
+      if (!t) return;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+    }
+    initLangPicker(applyLanguagePortfolio);
+  </script>
+</body>
+</html>
