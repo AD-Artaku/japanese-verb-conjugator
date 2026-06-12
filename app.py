@@ -454,5 +454,42 @@ def send_message():
         return jsonify({"success": False, "error": str(e)}), 500
 
 
+# =====================
+# SEO — robots.txt & sitemap.xml
+# Served from root so crawlers find them at the expected paths.
+# =====================
+@app.route("/robots.txt")
+def robots_txt():
+    from flask import Response
+    base = request.host_url
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        "Disallow: /api/",
+        "Disallow: /suggest",
+        "Disallow: /portfolio/img",
+        "Disallow: /resume/download",
+        "Disallow: /resume/download/en",
+        "Disallow: /resume/print",
+        "Disallow: /resume/print/en",
+        f"Sitemap: {base}sitemap.xml",
+    ]
+    return Response("\n".join(lines), mimetype="text/plain")
+
+
+@app.route("/sitemap.xml")
+def sitemap_xml():
+    from flask import Response
+    base = request.host_url.rstrip("/")
+    xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>{base}/</loc>          <priority>1.0</priority><changefreq>weekly</changefreq></url>
+  <url><loc>{base}/portfolio</loc> <priority>0.9</priority><changefreq>weekly</changefreq></url>
+  <url><loc>{base}/resume</loc>    <priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>{base}/devlog</loc>    <priority>0.7</priority><changefreq>monthly</changefreq></url>
+</urlset>"""
+    return Response(xml, mimetype="application/xml")
+
+
 if __name__ == "__main__":
     app.run(debug=True)

@@ -3,7 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ポートフォリオ – Eric Chou</title>
+  <title>Portfolio | Eric Chou</title>
+  <!-- SEO -->
+  <meta name="description" content="Portfolio of Eric Chou — art director, concept artist, and UI/UX designer with experience in AAA games, metaverse, and telehealth." />
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="{{ request.url }}" />
+  <meta property="og:title"       content="Portfolio | Eric Chou" />
+  <meta property="og:description" content="Portfolio of Eric Chou — art director, concept artist, and UI/UX designer with experience in AAA games, metaverse, and telehealth." />
+  <meta property="og:image"       content="{{ request.url_root[:-1] }}{% if featured %}{{ featured.large_url }}{% else %}/static/og-image.jpg{% endif %}" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Portfolio | Eric Chou" />
+  <meta name="twitter:description" content="Portfolio of Eric Chou — art director, concept artist, and UI/UX designer with experience in AAA games, metaverse, and telehealth." />
+  <meta name="twitter:image"       content="{{ request.url_root[:-1] }}{% if featured %}{{ featured.large_url }}{% else %}/static/og-image.jpg{% endif %}" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -131,6 +144,7 @@
               src="{{ piece.medium_url }}"
               onerror="this.onerror=null; this.src='{{ piece.small_url }}'"
               alt="{{ piece.title }}"
+              loading="lazy"
             />
             <div class="portfolio-overlay">
               <span class="portfolio-piece-title">{{ piece.title }}</span>
@@ -152,6 +166,7 @@
             src="{{ piece.medium_url }}"
             onerror="this.onerror=null; this.src='{{ piece.small_url }}'"
             alt="{{ piece.title }}"
+            loading="lazy"
           />
           <div class="portfolio-overlay">
             <span class="portfolio-piece-title">{{ piece.title }}</span>
