@@ -1860,12 +1860,15 @@ main.main {
   padding-left: 40px; /* aligns under title text, past icon + gap */
 }
 
-/* display:contents lets each row's children become direct grid items */
-.card-row {
+/* display:contents lets each row's children become direct grid items.
+   Scoped to .card-body (devlog cards) so it doesn't clobber the
+   conjugator's .card-rows > .card-row flex layout, which shares the
+   .card-row class name. */
+.card-body .card-row {
   display: contents;
 }
 
-.card-row-label {
+.card-body .card-row-label {
   font-size: 16px;
   font-weight: 400;
   font-family: 'Inter', 'Noto Sans SC', 'Noto Sans KR', sans-serif;
