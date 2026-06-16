@@ -685,10 +685,20 @@ function initHistoryPicker() {
     };
   }
 
+  // Read the verb from whichever input is actually visible. On mobile the
+  // desktop input is hidden (display:none) but still in the DOM, and the
+  // server pre-fills it from the /verb/<x> URL — reading it first meant a
+  // freshly typed verb in the mobile pill was ignored, so the page stayed
+  // stuck on the previous verb after reopening the tab days later.
+  function currentVerb() {
+    const isMobile = window.matchMedia('(max-width: 600px)').matches;
+    const primary  = isMobile ? (mobileInput || desktopInput) : desktopInput;
+    return (primary?.value.trim()) || desktopInput.value.trim() || mobileInput?.value.trim() || '';
+  }
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    // Prefer whichever input has a value (desktop vs mobile)
-    const verb = desktopInput.value.trim() || mobileInput?.value.trim() || '';
+    const verb = currentVerb();
     const { polite, negative } = getToggles();
     doSearch(verb, polite, negative);
   });
@@ -696,7 +706,7 @@ function initHistoryPicker() {
   // Also re-search when toggles change (if cards are visible)
   [togglePolite, toggleNegative].forEach(toggle => {
     toggle?.addEventListener('change', () => {
-      const verb = desktopInput.value.trim();
+      const verb = currentVerb();
       if (verb && document.querySelector('.cards-section')) {
         const { polite, negative } = getToggles();
         doSearch(verb, polite, negative, false); // don't push a new history state

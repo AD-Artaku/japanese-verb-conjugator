@@ -196,7 +196,7 @@
                   name="verb"
                   placeholder="辞書形を入力"
                   data-i18n-placeholder="search_placeholder"
-                  value="{{ request.form.get('verb', '') }}"
+                  value="{{ request.form.get('verb_desktop') or request.form.get('verb') or shared_verb or '' }}"
                   autocomplete="off"
                   id="mobile-verb-input"
                   maxlength="20"
