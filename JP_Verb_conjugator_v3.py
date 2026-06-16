@@ -5,7 +5,7 @@
 # 着る ichidan, both きる). Keyed on the written form so homophones stay
 # distinct. Entries are kanji except where the verb is conventionally written
 # in kana (かぎる — its kanji 限る is also listed for kanji input).
-irregular_godan_verb = ["入る", "走る", "帰る", "切る", "知る", "要る", "減る", "滑る", "蹴る", "握る", "参る", "混じる", "交じる", "交る", "焦る", "湿る", "茂る", "遮る", "罵る", "嘲る", "蘇る", "覆る", "捻る","煎る", "練る", "限る", "喋る", "散る", "照る", "弄る", "齧る", "滅入る", "陥る", "かぎる"]
+irregular_godan_verb = ["入る", "走る", "帰る", "切る", "知る", "要る", "減る", "滑る", "蹴る", "握る", "参る", "混じる", "交じる", "交る", "焦る", "湿る", "茂る", "遮る", "罵る", "嘲る", "蘇る", "覆る", "捻る","煎る", "練る", "限る", "喋る", "散る", "照る", "弄る", "齧る", "滅入る", "陥る", "千切る", "区切る", "句切る", "しくじる", "翻る", "飜る", "耽る", "畝る", "競る", "糶る", "かぎる"]
 
 # Morae (hiragana) from the あ/う/お rows. A verb ending in る whose preceding
 # mora is one of these is ALWAYS godan — there are no ichidan verbs ending in
