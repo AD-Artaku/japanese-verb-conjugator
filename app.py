@@ -9,7 +9,7 @@ import urllib.parse
 import xml.etree.ElementTree as ET
 from email.utils import parsedate
 import pykakasi
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, url_for
 from flask_mail import Mail, Message
 from dotenv import load_dotenv
 from JP_Verb_conjugator_v3 import Verb, honorific_godan_verb, HIRAGANA_PREFERRED
@@ -109,6 +109,28 @@ app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
 app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_USERNAME")
 
 mail = Mail(app)
+
+# =====================
+# STATIC ASSET CACHE-BUSTING
+# Appends ?v=<file-mtime> to every url_for('static', ...) call in templates.
+# Browsers cache CSS/JS aggressively between deploys but re-fetch the instant
+# a file changes (its mtime changes). Critical on mobile, where a stale
+# style.css / script.js would otherwise linger for days after a fix.
+# =====================
+def _dated_url_for(endpoint, **values):
+    if endpoint == "static":
+        filename = values.get("filename")
+        if filename:
+            try:
+                mtime = os.stat(os.path.join(app.root_path, "static", filename)).st_mtime
+                values["v"] = int(mtime)
+            except OSError:
+                pass  # missing file — fall back to an unversioned URL
+    return url_for(endpoint, **values)
+
+@app.context_processor
+def _override_url_for():
+    return dict(url_for=_dated_url_for)
 
 # =====================
 # VERB DICTIONARY LOAD
