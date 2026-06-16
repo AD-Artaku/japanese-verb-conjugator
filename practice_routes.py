@@ -31,6 +31,13 @@ os.makedirs(MEDIA_DIR, exist_ok=True)
 with open(VERB_DICT_PATH, encoding="utf-8") as f:
     VERB_DICT = json.load(f)
 
+# Reverse map: kanji form -> canonical hiragana reading, so the conjugator can
+# classify godan vs ichidan for kanji る-verbs. First reading wins on collisions.
+_KANJI_TO_READING = {}
+for _reading, _kanji_forms in VERB_DICT.items():
+    for _kf in _kanji_forms:
+        _KANJI_TO_READING.setdefault(_kf, _reading)
+
 VALID_ENDINGS   = ("う", "く", "ぐ", "す", "つ", "ぬ", "ぶ", "む", "る")
 INVALID_ENDINGS = ("い", "な", "だ", "た", "て", "で", "ば", "に",
                    "ない", "ます", "した", "って", "んで", "いて",
@@ -71,16 +78,21 @@ def _build_conjugation_html(verb):
     """
     verb = verb.strip()
 
+    reading = None
     if _is_all_hiragana(verb):
         if verb not in VERB_DICT:
             raise ValueError("verb not found in dictionary")
+        reading = verb  # the kana input is itself the reading
         if verb not in HIRAGANA_PREFERRED:
             verb = VERB_DICT[verb][0]
 
     if not _is_valid_verb(verb):
         raise ValueError("not a valid dictionary-form verb")
 
-    v = Verb(verb)
+    if reading is None:
+        reading = _KANJI_TO_READING.get(verb, verb)
+
+    v = Verb(verb, reading=reading)
     v.polite().negative()
     f = v.forms
 

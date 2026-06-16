@@ -1,6 +1,21 @@
 # 3rd version - OOP upgrade / instead of storeing info in a global list, we make a class
 
-irregular_godan_verb = ["入る", "走る", "帰る", "切る", "知る", "要る", "減る", "滑る", "蹴る", "握る", "参る", "混じる", "交じる", "交る", "焦る", "湿る", "茂る", "遮る", "罵る", "嘲る", "蘇る", "覆る", "捻る","煎る", "練る", "限る", "喋る", "散る", "照る"]
+# Godan verbs ending in る whose mora before る is from the え/い rows, where
+# the reading alone can't distinguish godan from ichidan (e.g. 切る godan vs
+# 着る ichidan, both きる). Keyed on the written form so homophones stay
+# distinct. Entries are kanji except where the verb is conventionally written
+# in kana (かぎる — its kanji 限る is also listed for kanji input).
+irregular_godan_verb = ["入る", "走る", "帰る", "切る", "知る", "要る", "減る", "滑る", "蹴る", "握る", "参る", "混じる", "交じる", "交る", "焦る", "湿る", "茂る", "遮る", "罵る", "嘲る", "蘇る", "覆る", "捻る","煎る", "練る", "限る", "喋る", "散る", "照る", "弄る", "齧る", "滅入る", "陥る", "かぎる"]
+
+# Morae (hiragana) from the あ/う/お rows. A verb ending in る whose preceding
+# mora is one of these is ALWAYS godan — there are no ichidan verbs ending in
+# -aru / -uru / -oru. The ambiguous え/い-row cases fall through to the word
+# list above instead. Classification by reading needs only this set.
+GODAN_RU_PRECEDING = set(
+    "あかがさざただなはばぱまやらわ"   # あ-row
+    "うくぐすずつづぬふぶぷむゆる"      # う-row
+    "おこごそぞとどのほぼぽもよろを"    # お-row
+)
 
 # Honorific godan verbs with irregular masu stems
 honorific_godan_verb = {
@@ -49,8 +64,12 @@ godan_map = {
 
 #Layer 0 - Class
 class Verb:
-    def __init__(self, verb):
+    def __init__(self, verb, reading=None):
         self.verb = verb
+        # Reading (hiragana) is used only to classify godan vs ichidan for る
+        # verbs. Defaults to the verb itself, which is already correct when the
+        # verb is written in kana; callers with kanji should pass the reading.
+        self.reading = reading or verb
         self.type = self.classify()
         self.stem = self.get_stem()
         # combining 2 dictionaries into 1 master dictionary
@@ -75,13 +94,18 @@ class Verb:
         if self.verb in honorific_godan_verb:
             return "honorific_godan"
 
-        if self.verb.endswith("る") and self.verb not in irregular_godan_verb:
+        if self.verb.endswith("る"):
+            # Word-identity exceptions: え/い-row verbs that are really godan.
+            if self.verb in irregular_godan_verb:
+                return "godan"
+            # あ/う/お-row mora before る is always godan (no ichidan twin).
+            if (len(self.reading) >= 2
+                    and self.reading.endswith("る")
+                    and self.reading[-2] in GODAN_RU_PRECEDING):
+                return "godan"
             return "ichidan"
 
         if self.verb.endswith(("う","く","ぐ","す","つ","ぬ","ぶ","む")):
-            return "godan"
-
-        if self.verb in irregular_godan_verb:
             return "godan"
 
         return "unknown"

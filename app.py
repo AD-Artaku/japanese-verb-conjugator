@@ -140,6 +140,14 @@ VERB_DICT_PATH = os.path.join(os.path.dirname(__file__), "verb_dict.json")
 with open(VERB_DICT_PATH, encoding="utf-8") as f:
     VERB_DICT = json.load(f)
 
+# Reverse map: kanji form -> canonical hiragana reading. Lets us hand the
+# conjugator a reading so it can tell godan from ichidan for kanji る-verbs
+# (取る, 戻る, 作る …). First reading wins on collisions.
+_KANJI_TO_READING = {}
+for _reading, _kanji_forms in VERB_DICT.items():
+    for _kf in _kanji_forms:
+        _KANJI_TO_READING.setdefault(_kf, _reading)
+
 # Valid dictionary form endings
 VALID_ENDINGS = ("う", "く", "ぐ", "す", "つ", "ぬ", "ぶ", "む", "る")
 
@@ -155,6 +163,17 @@ def is_all_hiragana(text):
         if not (0x3040 <= cp <= 0x309F or ch == "ー"):
             return False
     return True
+
+def _reading_for(verb):
+    """Best-effort hiragana reading for a verb, used only for godan/ichidan
+    classification of る-verbs."""
+    if is_all_hiragana(verb):
+        return verb
+    reading = _KANJI_TO_READING.get(verb)
+    if reading:
+        return reading
+    # Kanji verb not in the dictionary — fall back to pykakasi.
+    return "".join(tok["hira"] for tok in _kks.convert(verb))
 
 def is_valid_verb(verb):
 
@@ -198,16 +217,21 @@ def _conjugate(user_verb):
     if not user_verb:
         raise ValueError("empty")
 
+    reading = None
     if is_all_hiragana(user_verb):
         if user_verb not in VERB_DICT:
             raise ValueError("not found")
+        reading = user_verb  # the kana input is itself the reading
         if user_verb not in HIRAGANA_PREFERRED:
             user_verb = VERB_DICT[user_verb][0]
 
     if not is_valid_verb(user_verb):
         raise ValueError("invalid")
 
-    v = Verb(user_verb)
+    if reading is None:
+        reading = _reading_for(user_verb)
+
+    v = Verb(user_verb, reading=reading)
     v.polite().negative()
     _track_search(user_verb)
     return user_verb, {k: to_ruby(val) for k, val in v.forms.items()}
